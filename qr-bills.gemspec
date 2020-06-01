@@ -7,7 +7,17 @@ Gem::Specification.new do |s|
   s.authors     = ["Damiano Radice"]
   s.email       = 'damoiser@gmail.com'
   s.files       = ["lib/qr-bills.rb"]
-  s.homepage    =
-    'https://rubygems.org/gems/qr-bills'
-  s.license       = 'MIT'
+  s.homepage    = 'https://github.com/damoiser/qr-bills'
+  s.license     = 'MIT'
+  s.metadata    = {
+    "bug_tracker_uri"   => "https://github.com/damoiser/qr-bills/issues",
+    "changelog_uri"     => "https://github.com/damoiser/qr-bills/CHANGELOG.md",
+    "documentation_uri" => "https://github.com/damoiser/qr-bills",
+    "homepage_uri"      => "https://github.com/damoiser/qr-bills",
+    "mailing_list_uri"  => "https://groups.example.com/bestgemever",
+    "source_code_uri"   => "https://github.com/damoiser/qr-bills",
+    "wiki_uri"          => "https://github.com/damoiser/qr-bills"
+  }
+  s.required_ruby_version = '>= 2.7.1'
+  
 end
