@@ -1,5 +1,4 @@
 class QRBills
-  
   def get_qr_params
     { 
       language: "it",
