@@ -2,11 +2,13 @@
 
 QR-Bills gem for implementing swiss payements.
 
+
+## Installation
 ```
 gem install qr-bills
 ```
 
-## Usage
+## Usage
 
 ### QR Bill "old red" with creditor reference (ISO-11649)
 TODO
