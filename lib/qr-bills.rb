@@ -24,7 +24,6 @@ class QRBills
     else
       raise QRExceptions::INVALID_PARAMETERS + ": bill type param not set"
     end
+    return bill
   end
-
-  return bill
 end
