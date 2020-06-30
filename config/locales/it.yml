@@ -1,2 +1,11 @@
 it:
-  test: "This is a test"
+  receipt: "ricevuta"
+  payement_section: "sezione pagamento"
+  reference: "riferimento"
+  account: "conto"
+  currency: "valuta"
+  amount: "importo"
+  additional_information: "informazioni supplementari"
+  payable_from: "pagabile da"
+  payable_to: "pagabile a"
+  for_acceptance_point: "punto di accettazione"
