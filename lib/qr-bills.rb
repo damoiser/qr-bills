@@ -1,3 +1,6 @@
+require 'I18n'
+require 'qr-bills/QRExceptions'
+
 class QRBills
   # type of bills
   QR_BILL_WITH_QR_REFERENCE       = "orange_with_reference"
