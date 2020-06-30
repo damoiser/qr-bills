@@ -19,5 +19,6 @@ Gem::Specification.new do |s|
     "wiki_uri"          => "https://github.com/damoiser/qr-bills"
   }
   s.required_ruby_version = '>= 2.7.1'
-  
+
+  s.add_runtime_dependency('i18n', '>= 1.8.3', '< 2')
 end
