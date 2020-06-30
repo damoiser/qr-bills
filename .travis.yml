@@ -5,3 +5,6 @@ rvm:
 
 before_install:
   - gem install bundler
+
+script:
+  rspec spec
