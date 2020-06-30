@@ -6,15 +6,22 @@ class QRBills
   QR_BILL_WITOUTH_REFERENCE       = "red_without_reference"
 
   def initialize(qr_params)
+    # init translator sets
+    I18n.load_path << Dir[File.expand_path("config/locales") + "/*.yml"]
+    I18n.default_locale = :it
 
+    if qr_params.has_key?(:bill_type)
+      if qr_params[:bill_type] == QR_BILL_WITH_QR_REFERENCE
+
+      elsif qr_params[:bill_type] == QR_BILL_WITH_CREDITOR_REFERENCE
+
+      elsif qr_params[:bill_type] == QR_BILL_WITOUTH_REFERENCE
+
+      else
+        raise QRExceptions::INVALID_PARAMETERS + ": bill type not valid"
+      end
+    else
+      raise QRExceptions::INVALID_PARAMETERS + ": bill type param not set"
+    end
   end
-
-  def self.create_orange_deposit_slip(qr_params)
-
-  end
-
-  def self.create_red_deposit_slip(qr_params)
-
-  end
-
 end
