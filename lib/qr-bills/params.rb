@@ -1,7 +1,8 @@
 class QRBills::Params
 
   def self.get_qr_params
-    { 
+    {
+      bill_type: "", # see global variables in qr-bills.rb / README
       bill_params: {
         language: "it",
         qr_content: "",
