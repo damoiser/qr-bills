@@ -1,12 +1,8 @@
 require 'I18n'
-require 'qr-bills/QRExceptions'
+require 'qr-bills/qr-exceptions'
+require 'qr-bills/qr-params'
 
 class QRBills
-  # type of bills
-  QR_BILL_WITH_QR_REFERENCE       = "orange_with_reference"
-  QR_BILL_WITH_CREDITOR_REFERENCE = "red_with_reference"
-  QR_BILL_WITOUTH_REFERENCE       = "red_without_reference"
-
   def initialize(qr_params)
     # init translator sets
     I18n.load_path << Dir[File.expand_path("config/locales") + "/*.yml"]
@@ -15,11 +11,16 @@ class QRBills
     bill = nil
 
     if qr_params.has_key?(:bill_type)
-      if qr_params[:bill_type] == QR_BILL_WITH_QR_REFERENCE
+
+      if !QRParams.valid?(qr_params)
+        raise QRExceptions::INVALID_PARAMETERS + ": invalid parameters"
+      end
+
+      if qr_params[:bill_type] == QRParams::QR_BILL_WITH_QR_REFERENCE
         # todo
-      elsif qr_params[:bill_type] == QR_BILL_WITH_CREDITOR_REFERENCE
+      elsif qr_params[:bill_type] == QRParams::QR_BILL_WITH_CREDITOR_REFERENCE
         bill = QRGeneratorWithCreditorReference.new(params)
-      elsif qr_params[:bill_type] == QR_BILL_WITOUTH_REFERENCE
+      elsif qr_params[:bill_type] == QRParams::QR_BILL_WITOUTH_REFERENCE
         bill = QRGeneratorWithoutReference.new(params)
       else
         raise QRExceptions::INVALID_PARAMETERS + ": bill type not valid"
