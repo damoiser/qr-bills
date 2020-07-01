@@ -26,10 +26,10 @@ class QRParams
             zip: "",
             city: "",
           },
-        }
-      }
+        },
+      },
       output_params: {
-        format: "html",
+        format: "html"
       }
     }
   end
