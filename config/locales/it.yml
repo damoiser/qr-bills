@@ -1,11 +1,15 @@
 it:
-  receipt: "ricevuta"
-  payement_section: "sezione pagamento"
-  reference: "riferimento"
-  account: "conto"
-  currency: "valuta"
-  amount: "importo"
-  additional_information: "informazioni supplementari"
-  payable_from: "pagabile da"
+  payment_part: "sezione pagamento"
+  account: conto
   payable_to: "pagabile a"
-  for_acceptance_point: "punto di accettazione"
+  reference: riferimento
+  additional_information: "informazioni aggiuntive"
+  further_information: "informazioni supplementari"
+  currency: valuta
+  amount: importo
+  receipt: ricevuta
+  acceptance_point: "punto di accettazione"
+  separate_before_paying_in: "da staccare prima del versamento"
+  payable_by: pagabile da
+  payable_by_name_addr: pagabile da (nome/indirizzo)
+  in_favour_of: a favore di
