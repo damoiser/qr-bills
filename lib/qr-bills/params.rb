@@ -1,8 +1,11 @@
-class QRBills::Params
+class QRParams
+  QR_BILL_WITH_QR_REFERENCE       = "orange_with_reference"
+  QR_BILL_WITH_CREDITOR_REFERENCE = "red_with_reference"
+  QR_BILL_WITOUTH_REFERENCE       = "red_without_reference"
 
   def self.get_qr_params
     {
-      bill_type: "", # see global variables in qr-bills.rb / README
+      bill_type: "", # see global variables / README
       bill_params: {
         language: "it",
         qr_content: "",
@@ -31,7 +34,36 @@ class QRBills::Params
     }
   end
 
-  def self.red_slip_with_reference_valid?(params)
+  def self.valid?(params)
+    if params.has_key?(:bill_type)
+
+      if !QRParams.base_params_valid?(params)
+        return false
+      end
+
+      if params[:bill_type] == QR_BILL_WITH_QR_REFERENCE
+        return QRParams.qr_bill_with_qr_reference_valid?(params)
+      elsif qr_params[:bill_type] == QR_BILL_WITH_CREDITOR_REFERENCE
+        return QRParams.qr_bill_with_creditor_reference_valid?(params)
+      elsif qr_params[:bill_type] == QR_BILL_WITOUTH_REFERENCE
+        return QRParams.qr_bill_without_reference_valid?(params)
+      else
+        return false
+      end
+    else
+      return false
+    end
+  end
+
+  def self.base_params_valid?(params)
+    # todo
+  end
+
+  def self.qr_bill_with_qr_reference_valid?(params)
+    # todo
+  end
+
+  def self.qr_bill_with_creditor_reference_valid?(params)
     if params[:iban].blank? ||
       params[:reference].blank? || 
       params[:currency].blank? || 
@@ -50,13 +82,8 @@ class QRBills::Params
     return true
   end
 
-  def self.red_slip_valid?(params)
-  end
-
-  def self.orange_slip_valid?(params)
-    # TODO
+  def self.qr_bill_without_reference_valid?(params)
+    # todo
     return true
   end
-
-
 end
