@@ -1,5 +1,7 @@
 ## Work in progress
 
+[![Build Status](https://travis-ci.com/damoiser/qr-bills.svg?branch=master)](https://travis-ci.com/damoiser/qr-bills)
+
 QR-Bills gem for implementing swiss payements.
 
 
