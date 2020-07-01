@@ -1,0 +1,151 @@
+<!-- test area for html formatting -->
+
+<div class="bill_container">
+  <div class="receipt_section">
+    <div class="title">Ricevuta</div>
+    <div class="subtitle payable_at">Conto / Pagabile a</div>
+    <div class="content">
+      CH00 1234 5678 9101 2345 6<br/>
+      Compagnia di assicurazione forma & scalciante<br/>
+      Via cantonale 24<br/>
+      3000 Lugano
+    </div>
+    <div class="subtitle reference">Referenza</div>
+    <div class="reference">
+      RF12 3456 7890 1234 ABCD DEFG HIJK
+    </div>
+    <div class="subtitle payable_from">Pagabile da</div>
+    <div class="payable_from">
+      Foobar Barfoot<br/>
+      Via Cantonale 25<br/>
+      3001 Lugano<br/>
+    </div>
+
+    <div class="amount">
+      <table>
+        <tr>
+          <th>Valuta</th>
+          <th>Importo</th>
+        </tr>
+        <tr>
+          <td>CHF</td>
+          <td>2151.00</td>
+        </tr>
+      </table>
+    </div>
+
+    <div class="acceptance_point">
+      Punto di accettazione
+    </div>
+
+  </div>
+  <div class="payement_section">
+    <div class="left_column">
+      <div class="title">Sezione pagamento</div>
+      <div class="qr_code">QR-CODE</div>
+      <div class="amount">
+        <table>
+          <tr>
+            <th>Valuta</th>
+            <th>Importo</th>
+          </tr>
+          <tr>
+            <td>CHF</td>
+            <td>2151.00</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <div class="right_column">
+      <div class="subtitle payable_at">Conto / Pagabile a</div>
+      <div class="content">
+        CH00 1234 5678 9101 2345 6<br/>
+        Compagnia di assicurazione forma & scalciante<br/>
+        Via cantonale 24<br/>
+        3000 Lugano<br/>
+      </div>
+      <div class="subtitle reference">Referenza</div>
+      <div class="reference">
+        RF12 3456 7890 1234 ABCD DEFG HIJK
+      </div>
+      <div class="subtitle additional_information">Informazioni supplementari</div>
+      <div class="additional_information">
+        Premio mensile luglio 2020
+      </div>
+      <div class="subtitle payable_from">Pagabile da</div>
+      <div class="payable_from">
+        Foobar Barfoot<br/>
+        Via Cantonale 25<br/>
+        3001 Lugano<br/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .bill_container {
+    width: 210mm;
+    height: 105mm;
+
+    font-size: 12px;
+
+    border: 1px solid #ccc;
+  }
+
+  .bill_container:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .receipt_section {
+    width: 62mm;
+    height: 105mm;
+
+    float: left;
+
+    border-right: 1px dotted #ccc;
+  }
+
+  .payement_section {
+    width: 147mm;
+    height: 105mm;
+    float: left;
+  }
+
+  .payement_section .left_column {
+    float: left;
+    height: 105mm;
+  }
+
+  .payement_section .right_column {
+    float: left;
+    height: 105mm;
+  }
+
+  .amount table {
+    font-size: 12px;
+    width: 100%;
+    margin-top: 15px;
+  }
+
+  .amount table tr th {
+    text-align: left;
+    font-weight: bold;
+  }
+
+  .title {
+    font-weight: bold;
+    font-size: 16px;
+  }
+
+  .subtitle {
+    font-weight: bold;
+    margin-top: 15px;
+  }
+
+  .acceptance_point {
+    text-align: right;
+  }
+
+</style>
