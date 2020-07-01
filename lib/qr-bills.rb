@@ -1,4 +1,4 @@
-require 'I18n'
+require 'i18n'
 require 'qr-bills/qr-exceptions'
 require 'qr-bills/qr-params'
 
