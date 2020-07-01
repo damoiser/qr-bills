@@ -9,6 +9,7 @@ Gem::Specification.new do |s|
   s.files       = ["lib/qr-bills.rb",
                   "lib/qr-bills/*.rb",
                   "app/assets/images/*.png",
+                  "app/assets/fonts/*",
                   "config/locales/*.yml"]
   s.homepage    = "https://github.com/damoiser/qr-bills"
   s.license     = "MIT"
