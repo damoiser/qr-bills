@@ -7,6 +7,7 @@ GEM
     i18n (1.8.3)
       concurrent-ruby (~> 1.0)
     rake (13.0.1)
+    rmagick (4.1.2)
     rqrcode (1.1.2)
       chunky_png (~> 1.0)
       rqrcode_core (~> 0.1)
@@ -31,6 +32,7 @@ PLATFORMS
 DEPENDENCIES
   i18n
   rake
+  rmagick
   rqrcode
   rspec
 
