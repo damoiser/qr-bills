@@ -8,25 +8,36 @@ class QRParams
       bill_type: "", # see global variables / README
       bill_params: {
         language: "it",
-        qr_content: "",
-        iban: "",
-        address: {
-          street: "",
-          zip: "",
-          city: "",
-        },
-        reference: "", # simple reference for orange slip, creditor reference (iso-11649) for the new red slip format
-        currency: "CHF",
         amount: 0.0,
+        currency: "CHF",
+        reference_type: "", # QRR = QR reference, SCOR = Creditor reference, NON = without reference
+        reference: "", # qr reference or creditor reference (iso-11649)
         additionally_information: "",
-        customer: {
-          name: "",
+        bill_information_coded: "",
+        alternative_scheme_paramters: "",
+        creditor: {
           address: {
-            street: "",
-            zip: "",
-            city: "",
+            type: "S",
+            name: "",
+            line1: "",
+            line2: "",
+            postal_code: "",
+            town: "",
+            country: "",
+            iban: ""
           },
         },
+        debtor: {
+          address: {
+            type: "S",
+            name: "",
+            line1: "",
+            line2: "",
+            postal_code: "",
+            town: "",
+            country: "",
+          },
+        }
       },
       output_params: {
         format: "html"
