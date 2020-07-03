@@ -1,7 +1,10 @@
 require 'qr-bills'
+require 'fileutils'
 require 'qr-bills/qr-generator'
 require 'RMagick'
 include Magick
+
+
 
 RSpec.configure do |config|
   config.before(:each) do
@@ -26,19 +29,24 @@ RSpec.configure do |config|
     @params[:bill_params][:reference] = "SCOR"
     @params[:bill_params][:reference_type] = "RF89MTR81UUWZYO48NY55NP3"
     @params[:bill_params][:additionally_information] = "pagamento riparazione monopattino"
-    
-    @path = "#{Dir.pwd}/tmp/qrcode.png"    
+
+    @path = "#{Dir.pwd}/tmp/"
+    @filepath = @path + "qrcode.png"
+  end
+
+  config.before(:all) do
+    FileUtils.mkdir_p "#{Dir.pwd}/tmp/"
   end
 end
 
 RSpec.describe "QRGenerator" do
   describe "qrcode generation" do
     it "generates successfully a qr image" do
-      expect{QRGenerator.create_qr(@params, @path)}.not_to raise_error
+      expect{QRGenerator.create_qr(@params, @filepath)}.not_to raise_error
     end
 
     it "add successfully the swiss cross on the qr code" do
-      expect{QRGenerator.add_swiss_cross(@path, @path)}.not_to raise_error
+      expect{QRGenerator.add_swiss_cross(@filepath, @filepath)}.not_to raise_error
     end
   end
 end
