@@ -4,8 +4,6 @@ require 'qr-bills/qr-generator'
 require 'RMagick'
 include Magick
 
-
-
 RSpec.configure do |config|
   config.before(:each) do
     @params = QRParams.get_qr_params
@@ -26,8 +24,8 @@ RSpec.configure do |config|
     @params[:bill_params][:debtor][:address][:postal_code] = "3001"
     @params[:bill_params][:debtor][:address][:town] = "Comano"
     @params[:bill_params][:debtor][:address][:country] = "CH"
-    @params[:bill_params][:reference] = "SCOR"
-    @params[:bill_params][:reference_type] = "RF89MTR81UUWZYO48NY55NP3"
+    @params[:bill_params][:reference] = "RF89MTR81UUWZYO48NY55NP3"
+    @params[:bill_params][:reference_type] = "SCOR"
     @params[:bill_params][:additionally_information] = "pagamento riparazione monopattino"
 
     @path = "#{Dir.pwd}/tmp/"
