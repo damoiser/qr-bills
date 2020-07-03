@@ -1,6 +1,7 @@
 require 'i18n'
 require 'qr-bills/qr-exceptions'
 require 'qr-bills/qr-params'
+require 'qr-bills/qr-html-layout'
 
 class QRBills
   def initialize(qr_params)
@@ -13,21 +14,19 @@ class QRBills
     if qr_params.has_key?(:bill_type)
 
       if !QRParams.valid?(qr_params)
-        raise QRExceptions::INVALID_PARAMETERS + ": invalid parameters"
+        raise QRExceptions::INVALID_PARAMETERS + ": params validation check failed"
       end
 
-      if qr_params[:bill_type] == QRParams::QR_BILL_WITH_QR_REFERENCE
-        # todo
-      elsif qr_params[:bill_type] == QRParams::QR_BILL_WITH_CREDITOR_REFERENCE
-        bill = QRGeneratorWithCreditorReference.new(params)
-      elsif qr_params[:bill_type] == QRParams::QR_BILL_WITOUTH_REFERENCE
-        bill = QRGeneratorWithoutReference.new(params)
+      if qr_params[:output_params][:format] == "html"
+        bill = QRHTMLLayout.create(qr_params)
       else
-        raise QRExceptions::INVALID_PARAMETERS + ": bill type not valid"
+        raise QRExceptions::NOT_SUPPORTED + ": html is the only output format supported so far"
       end
+
     else
       raise QRExceptions::INVALID_PARAMETERS + ": bill type param not set"
     end
+
     return bill
   end
 end
