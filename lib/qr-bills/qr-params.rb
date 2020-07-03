@@ -7,6 +7,12 @@ class QRParams
     {
       bill_type: "", # see global variables / README
       qrcode_filepath: "", # where to store the qrcode, i.e. : /tmp/qrcode_1234.png
+      fonts: {
+        eot: "app/assets/fonts/LiberationSans-Regular.eot",
+        woff: "app/assets/fonts/LiberationSans-Regular.woff",
+        ttf: "app/assets/fonts/LiberationSans-Regular.ttf",
+        svg: "app/assets/fonts/LiberationSans-Regular.svg",
+      },
       bill_params: {
         language: "it",
         amount: 0.0,
