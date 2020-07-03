@@ -39,7 +39,12 @@ class QRGenerator
   #  "//S1/10/10201409/11/181105/40/0:30\r\n" +   # bill information coded for automated booking of payment, data is not forwarded with the payment
   #  "eBill/B/41010560425610173";                 # alternative scheme paramaters, max 100 chars
  
-  def self.create(params)
+  def self.create(params, qrcode_path)
+    create_qr(params, qrcode_path)
+    add_swiss_cross(qrcode_path, qrcode_path)
+  end
+
+  def self.create_qr(params, qrcode_path)
     payload = "SPC\r\n"
     payload += "0200\r\n"
     payload += "1\r\n"
@@ -88,13 +93,14 @@ class QRGenerator
       resize_gte_to: false,
       size: 1024,
     )
-    
-    IO.binwrite("/Users/dra/code/qr-bills/tmp/qrcode.png", png.to_s)
 
-    qrImage =  Image.read("/Users/dra/code/qr-bills/tmp/qrcode.png")[0]
+    IO.binwrite(qrcode_path, png.to_s)
+  end
+
+  def self.add_swiss_cross(qrcode_path, final_path)
+    qrImage =  Image.read(qrcode_path)[0]
     logoImage = Image.read("app/assets/images/swiss_cross.png")[0]
     finalImage = qrImage.composite(logoImage, CenterGravity, OverCompositeOp)
-    finalImage.write("/Users/dra/code/qr-bills/tmp/qrcode2.png")
-
+    finalImage.write(final_path)
   end
 end
