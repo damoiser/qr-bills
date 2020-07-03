@@ -1,7 +1,7 @@
 class QRHTMLLayout
 
   def self.create(params)
-    QRGenerator.create(params, params[:bill_params][:qrcode_filepath])
+    QRGenerator.create(params, params[:qrcode_filepath])
     return html_layout(params)
   end
 
@@ -53,7 +53,7 @@ class QRHTMLLayout
     layout += "  <div class=\"payment_section\">\n"
     layout += "    <div class=\"left_column\">\n"
     layout += "      <div class=\"title\">#{I18n.t(:payment_part).capitalize}</div>\n"
-    layout += "      <div class=\"qr_code\"><img src=\"#{params[:bill_params][:qrcode_filepath]}\" /></div>\n"
+    layout += "      <div class=\"qr_code\"><img src=\"#{params[:qrcode_filepath]}\" /></div>\n"
     layout += "      <div class=\"amount\">\n"
     layout += "        <div class=\"currency\">\n"
     layout += "          <span class=\"amount_header subtitle\">#{I18n.t(:currency).capitalize}</span><br/>\n"
@@ -117,11 +117,11 @@ class QRHTMLLayout
     layout += "<style>\n"
     layout += "  @font-face{ \n"
     layout += "    font-family: \"liberation_sansregular\";\n"
-    layout += "    src: url(\"app/assets/fonts/LiberationSans-Regular.eot\");\n"
-    layout += "    src: url(\"app/assets/fonts/LiberationSans-Regular.eot?#iefix\") format(\"embedded-opentype\"),\n"
-    layout += "        url(\"app/assets/fonts/LiberationSans-Regular.woff\") format(\"woff\"),\n"
-    layout += "        url(\"app/assets/fonts/LiberationSans-Regular.ttf\") format(\"truetype\"),\n"
-    layout += "        url(\"app/assets/fonts/LiberationSans-Regular.svg#liberation_sansregular\") format(\"svg\");\n"
+    layout += "    src: url(\"#{params[:fonts][:eot]}\");\n"
+    layout += "    src: url(\"#{params[:fonts][:eot]}?#iefix\") format(\"embedded-opentype\"),\n"
+    layout += "        url(\"#{params[:fonts][:woff]}\") format(\"woff\"),\n"
+    layout += "        url(\"#{params[:fonts][:ttf]}\") format(\"truetype\"),\n"
+    layout += "        url(\"#{params[:fonts][:svg]}#liberation_sansregular\") format(\"svg\");\n"
     layout += "    font-weight: normal;\n"
     layout += "    font-style: normal;\n"
     layout += "  }\n"
