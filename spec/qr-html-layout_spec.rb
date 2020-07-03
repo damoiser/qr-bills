@@ -35,10 +35,11 @@ end
 RSpec.describe "QRHTMLLayout" do
   describe "layout generation" do
     it "generates successfully the html layout + qr code" do
-      expect{layout = QRHTMLLayout.create(@params)}.not_to raise_error
+      expect{QRHTMLLayout.create(@params)}.not_to raise_error
+    end
 
-      # to test the result "manually"
-      IO.binwrite("#{Dir.pwd}/tmp/html-layout.png", layout.to_s)
+    it "writes the result to tmp for double checks" do
+      IO.binwrite("#{Dir.pwd}/tmp/html-layout.html", QRHTMLLayout.create(@params).to_s)
     end
   end
 end
