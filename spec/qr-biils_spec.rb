@@ -7,7 +7,7 @@ RSpec.describe QRBills do
     end
   
     it "raise an exception if the bill kind is not valid" do
-      expect{QRBills.new({bill_type: "bad"})}.to raise_error("QR-bill invalid parameters: invalid parameters")
+      expect{QRBills.new({bill_type: "bad"})}.to raise_error("QR-bill invalid parameters: params validation check failed")
     end
   end
 end
