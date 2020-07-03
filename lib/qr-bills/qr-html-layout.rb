@@ -1,4 +1,4 @@
-class QRLayout
+class QRHTMLLayout
 
   def html_layout
     layout = `
