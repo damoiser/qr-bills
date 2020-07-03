@@ -3,7 +3,11 @@ require 'qr-bills/qr-html-layout'
 RSpec.configure do |config|
   config.before(:each) do
     @params = QRParams.get_qr_params
-    @params[:bill_params][:qrcode_filepath] = "#{Dir.pwd}/tmp/qrcode-html.png"
+    @params[:fonts][:eot] = "../app/assets/fonts/LiberationSans-Regular.eot"
+    @params[:fonts][:woff] = "../app/assets/fonts/LiberationSans-Regular.woff"
+    @params[:fonts][:ttf] = "../app/assets/fonts/LiberationSans-Regular.ttf"
+    @params[:fonts][:svg] = "../app/assets/fonts/LiberationSans-Regular.svg"
+    @params[:qrcode_filepath] = "#{Dir.pwd}/tmp/qrcode-html.png"
     @params[:bill_params][:creditor][:iban] = "CH9300762011623852957"
     @params[:bill_params][:creditor][:address][:type] = "S"
     @params[:bill_params][:creditor][:address][:name] = "Compagnia di assicurazione forma & scalciante"
