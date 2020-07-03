@@ -1,5 +1,7 @@
 require 'rqrcode'
-require 'rmagick'
+require 'RMagick'
+include Magick
+
 
 class QRGenerator
   # payload:
@@ -65,8 +67,8 @@ class QRGenerator
     payload += "#{params[:bill_params][:debtor][:address][:postal_code]}\r\n"
     payload += "#{params[:bill_params][:debtor][:address][:town]}\r\n"
     payload += "#{params[:bill_params][:debtor][:address][:country]}\r\n"
-    payload += "#{params[:bill_params][:reference_type]}\r\n"
     payload += "#{params[:bill_params][:reference]}\r\n"
+    payload += "#{params[:bill_params][:reference_type]}\r\n"
     payload += "#{params[:bill_params][:additionally_information]}\r\n"
     payload += "EPD\r\n"
     payload += "#{params[:bill_params][:bill_information_coded]}\r\n"
@@ -76,15 +78,15 @@ class QRGenerator
 
     png = qrcode.as_png(
       bit_depth: 1,
-      border_modules: 4,
+      border_modules: 0,
       color_mode: ChunkyPNG::COLOR_GRAYSCALE,
       color: 'black',
-      file: '',
+      file: nil,
       fill: 'white',
-      module_px_size: 6,
+      module_px_size: 10,
       resize_exactly_to: false,
       resize_gte_to: false,
-      size: 120,
+      size: 1024,
     )
     
     IO.binwrite("/Users/dra/code/qr-bills/tmp/qrcode.png", png.to_s)
