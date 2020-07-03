@@ -5,7 +5,7 @@
     <div class="title">Ricevuta</div>
     <div class="subtitle payable_to">Conto / Pagabile a</div>
     <div class="content">
-      CH00 1234 5678 9101 2345 6<br/>
+      CH93 0076 2011 6238 5295 7<br/>
       Compagnia di assicurazione forma & scalciante<br/>
       Via cantonale 24<br/>
       3000 Lugano
@@ -13,7 +13,7 @@
     <div><br/></div>
     <div class="subtitle reference">Referenza</div>
     <div class="reference">
-      RF12 3456 7890 1234 ABCD DEFG HIJK
+      RF89 MTR8 1UUW ZYO4 8NY5 5NP3
     </div>
     <div><br/></div>
     <div class="subtitle payable_by">Pagabile da</div>
@@ -24,16 +24,15 @@
     </div>
 
     <div class="amount">
-      <table>
-        <tr>
-          <th>Valuta</th>
-          <th>Importo</th>
-        </tr>
-        <tr>
-          <td>CHF</td>
-          <td>2151.00</td>
-        </tr>
-      </table>
+      <div class="currency">
+        <span class="amount_header subtitle">Valuta</span><br/>
+        CHF
+      </div>
+
+      <div class="amount_value">
+        <span class="amount_header subtitle">Importo</span><br/>
+        2151.00
+      </div>
     </div>
 
     <div class="acceptance_point">
@@ -44,24 +43,28 @@
   <div class="payement_section">
     <div class="left_column">
       <div class="title">Sezione pagamento</div>
-      <div class="qr_code">QR-CODE</div>
+      <div class="qr_code"><img src="tmp/qrcode2.png" /></div>
       <div class="amount">
-        <table>
-          <tr>
-            <th>Valuta</th>
-            <th>Importo</th>
-          </tr>
-          <tr>
-            <td>CHF</td>
-            <td>2151.00</td>
-          </tr>
-        </table>
+        <div class="currency">
+          <span class="amount_header subtitle">Valuta</span><br/>
+          CHF
+        </div>
+
+        <div class="amount_value">
+          <span class="amount_header subtitle">Importo</span><br/>
+          2151.00
+        </div>
+      </div>
+
+      <div class="further_information">
+        <span class="finfo_header">Name AV1:</span> UV;UltraPay005;12345
+        <span class="finfo_header">Name AV2:</span> XY;XYService;54321
       </div>
     </div>
     <div class="right_column">
       <div class="subtitle payable_to">Conto / Pagabile a</div>
       <div class="content">
-        CH00 1234 5678 9101 2345 6<br/>
+        CH93 0076 2011 6238 5295 7<br/>
         Compagnia di assicurazione forma & scalciante<br/>
         Via cantonale 24<br/>
         3000 Lugano<br/>
@@ -69,7 +72,7 @@
     <div><br/></div>
     <div class="subtitle reference">Referenza</div>
       <div class="reference">
-        RF12 3456 7890 1234 ABCD DEFG HIJK
+        RF89 MTR8 1UUW ZYO4 8NY5 5NP3
       </div>
     <div><br/></div>
     <div class="subtitle additional_information">Informazioni supplementari</div>
@@ -140,31 +143,35 @@
     height: 95mm;
     width: 46mm;
     float: left;
+
+    margin-right: 5mm;
   }
 
   .payement_section .right_column {
     height: 95mm;
-    width: 87mm;
+    width: 86mm;
     float: left;
   }
 
   .qr_code {
-    margin-top: 5mm;
-    margin-bottom: 5mm;
+    padding: 5mm 0mm 5mm 0mm;
 
     height: 46mm;
     width: 46mm;
   }
 
-  .amount table {
-    width: 100%;
-    height: 14mm;
+  .qr_code img {
+    height: 46mm;
+    width: 46mm;
+  }
+
+  .amount {
     margin-top: 15px;
   }
 
-  .amount table tr th {
-    text-align: left;
-    font-weight: bold;
+  .amount .currency {
+    float: left;
+    margin-right: 15px;
   }
 
   .title {
@@ -178,25 +185,12 @@
     line-height: 9pt;
   }
 
-  .receipt_section .amount table tr {
-    line-height: 9pt;
-  }
-
-  .receipt_section .amount table tr th {
-    font-size: 6pt;
-    height: 9pt;
-  }
-
-  .receipt_section .amount table tr td {
-    font-size: 8pt;
-    height: 9pt;
-  }
-
   .receipt_section .acceptance_point {
     font-weight: bold;
     text-align: right;
     font-size: 6pt;
     line-height: 8pt;
+    padding-top: 5mm;
   }
 
   .payement_section .subtitle {
@@ -205,17 +199,15 @@
     line-height: 11pt;
   }
 
-  .payement_section .amount table tr {
-    line-height: 11pt;
+  .payement_section .amount {
+    height: 22mm;
   }
 
-  .payement_section .amount table tr th {
-    font-size: 8pt;
-    height: 11pt;
+  .payement_section .further_information {
+    font-size: 7pt;
   }
 
-  .payement_section .amount table tr td {
-    font-size: 10pt;
-    height: 11pt;
+  .payement_section .finfo_header {
+    font-weight: bold;
   }
 </style>
