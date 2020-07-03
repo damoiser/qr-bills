@@ -6,6 +6,7 @@ class QRParams
   def self.get_qr_params
     {
       bill_type: "", # see global variables / README
+      qrcode_filepath: "", # where to store the qrcode, i.e. : /tmp/qrcode_1234.png
       bill_params: {
         language: "it",
         amount: 0.0,

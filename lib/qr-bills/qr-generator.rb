@@ -2,7 +2,6 @@ require 'rqrcode'
 require 'RMagick'
 include Magick
 
-
 class QRGenerator
   # payload:
   #  "SPC\r\n" +    # indicator for swiss qr code: SPC (swiss payments code)
