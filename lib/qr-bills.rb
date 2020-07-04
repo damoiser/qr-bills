@@ -9,7 +9,10 @@ class QRBills
     I18n.load_path << Dir[File.expand_path("config/locales") + "/*.yml"]
     I18n.default_locale = :it
 
-    bill = nil
+    bill = { 
+      params: qr_params,
+      output: nil 
+    }
 
     if qr_params.has_key?(:bill_type)
 
@@ -18,7 +21,7 @@ class QRBills
       end
 
       if qr_params[:output_params][:format] == "html"
-        bill = QRHTMLLayout.create(qr_params)
+        bill[:output] = QRHTMLLayout.create(qr_params)
       else
         raise QRExceptions::NOT_SUPPORTED + ": html is the only output format supported so far"
       end
@@ -28,5 +31,9 @@ class QRBills
     end
 
     return bill
+  end
+
+  def self.get_qr_params
+    QRParams.get_qr_params
   end
 end
