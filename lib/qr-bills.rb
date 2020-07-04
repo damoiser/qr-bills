@@ -38,14 +38,14 @@ class QRBills
   end
 
   def self.get_qrbill_with_qr_reference_type
-    QR_BILL_WITH_QR_REFERENCE
+    QRParams::QR_BILL_WITH_QR_REFERENCE
   end
 
   def self.get_qrbill_with_creditor_reference_type
-    QR_BILL_WITH_CREDITOR_REFERENCE
+    QRParams::QR_BILL_WITH_CREDITOR_REFERENCE
   end
 
   def self.get_qrbill_without_reference_type
-    QR_BILL_WITOUTH_REFERENCE
+    QRParams::QR_BILL_WITOUTH_REFERENCE
   end
 end
