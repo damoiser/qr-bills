@@ -61,9 +61,9 @@ class QRParams
 
       if params[:bill_type] == QR_BILL_WITH_QR_REFERENCE
         return QRParams.qr_bill_with_qr_reference_valid?(params)
-      elsif qr_params[:bill_type] == QR_BILL_WITH_CREDITOR_REFERENCE
+      elsif params[:bill_type] == QR_BILL_WITH_CREDITOR_REFERENCE
         return QRParams.qr_bill_with_creditor_reference_valid?(params)
-      elsif qr_params[:bill_type] == QR_BILL_WITOUTH_REFERENCE
+      elsif params[:bill_type] == QR_BILL_WITOUTH_REFERENCE
         return QRParams.qr_bill_without_reference_valid?(params)
       else
         return false
@@ -75,28 +75,16 @@ class QRParams
 
   def self.base_params_valid?(params)
     # todo
+    return true
   end
 
   def self.qr_bill_with_qr_reference_valid?(params)
     # todo
+    return true
   end
 
   def self.qr_bill_with_creditor_reference_valid?(params)
-    if params[:iban].blank? ||
-      params[:reference].blank? || 
-      params[:currency].blank? || 
-      params[:address].blank? || 
-      params[:address][:street].blank? || 
-      params[:address][:zip].blank? || 
-      params[:address][:city].blank? || 
-      params[:customer][:name].blank? || 
-      params[:customer][:address].blank? || 
-      params[:customer][:address][:street].blank? || 
-      params[:customer][:address][:zip].blank? || 
-      params[:customer][:address][:city].blank?
-      return false
-    end
-
+    # todo
     return true
   end
 
