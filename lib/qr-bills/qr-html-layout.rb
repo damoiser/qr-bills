@@ -1,3 +1,5 @@
+require 'qr-bills/qr-generator'
+
 class QRHTMLLayout
 
   def self.create(params)
