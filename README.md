@@ -1,5 +1,3 @@
-## Work in progress
-
 [![Build Status](https://travis-ci.com/damoiser/qr-bills.svg?branch=master)](https://travis-ci.com/damoiser/qr-bills)
 
 QR-Bills gem for implementing swiss payements.
@@ -26,31 +24,45 @@ Liberation Sans is the only approved open source fonts (you can download for exa
 
 ## Usage
 
-### QR Bill "old red" with creditor reference (ISO-11649)
-TODO
+```
+# get the QR Params
+params = QRBills.get_qr_params
 
-Expected output 
-![QR Bill red without reference](https://github.com/damoiser/qr-bills/blob/master/imgs/qr_bill_red_with_credit_ref.jpeg)
+# fill the params, for example
+params[:qrcode_filepath] = "#{Dir.pwd}/tmp/qrcode-html.png"
+params[:bill_params][:creditor][:iban] = "CH9300762011623852957"
+params[:bill_params][:creditor][:address][:type] = "S"
+params[:bill_params][:creditor][:address][:name] = "Compagnia di assicurazione forma & scalciante"
+params[:bill_params][:creditor][:address][:line1] = "Via cantonale"
+params[:bill_params][:creditor][:address][:line2] = "24"
+params[:bill_params][:creditor][:address][:postal_code] = "3000"
+params[:bill_params][:creditor][:address][:town] = "Lugano"
+params[:bill_params][:creditor][:address][:country] = "CH"
+params[:bill_params][:amount] = 12345.15
+params[:bill_params][:currency] = "CHF"
+params[:bill_params][:debtor][:address][:type] = "S"
+params[:bill_params][:debtor][:address][:name] = "Foobar Barfoot"
+params[:bill_params][:debtor][:address][:line1] = "Via cantonale"
+params[:bill_params][:debtor][:address][:line2] = "25"
+params[:bill_params][:debtor][:address][:postal_code] = "3001"
+params[:bill_params][:debtor][:address][:town] = "Comano"
+params[:bill_params][:debtor][:address][:country] = "CH"
+params[:bill_params][:reference] = "RF89MTR81UUWZYO48NY55NP3"
+params[:bill_params][:reference_type] = "SCOR"
+params[:bill_params][:additionally_information] = "pagamento riparazione monopattino"
 
+# generate the QR Bill
+bill = QRBills.new(params)
 
-### QR Bill "old red" without reference
-TODO
+# bill format is given in the params, standard is html
+# bill has the following format: 
+#    bill = { 
+#      params: params,
+#      output: "output" 
+#    }
 
-Expected output  
-![QR Bill red with creditor reference](https://github.com/damoiser/qr-bills/blob/master/imgs/qr_bill_red_no_ref.jpeg)
+```
 
-
-### QR Bill "old orange" with reference
-TODO
-
-Expected output  
-![QR Bill orange with old reference](https://github.com/damoiser/qr-bills/blob/master/imgs/qr_bill_orange_old_ref.jpeg)
-
-### QR Bill no amount
-TODO
-
-Expected output  
-![QR Bill no amount](https://github.com/damoiser/qr-bills/blob/master/imgs/qr_bill_no_amount.jpeg)
 
 ## References
 * https://www.paymentstandards.ch/dam/downloads/ig-qr-bill-en.pdf
