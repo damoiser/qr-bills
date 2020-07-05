@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Damiano Radice"]
   s.email       = "damoiser+qrbill@gmail.com"
   s.files       = FileList["lib/**/*",
-                  "app/assets/**/*",
+                  "web/assets/**/*",
                   "config/locales/*.yml"]
   s.homepage    = "https://github.com/damoiser/qr-bills"
   s.license     = "MIT"
