@@ -4,7 +4,7 @@ require 'qr-bills/qr-params'
 require 'qr-bills/qr-html-layout'
 
 class QRBills
-  def initialize(qr_params)
+  def self.generate(qr_params)
     # init translator sets
     I18n.load_path << Dir[File.expand_path("config/locales") + "/*.yml"]
     I18n.default_locale = :it
