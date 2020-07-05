@@ -10,18 +10,6 @@ These checks are required to be perfomed by the running application.
 ```
 gem install qr-bills
 ```
-
-Download and install the fonts on your application, default directory and fonts are:
-```
-eot: "app/assets/fonts/LiberationSans-Regular.eot"
-woff: "app/assets/fonts/LiberationSans-Regular.woff"
-ttf: "app/assets/fonts/LiberationSans-Regular.ttf"
-svg: "app/assets/fonts/LiberationSans-Regular.svg"
-```
-The fonts can be edited in the ```qr_params```.
-
-Liberation Sans is the only approved open source fonts (you can download for example [here](https://www.fontsquirrel.com/fonts/liberation-sans)). 
-
 ## Usage
 
 ```
