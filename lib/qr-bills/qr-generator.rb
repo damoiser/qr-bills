@@ -97,9 +97,9 @@ class QRGenerator
   end
 
   def self.add_swiss_cross(qrcode_path, final_path)
-    qrImage =  Image.read(qrcode_path)[0]
-    logoImage = Image.read("app/assets/images/swiss_cross.png")[0]
-    finalImage = qrImage.composite(logoImage, CenterGravity, OverCompositeOp)
-    finalImage.write(final_path)
+    qr_image =  Image.read(qrcode_path)[0]
+    swiss_cross = Image.read("app/assets/images/swiss_cross.png")[0]
+    final_qr = qr_image.composite(swiss_cross, CenterGravity, OverCompositeOp)
+    final_qr.write(final_path)
   end
 end
