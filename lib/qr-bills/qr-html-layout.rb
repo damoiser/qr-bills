@@ -151,7 +151,7 @@ class QRHTMLLayout
     layout += "  }\n"
     
     layout += " .payment_section {\n"
-    layout += "    width: 137mm;\n"
+    layout += "    width: 157mm;\n"
     layout += "    height: 95mm;\n"
     layout += "    float: left;\n"
     layout += "    padding: 5mm;\n"
@@ -218,6 +218,7 @@ class QRHTMLLayout
     
     layout += "  .payment_section .amount {\n"
     layout += "    height: 22mm;\n"
+    layout += "    margin-top: 40px;\n"
     layout += "  }\n"
 
     layout += "  .payment_section .further_information {\n"
