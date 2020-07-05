@@ -12,7 +12,7 @@ class QRHTMLLayout
     layout += "  <div class=\"receipt_section\">\n"
     layout += "    <div class=\"title\">#{I18n.t(:receipt).capitalize}</div>\n"
     layout += "    <div class=\"subtitle payable_to\">#{I18n.t(:account).capitalize} / #{I18n.t(:payable_to).capitalize}</div>\n"
-    layout += "    <div class=\"content\">\n"
+    layout += "    <div class=\"qrcontent\">\n"
     layout += "      #{params[:bill_params][:creditor][:iban]}<br/>\n"
     layout += "      #{params[:bill_params][:creditor][:address][:name]}<br/>\n"
     layout += "      #{params[:bill_params][:creditor][:address][:line1]} #{params[:bill_params][:creditor][:address][:line2]}<br/>\n"
@@ -82,7 +82,7 @@ class QRHTMLLayout
     layout += "    </div>\n"
     layout += "    <div class=\"right_column\">\n"
     layout += "      <div class=\"subtitle payable_to\">#{I18n.t(:account).capitalize} / #{I18n.t(:payable_to).capitalize}</div>\n"
-    layout += "      <div class=\"content\">\n"
+    layout += "      <div class=\"qrcontent\">\n"
     layout += "        #{params[:bill_params][:creditor][:iban]}<br/>\n"
     layout += "        #{params[:bill_params][:creditor][:address][:name]}<br/>\n"
     layout += "        #{params[:bill_params][:creditor][:address][:line1]} #{params[:bill_params][:creditor][:address][:line2]}<br/>\n"
@@ -145,11 +145,8 @@ class QRHTMLLayout
     layout += "    width: 52mm;\n"
     layout += "    height: 95mm;\n"
     layout += "    padding: 5mm;\n"
-    
     layout += "    float: left;\n"
-    
     layout += "    font-size: 8pt;\n"
-    
     layout += "    border-right: 1px dotted #ccc;\n"
     layout += "  }\n"
     
@@ -158,7 +155,6 @@ class QRHTMLLayout
     layout += "    height: 95mm;\n"
     layout += "    float: left;\n"
     layout += "    padding: 5mm;\n"
-    
     layout += "    font-size: 10pt;\n"
     layout += "  }\n"
     
@@ -166,7 +162,6 @@ class QRHTMLLayout
     layout += "    height: 95mm;\n"
     layout += "    width: 46mm;\n"
     layout += "    float: left;\n"
-    
     layout += "    margin-right: 5mm;\n"
     layout += "  }\n"
     
@@ -178,7 +173,6 @@ class QRHTMLLayout
     
     layout += "  .qr_code {\n"
     layout += "    padding: 5mm 0mm 5mm 0mm;\n"
-    
     layout += "    height: 46mm;\n"
     layout += "    width: 46mm;\n"
     layout += "  }\n"
