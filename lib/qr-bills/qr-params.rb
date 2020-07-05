@@ -8,10 +8,10 @@ class QRParams
       bill_type: "", # see global variables / README
       qrcode_filepath: "", # where to store the qrcode, i.e. : /tmp/qrcode_1234.png
       fonts: {
-        eot: "web/assets/fonts/LiberationSans-Regular.eot",
-        woff: "web/assets/fonts/LiberationSans-Regular.woff",
-        ttf: "web/assets/fonts/LiberationSans-Regular.ttf",
-        svg: "web/assets/fonts/LiberationSans-Regular.svg",
+        eot: File.expand_path("#{File.dirname(__FILE__)}/../../web/assets/fonts/LiberationSans-Regular.eot"),
+        woff: File.expand_path("#{File.dirname(__FILE__)}/../../web/assets/fonts/LiberationSans-Regular.woff"),
+        ttf: File.expand_path("#{File.dirname(__FILE__)}/../../web/assets/fonts/LiberationSans-Regular.ttf"),
+        svg: File.expand_path("#{File.dirname(__FILE__)}/../../web/assets/fonts/LiberationSans-Regular.svg")
       },
       bill_params: {
         language: "it",

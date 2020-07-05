@@ -6,7 +6,10 @@ require 'qr-bills/qr-html-layout'
 class QRBills
   def self.generate(qr_params)
     # init translator sets
-    I18n.load_path << Dir[File.expand_path("config/locales") + "/*.yml"]
+    I18n.load_path << "#{File.expand_path("#{File.dirname(__FILE__)}/../config/locales/it.yml")}"
+    I18n.load_path << "#{File.expand_path("#{File.dirname(__FILE__)}/../config/locales/en.yml")}"
+    I18n.load_path << "#{File.expand_path("#{File.dirname(__FILE__)}/../config/locales/de.yml")}"
+    I18n.load_path << "#{File.expand_path("#{File.dirname(__FILE__)}/../config/locales/fr.yml")}"
     I18n.default_locale = :it
 
     bill = { 
