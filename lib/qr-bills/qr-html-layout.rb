@@ -10,8 +10,8 @@ class QRHTMLLayout
   def self.html_layout(params)
     layout  = "<div class=\"bill_container\">\n"
     layout += "  <div class=\"receipt_section\">\n"
-    layout += "    <div class=\"title\">#{I18n.t(:receipt).capitalize}</div>\n"
-    layout += "    <div class=\"subtitle payable_to\">#{I18n.t(:account).capitalize} / #{I18n.t(:payable_to).capitalize}</div>\n"
+    layout += "    <div class=\"title\">#{I18n.t("qrbills.receipt").capitalize}</div>\n"
+    layout += "    <div class=\"subtitle payable_to\">#{I18n.t("qrbills.account").capitalize} / #{I18n.t("qrbills.payable_to").capitalize}</div>\n"
     layout += "    <div class=\"qrcontent\">\n"
     layout += "      #{params[:bill_params][:creditor][:iban]}<br/>\n"
     layout += "      #{params[:bill_params][:creditor][:address][:name]}<br/>\n"
@@ -21,14 +21,14 @@ class QRHTMLLayout
     layout += "    <div><br/></div>\n"
 
     if !params[:bill_params][:reference].nil? && !params[:bill_params][:reference].empty?
-    layout += "    <div class=\"subtitle reference\">#{I18n.t(:reference).capitalize}</div>\n"
+    layout += "    <div class=\"subtitle reference\">#{I18n.t("qrbills.reference").capitalize}</div>\n"
     layout += "    <div class=\"reference\">\n"
     layout += "      #{params[:bill_params][:reference]}<br/>\n"
     layout += "    </div>\n"
     layout += "    <div><br/></div>\n"
     end
 
-    layout += "    <div class=\"subtitle payable_by\">#{I18n.t(:payable_by).capitalize}</div>\n"
+    layout += "    <div class=\"subtitle payable_by\">#{I18n.t("qrbills.payable_by").capitalize}</div>\n"
     layout += "    <div class=\"payable_by\">\n"
     layout += "      #{params[:bill_params][:debtor][:address][:name]}<br/>\n"
     layout += "      #{params[:bill_params][:debtor][:address][:line1]} #{params[:bill_params][:debtor][:address][:line2]}<br/>\n"
@@ -37,33 +37,33 @@ class QRHTMLLayout
 
     layout += "    <div class=\"amount\">\n"
     layout += "      <div class=\"currency\">\n"
-    layout += "        <span class=\"amount_header subtitle\">#{I18n.t(:currency).capitalize}</span><br/>\n"
+    layout += "        <span class=\"amount_header subtitle\">#{I18n.t("qrbills.currency").capitalize}</span><br/>\n"
     layout += "        #{params[:bill_params][:currency]}<br/>\n"
     layout += "      </div>\n"
 
     layout += "      <div class=\"amount_value\">\n"
-    layout += "        <span class=\"amount_header subtitle\">#{I18n.t(:amount).capitalize}</span><br/>\n"
+    layout += "        <span class=\"amount_header subtitle\">#{I18n.t("qrbills.amount").capitalize}</span><br/>\n"
     layout += "        #{params[:bill_params][:amount]}<br/>\n"
     layout += "      </div>\n"
     layout += "    </div>\n"
     
     layout += "    <div class=\"acceptance_point\">\n"
-    layout += "      #{I18n.t(:acceptance_point).capitalize}<br/>\n"
+    layout += "      #{I18n.t("qrbills.acceptance_point").capitalize}<br/>\n"
     layout += "    </div>\n"
     
     layout += "  </div>\n"
     layout += "  <div class=\"payment_section\">\n"
     layout += "    <div class=\"left_column\">\n"
-    layout += "      <div class=\"title\">#{I18n.t(:payment_part).capitalize}</div>\n"
+    layout += "      <div class=\"title\">#{I18n.t("qrbills.payment_part").capitalize}</div>\n"
     layout += "      <div class=\"qr_code\"><img src=\"#{params[:qrcode_filepath]}\" /></div>\n"
     layout += "      <div class=\"amount\">\n"
     layout += "        <div class=\"currency\">\n"
-    layout += "          <span class=\"amount_header subtitle\">#{I18n.t(:currency).capitalize}</span><br/>\n"
+    layout += "          <span class=\"amount_header subtitle\">#{I18n.t("qrbills.currency").capitalize}</span><br/>\n"
     layout += "          #{params[:bill_params][:currency]}<br/>\n"
     layout += "        </div>\n"
     
     layout += "        <div class=\"amount_value\">\n"
-    layout += "          <span class=\"amount_header subtitle\">#{I18n.t(:amount).capitalize}</span><br/>\n"
+    layout += "          <span class=\"amount_header subtitle\">#{I18n.t("qrbills.amount").capitalize}</span><br/>\n"
     layout += "          #{params[:bill_params][:amount]}<br/>\n"
     layout += "        </div>\n"
     layout += "      </div>\n"
@@ -71,17 +71,17 @@ class QRHTMLLayout
     layout += "      <div class=\"further_information\">\n"
 
     if !params[:bill_params][:bill_information_coded].nil? && !params[:bill_params][:bill_information_coded].empty?
-    layout += "        <span class=\"finfo_header\">Name AV1:</span> #{params[:bill_params][:bill_information_coded]}\n"
+    layout += "        <span class=\"finfo_header\">#{I18n.t("qrbills.name").capitalize} AV1:</span> #{params[:bill_params][:bill_information_coded]}\n"
     end
   
     if !params[:bill_params][:alternative_scheme_paramters].nil? && !params[:bill_params][:alternative_scheme_paramters].empty?
-    layout += "        <span class=\"finfo_header\">Name AV2:</span> #{params[:bill_params][:alternative_scheme_paramters]}\n"
+    layout += "        <span class=\"finfo_header\">#{I18n.t("qrbills.name").capitalize} AV2:</span> #{params[:bill_params][:alternative_scheme_paramters]}\n"
     end
 
     layout += "      </div>\n"
     layout += "    </div>\n"
     layout += "    <div class=\"right_column\">\n"
-    layout += "      <div class=\"subtitle payable_to\">#{I18n.t(:account).capitalize} / #{I18n.t(:payable_to).capitalize}</div>\n"
+    layout += "      <div class=\"subtitle payable_to\">#{I18n.t("qrbills.account").capitalize} / #{I18n.t("qrbills.payable_to").capitalize}</div>\n"
     layout += "      <div class=\"qrcontent\">\n"
     layout += "        #{params[:bill_params][:creditor][:iban]}<br/>\n"
     layout += "        #{params[:bill_params][:creditor][:address][:name]}<br/>\n"
@@ -91,7 +91,7 @@ class QRHTMLLayout
     layout += "    <div><br/></div>\n"
 
     if !params[:bill_params][:reference].nil? && !params[:bill_params][:reference].empty?
-    layout += "    <div class=\"subtitle reference\">#{I18n.t(:reference).capitalize}</div>\n"
+    layout += "    <div class=\"subtitle reference\">#{I18n.t("qrbills.reference").capitalize}</div>\n"
     layout += "      <div class=\"reference\">\n"
     layout += "        #{params[:bill_params][:reference]}<br/>\n"
     layout += "      </div>\n"
@@ -99,14 +99,14 @@ class QRHTMLLayout
     end
 
     if !params[:bill_params][:additionally_information].nil? && !params[:bill_params][:additionally_information].empty?
-    layout += "    <div class=\"subtitle additional_information\">#{I18n.t(:additional_information).capitalize}</div>\n"
+    layout += "    <div class=\"subtitle additional_information\">#{I18n.t("qrbills.additional_information").capitalize}</div>\n"
     layout += "      <div class=\"additional_information\">\n"
     layout += "        #{params[:bill_params][:additionally_information]}<br/>\n"
     layout += "      </div>\n"
     layout += "    <div><br/></div>\n"
     end
 
-    layout += "    <div class=\"subtitle payable_by\">#{I18n.t(:payable_by).capitalize}</div>\n"
+    layout += "    <div class=\"subtitle payable_by\">#{I18n.t("qrbills.payable_by").capitalize}</div>\n"
     layout += "      <div class=\"payable_by\">\n"
     layout += "        #{params[:bill_params][:debtor][:address][:name]}<br/>\n"
     layout += "        #{params[:bill_params][:debtor][:address][:line1]} #{params[:bill_params][:debtor][:address][:line2]}<br/>\n"
