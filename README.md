@@ -10,6 +10,21 @@ These checks are required to be perfomed by the running application.
 ```
 gem install qr-bills
 ```
+
+This gem depends on RMagick to add the Swiss cross to the QR code. 
+If you got some issues when installing RMagick (bundle install), you can add the following dependencies to your system:
+
+```
+# Debian, Ubuntu,...
+sudo apt-get install libmagickwand-dev imagemagick
+
+# CentOS, RHEL,...
+$ yum install ImageMagick-devel
+
+# MacOS
+$ brew install imagemagick
+```
+
 ## Usage
 
 ### Generate a QR-Bill
