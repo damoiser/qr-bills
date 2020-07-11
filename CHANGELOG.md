@@ -1,3 +1,6 @@
+### v0.2
+* add creditor reference ISO-11649 generator
+
 ### v0.1.2
 * fix layout
 
