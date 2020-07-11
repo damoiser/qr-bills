@@ -12,6 +12,8 @@ gem install qr-bills
 ```
 ## Usage
 
+### Generate a QR-Bill
+
 ```
 # get the QR Params
 params = QRBills.get_qr_params
@@ -49,6 +51,18 @@ bill = QRBills.new(params)
 #      output: "output" 
 #    }
 
+```
+
+### Generate a creditor reference (ISO-11649) number
+
+The creditor reference is composed as follow:
+* RF + 2 check digits + reference
+
+Max reference length is 21 chars.
+
+```
+QRBills.create_creditor_reference("MTR81UUWZYO48NY55NP3")
+# => "RF89MTR81UUWZYO48NY55NP3"
 ```
 
 ## References
