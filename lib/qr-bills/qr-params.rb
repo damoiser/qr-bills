@@ -13,6 +13,9 @@ class QRParams
         ttf: File.expand_path("#{File.dirname(__FILE__)}/../../web/assets/fonts/LiberationSans-Regular.ttf"),
         svg: File.expand_path("#{File.dirname(__FILE__)}/../../web/assets/fonts/LiberationSans-Regular.svg")
       },
+      locales: {
+        path: File.expand_path("#{File.dirname(__FILE__)}/../../config/locales")
+      },
       bill_params: {
         language: "it",
         amount: 0.0,
