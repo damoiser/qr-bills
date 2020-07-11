@@ -18,7 +18,7 @@ params = QRBills.get_qr_params
 
 # fill the params, for example
 params[:qrcode_filepath] = "#{Dir.pwd}/tmp/qrcode-html.png"
-params[:bill_params][:creditor][:iban] = "CH9300762011623852957"
+params[:bill_params][:creditor][:iban] = "CH93 0076 2011 6238 5295 7"
 params[:bill_params][:creditor][:address][:type] = "S"
 params[:bill_params][:creditor][:address][:name] = "Compagnia di assicurazione forma & scalciante"
 params[:bill_params][:creditor][:address][:line1] = "Via cantonale"
@@ -51,12 +51,18 @@ bill = QRBills.new(params)
 
 ```
 
-
 ## References
 * https://www.paymentstandards.ch/dam/downloads/ig-qr-bill-en.pdf
 * https://www.paymentstandards.ch/en/shared/know-how/faq/qr.html
 * https://www.kmu.admin.ch/kmu/it/home/consigli-pratici/questioni-finanziarie/contabilita-e-revisione/introduzione-della-qr-fattura.html
 * https://www.paymentstandards.ch/dam/downloads/drehbuch-rechnung-steller-empfaenger-it.pdf
+
+## TODO
+
+* add "empty" QR-Bill
+* improve tests
+* add other outputs formats
+* improve params validations
 
 ## License
 MIT
