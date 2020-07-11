@@ -30,10 +30,10 @@ RSpec.configure do |config|
     @params[:bill_params][:reference_type] = "SCOR"
     @params[:bill_params][:additionally_information] = "pagamento riparazione monopattino"
 
-    I18n.load_path << File.join(@params[:locales][:path], "it.yml")
-    I18n.load_path << File.join(@params[:locales][:path], "en.yml")
-    I18n.load_path << File.join(@params[:locales][:path], "de.yml")
-    I18n.load_path << File.join(@params[:locales][:path], "fr.yml")
+    I18n.load_path << File.join(@params[:locales][:path], "qrbills.it.yml")
+    I18n.load_path << File.join(@params[:locales][:path], "qrbills.en.yml")
+    I18n.load_path << File.join(@params[:locales][:path], "qrbills.de.yml")
+    I18n.load_path << File.join(@params[:locales][:path], "qrbills.fr.yml")
     I18n.default_locale = :it
   end
 

@@ -23,10 +23,10 @@ class QRBills
     end
 
     # init translator sets
-    I18n.load_path << File.join(qr_params[:locales][:path], "it.yml")
-    I18n.load_path << File.join(qr_params[:locales][:path], "en.yml")
-    I18n.load_path << File.join(qr_params[:locales][:path], "de.yml")
-    I18n.load_path << File.join(qr_params[:locales][:path], "fr.yml")
+    I18n.load_path << File.join(qr_params[:locales][:path], "qrbills.it.yml")
+    I18n.load_path << File.join(qr_params[:locales][:path], "qrbills.en.yml")
+    I18n.load_path << File.join(qr_params[:locales][:path], "qrbills.de.yml")
+    I18n.load_path << File.join(qr_params[:locales][:path], "qrbills.fr.yml")
     I18n.default_locale = :it
 
     bill = { 
