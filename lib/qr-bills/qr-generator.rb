@@ -1,5 +1,5 @@
 require 'rqrcode'
-require 'RMagick'
+require 'rmagick'
 include Magick
 
 class QRGenerator
