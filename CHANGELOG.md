@@ -1,3 +1,7 @@
+### v0.2.1
+* add locales path params to reference from Rails
+* remove deprecation warning of RMagick dependency
+
 ### v0.2
 * add creditor reference ISO-11649 generator
 
