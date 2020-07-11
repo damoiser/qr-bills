@@ -7,10 +7,13 @@ Please note that **no checks are peformed to validate IBAN and references (like 
 These checks are required to be perfomed by the running application.
 
 ## Installation
+
+### Gem installation
 ```
 gem install qr-bills
 ```
 
+### Dependencies
 This gem depends on RMagick to add the Swiss cross to the QR code. 
 If you got some issues when installing RMagick (bundle install), you can add the following dependencies to your system:
 
@@ -24,6 +27,9 @@ $ yum install ImageMagick-devel
 # MacOS
 $ brew install imagemagick
 ```
+
+### Locales / Translations
+To support translations, copy/paste the 4 languages code into your I18n engine: ```config/locales/*.yml```
 
 ## Usage
 
