@@ -53,7 +53,7 @@ bill = QRBills.new(params)
 
 ```
 
-### Generate a creditor reference (ISO-11649) number
+### Generate a creditor reference (ISO-11649) number
 
 The creditor reference is composed as follow:
 * RF + 2 check digits + reference
@@ -71,7 +71,7 @@ QRBills.create_creditor_reference("MTR81UUWZYO48NY55NP3")
 * https://www.kmu.admin.ch/kmu/it/home/consigli-pratici/questioni-finanziarie/contabilita-e-revisione/introduzione-della-qr-fattura.html
 * https://www.paymentstandards.ch/dam/downloads/drehbuch-rechnung-steller-empfaenger-it.pdf
 
-## TODO
+## TODO
 
 * add "empty" QR-Bill
 * improve tests
