@@ -17,8 +17,8 @@ class QRHTMLLayout
     layout += "      #{params[:bill_params][:creditor][:address][:name]}<br/>\n"
     layout += "      #{params[:bill_params][:creditor][:address][:line1]} #{params[:bill_params][:creditor][:address][:line2]}<br/>\n"
     layout += "      #{params[:bill_params][:creditor][:address][:postal_code]} #{params[:bill_params][:creditor][:address][:town]}<br/>\n"
-    layout += "    </div>"
-    layout += "    <div><br/></div>"
+    layout += "    </div>\n"
+    layout += "    <div><br/></div>\n"
 
     if !params[:bill_params][:reference].nil? && !params[:bill_params][:reference].empty?
     layout += "    <div class=\"subtitle reference\">#{I18n.t(:reference).capitalize}</div>\n"
