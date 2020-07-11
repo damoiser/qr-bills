@@ -3,10 +3,11 @@ require 'qr-bills/qr-html-layout'
 RSpec.configure do |config|
   config.before(:each) do
     @params = QRParams.get_qr_params
-    @params[:fonts][:eot] = "../app/assets/fonts/LiberationSans-Regular.eot"
-    @params[:fonts][:woff] = "../app/assets/fonts/LiberationSans-Regular.woff"
-    @params[:fonts][:ttf] = "../app/assets/fonts/LiberationSans-Regular.ttf"
-    @params[:fonts][:svg] = "../app/assets/fonts/LiberationSans-Regular.svg"
+    @params[:fonts][:eot] = "web/assets/fonts/LiberationSans-Regular.eot"
+    @params[:fonts][:woff] = "web/assets/fonts/LiberationSans-Regular.woff"
+    @params[:fonts][:ttf] = "web/assets/fonts/LiberationSans-Regular.ttf"
+    @params[:fonts][:svg] = "web/assets/fonts/LiberationSans-Regular.svg"
+    @params[:locales][:path] = "config/locales/"
     @params[:qrcode_filepath] = "#{Dir.pwd}/tmp/qrcode-html.png"
     @params[:bill_params][:creditor][:iban] = "CH9300762011623852957"
     @params[:bill_params][:creditor][:address][:type] = "S"
@@ -28,6 +29,12 @@ RSpec.configure do |config|
     @params[:bill_params][:reference] = "RF89MTR81UUWZYO48NY55NP3"
     @params[:bill_params][:reference_type] = "SCOR"
     @params[:bill_params][:additionally_information] = "pagamento riparazione monopattino"
+
+    I18n.load_path << File.join(@params[:locales][:path], "it.yml")
+    I18n.load_path << File.join(@params[:locales][:path], "en.yml")
+    I18n.load_path << File.join(@params[:locales][:path], "de.yml")
+    I18n.load_path << File.join(@params[:locales][:path], "fr.yml")
+    I18n.default_locale = :it
   end
 
   config.before(:all) do
