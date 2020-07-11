@@ -6,33 +6,33 @@ require 'qr-bills/qr-creditor-reference'
 
 class QRBills
   def self.generate(qr_params)
-    # init translator sets
-    I18n.load_path << "#{File.expand_path("#{File.dirname(__FILE__)}/../config/locales/it.yml")}"
-    I18n.load_path << "#{File.expand_path("#{File.dirname(__FILE__)}/../config/locales/en.yml")}"
-    I18n.load_path << "#{File.expand_path("#{File.dirname(__FILE__)}/../config/locales/de.yml")}"
-    I18n.load_path << "#{File.expand_path("#{File.dirname(__FILE__)}/../config/locales/fr.yml")}"
-    I18n.default_locale = :it
 
-    bill = { 
-      params: qr_params,
-      output: nil 
-    }
-
+    # params validation
     if qr_params.has_key?(:bill_type)
 
       if !QRParams.valid?(qr_params)
         raise QRExceptions::INVALID_PARAMETERS + ": params validation check failed"
       end
 
-      if qr_params[:output_params][:format] == "html"
-        bill[:output] = QRHTMLLayout.create(qr_params)
-      else
+      if !qr_params[:output_params][:format] == "html"
         raise QRExceptions::NOT_SUPPORTED + ": html is the only output format supported so far"
       end
 
     else
       raise QRExceptions::INVALID_PARAMETERS + ": bill type param not set"
     end
+
+    # init translator sets
+    I18n.load_path << File.join(qr_params[:locales][:path], "it.yml")
+    I18n.load_path << File.join(qr_params[:locales][:path], "en.yml")
+    I18n.load_path << File.join(qr_params[:locales][:path], "de.yml")
+    I18n.load_path << File.join(qr_params[:locales][:path], "fr.yml")
+    I18n.default_locale = :it
+
+    bill = { 
+      params: qr_params,
+      output: QRHTMLLayout.create(qr_params) 
+    }
 
     return bill
   end
