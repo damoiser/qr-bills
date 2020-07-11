@@ -1,7 +1,7 @@
 [![Build Status](https://travis-ci.com/damoiser/qr-bills.svg?branch=master)](https://travis-ci.com/damoiser/qr-bills)
 ![](https://ruby-gem-downloads-badge.herokuapp.com/qr-bills?type=total)
 
-QR-Bills gem for implementing swiss payements.
+QR-Bills gem for implementing Swiss payments.
 
 ## Notes
 Please note that **no checks are peformed to validate IBAN and references (like Creditor Reference)**.
@@ -14,7 +14,7 @@ These checks are required to be perfomed by the running application.
 gem install qr-bills
 ```
 
-### Dependencies
+### Dependencies
 This gem depends on RMagick to add the Swiss cross to the QR code. 
 If you got some issues when installing RMagick (bundle install), you can add the following dependencies to your system:
 
