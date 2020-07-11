@@ -1,0 +1,17 @@
+de:
+  qrbills:
+    payment_part: Zahlteil
+    account: Konto
+    payable_to: Zahlbar an
+    reference: Referenz
+    additional_information: zusätzliche Informationen
+    further_information: weitere Informationen
+    currency: Währung
+    amount: Betrag
+    receipt: Empfangsschein
+    acceptance_point: Annahmestelle
+    separate_before_paying_in: Vor der Einzahlung abzutrennen
+    payable_by: Zahlbar durch
+    payable_by_name_addr: Zahlbar durch (Name/Adresse)
+    in_favour_of: Zugunsten
+    name: Name
