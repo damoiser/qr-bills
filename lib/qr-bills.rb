@@ -2,6 +2,7 @@ require 'i18n'
 require 'qr-bills/qr-exceptions'
 require 'qr-bills/qr-params'
 require 'qr-bills/qr-html-layout'
+require 'qr-bills/qr-creditor-reference'
 
 class QRBills
   def self.generate(qr_params)
@@ -34,6 +35,10 @@ class QRBills
     end
 
     return bill
+  end
+
+  def self.create_creditor_reference(reference)
+    return QRCreditorReference.create(reference)
   end
 
   def self.get_qr_params
