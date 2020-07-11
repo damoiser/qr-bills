@@ -1,4 +1,5 @@
 [![Build Status](https://travis-ci.com/damoiser/qr-bills.svg?branch=master)](https://travis-ci.com/damoiser/qr-bills)
+![](https://ruby-gem-downloads-badge.herokuapp.com/qr-bills?type=total)
 
 QR-Bills gem for implementing swiss payements.
 
