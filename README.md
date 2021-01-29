@@ -64,7 +64,7 @@ params[:bill_params][:reference_type] = "SCOR"
 params[:bill_params][:additionally_information] = "pagamento riparazione monopattino"
 
 # generate the QR Bill
-bill = QRBills.new(params)
+bill = QRBills.generate(params)
 
 # bill format is given in the params, standard is html
 # bill has the following format: 
