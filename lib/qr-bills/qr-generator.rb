@@ -1,6 +1,4 @@
 require 'rqrcode'
-require 'rmagick'
-include Magick
 
 class QRGenerator
   # payload:
@@ -40,7 +38,6 @@ class QRGenerator
  
   def self.create(params, qrcode_path)
     create_qr(params, qrcode_path)
-    add_swiss_cross(qrcode_path, qrcode_path)
   end
 
   def self.create_qr(params, qrcode_path)
@@ -93,13 +90,8 @@ class QRGenerator
       size: 1024,
     )
 
-    IO.binwrite(qrcode_path, png.to_s)
-  end
-
-  def self.add_swiss_cross(qrcode_path, final_path)
-    qr_image    = Image.read(qrcode_path)[0]
-    swiss_cross = Image.read(File.expand_path("#{File.dirname(__FILE__)}/../../web/assets/images/swiss_cross.png"))[0]
-    final_qr    = qr_image.composite(swiss_cross, CenterGravity, OverCompositeOp)
-    final_qr.write(final_path)
+    swiss_cross = ChunkyPNG::Image.from_file(File.expand_path("#{File.dirname(__FILE__)}/../../web/assets/images/swiss_cross.png"))
+    final_qr    = png.compose!(swiss_cross, 10, 10)
+    final_qr.save(qrcode_path)
   end
 end

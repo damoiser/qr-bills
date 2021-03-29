@@ -42,9 +42,5 @@ RSpec.describe "QRGenerator" do
     it "generates successfully a qr image" do
       expect{QRGenerator.create_qr(@params, @filepath)}.not_to raise_error
     end
-
-    it "add successfully the swiss cross on the qr code" do
-      expect{QRGenerator.add_swiss_cross(@filepath, @filepath)}.not_to raise_error
-    end
   end
 end
