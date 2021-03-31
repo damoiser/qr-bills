@@ -1,6 +1,6 @@
 require 'qr-bills/qr-generator'
 
-class QRHTMLLayout
+module QRHTMLLayout
 
   def self.create(params)
     QRGenerator.create(params, params[:qrcode_filepath])

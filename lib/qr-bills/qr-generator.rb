@@ -1,6 +1,6 @@
 require 'rqrcode'
 
-class QRGenerator
+module QRGenerator
   # payload:
   #  "SPC\r\n" +    # indicator for swiss qr code: SPC (swiss payments code)
   #  "0200\r\n" +   # version of the specifications, 0200 = v2.0

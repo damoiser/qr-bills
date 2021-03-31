@@ -56,43 +56,38 @@ module QRParams
   end
 
   def self.valid?(params)
-    if params.has_key?(:bill_type)
+    return false unless params.key?(:bill_type)
+    return false unless QRParams.base_params_valid?(params)
 
-      if !QRParams.base_params_valid?(params)
-        return false
-      end
-
-      if params[:bill_type] == QR_BILL_WITH_QR_REFERENCE
-        return QRParams.qr_bill_with_qr_reference_valid?(params)
-      elsif params[:bill_type] == QR_BILL_WITH_CREDITOR_REFERENCE
-        return QRParams.qr_bill_with_creditor_reference_valid?(params)
-      elsif params[:bill_type] == QR_BILL_WITHOUT_REFERENCE
-        return QRParams.qr_bill_without_reference_valid?(params)
-      else
-        return false
-      end
+    case params[:bill_type]
+    when QRParams::QR_BILL_WITH_QR_REFERENCE
+      QRParams.qr_bill_with_qr_reference_valid?(params)
+    when QRParams::QR_BILL_WITH_CREDITOR_REFERENCE
+      QRParams.qr_bill_with_creditor_reference_valid?(params)
+    when QRParams::QR_BILL_WITHOUT_REFERENCE
+      QRParams.qr_bill_without_reference_valid?(params)
     else
-      return false
+      false
     end
   end
-
+  
   def self.base_params_valid?(params)
-    # todo
-    return true
+    # TODO
+    true
   end
 
   def self.qr_bill_with_qr_reference_valid?(params)
-    # todo
-    return true
+    # TODO
+    true
   end
 
   def self.qr_bill_with_creditor_reference_valid?(params)
-    # todo
-    return true
+    # TODO
+    true
   end
 
   def self.qr_bill_without_reference_valid?(params)
-    # todo
-    return true
+    # TODO
+    true
   end
 end
