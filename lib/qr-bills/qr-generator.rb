@@ -37,10 +37,6 @@ class QRGenerator
   #  "eBill/B/41010560425610173";                 # alternative scheme paramaters, max 100 chars
  
   def self.create(params, qrcode_path)
-    create_qr(params, qrcode_path)
-  end
-
-  def self.create_qr(params, qrcode_path)
     payload = "SPC\r\n"
     payload += "0200\r\n"
     payload += "1\r\n"
@@ -91,7 +87,7 @@ class QRGenerator
     )
 
     swiss_cross = ChunkyPNG::Image.from_file(File.expand_path("#{File.dirname(__FILE__)}/../../web/assets/images/swiss_cross.png"))
-    final_qr    = png.compose!(swiss_cross, 10, 10)
+    final_qr    = png.compose!(swiss_cross, (png.width - swiss_cross.width) / 2,  (png.height - swiss_cross.height) / 2)
     final_qr.save(qrcode_path)
   end
 end
