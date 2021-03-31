@@ -1,7 +1,7 @@
-class QRParams
+module QRParams
   QR_BILL_WITH_QR_REFERENCE       = "orange_with_reference"
   QR_BILL_WITH_CREDITOR_REFERENCE = "red_with_reference"
-  QR_BILL_WITOUTH_REFERENCE       = "red_without_reference"
+  QR_BILL_WITHOUT_REFERENCE       = "red_without_reference"
 
   def self.get_qr_params
     {
@@ -66,7 +66,7 @@ class QRParams
         return QRParams.qr_bill_with_qr_reference_valid?(params)
       elsif params[:bill_type] == QR_BILL_WITH_CREDITOR_REFERENCE
         return QRParams.qr_bill_with_creditor_reference_valid?(params)
-      elsif params[:bill_type] == QR_BILL_WITOUTH_REFERENCE
+      elsif params[:bill_type] == QR_BILL_WITHOUT_REFERENCE
         return QRParams.qr_bill_without_reference_valid?(params)
       else
         return false
