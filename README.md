@@ -4,23 +4,26 @@
 QR-Bills gem for implementing Swiss payments.
 
 ## Notes
-Please note that **no checks are peformed to validate IBAN and references (like Creditor Reference)**.
-These checks are required to be perfomed by the running application.
+
+Please note that **no checks are performed to validate IBAN and references (like Creditor Reference)**.
+These checks are required to be performed by the running application.
 
 ## Installation
 
 ### Gem installation
-```
+
+```bash
 gem install qr-bills
 ```
 ### Locales / Translations
-To support translations, copy/paste the 4 languages code into your I18n engine: ```config/locales/*.yml```
+
+To support translations, copy/paste the 4 languages code into your I18n engine: `config/locales/*.yml`
 
 ## Usage
 
 ### Generate a QR-Bill
 
-```
+```ruby
 # get the QR Params
 params = QRBills.get_qr_params
 
@@ -51,10 +54,10 @@ params[:bill_params][:additionally_information] = "pagamento riparazione monopat
 bill = QRBills.generate(params)
 
 # bill format is given in the params, standard is html
-# bill has the following format: 
-#    bill = { 
+# bill has the following format:
+#    bill = {
 #      params: params,
-#      output: "output" 
+#      output: "output"
 #    }
 
 ```
@@ -66,7 +69,7 @@ The creditor reference is composed as follow:
 
 Max reference length is 21 chars.
 
-```
+```ruby
 QRBills.create_creditor_reference("MTR81UUWZYO48NY55NP3")
 # => "RF89MTR81UUWZYO48NY55NP3"
 ```
@@ -85,4 +88,5 @@ QRBills.create_creditor_reference("MTR81UUWZYO48NY55NP3")
 * improve params validations
 
 ## License
+
 MIT
