@@ -24,7 +24,6 @@ Gem::Specification.new do |s|
   s.required_ruby_version = ">= 2.7.1"
   s.add_runtime_dependency("i18n", ">= 1.8.3", "< 2")
   s.add_runtime_dependency("rqrcode", ">= 1.1.2", "< 2")
-  s.add_runtime_dependency("rmagick", ">= 4.1.2", "< 5")
   s.add_development_dependency("rspec", "~> 3.9")
   s.add_development_dependency("rake", "~> 13.0")
 end
