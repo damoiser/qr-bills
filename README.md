@@ -5,8 +5,8 @@ QR-Bills gem for implementing Swiss payments.
 
 ## Notes
 
-Please note that **no checks are performed to validate IBAN and references (like Creditor Reference)**.
-These checks are required to be performed by the running application.
+Please note that **no checks are performed to validate IBAN and references (like Creditor Reference)** when submitting the params.
+These checks are required to be performed by the application.
 
 ## Installation
 
