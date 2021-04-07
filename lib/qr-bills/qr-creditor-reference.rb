@@ -4,6 +4,7 @@ require 'qr-bills/qr-exceptions'
 module QRCreditorReference
   PREFIX = "RF"
 
+  # chars values to calculate the check code
   @char_values = {
     "A": 10,
     "B": 11,
@@ -56,6 +57,8 @@ module QRCreditorReference
     reference_val += @char_values["R".to_sym].to_s + @char_values["F".to_sym].to_s + "00"
 
     # get check code
+    # when performing the validation of the check code (n % 97) 
+    # the remainder must be equal to 1, thus the 98
     check_code = 98 - (reference_val.to_i % 97)
 
     if check_code < 10
