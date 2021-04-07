@@ -2,7 +2,7 @@ require 'rake'
 
 Gem::Specification.new do |s|
   s.name        = "qr-bills"
-  s.version     = "0.3"
+  s.version     = "1.0"
   s.date        = "2021-04-07"
   s.summary     = "QR-bills support for swiss payments"
   s.description = "QR-bills support for swiss payments, for full documentation please refer to github repo: https://github.com/damoiser/qr-bills"
