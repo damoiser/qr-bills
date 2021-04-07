@@ -55,7 +55,7 @@ params[:bill_type] = QRBills.get_qrbill_without_reference_type
 ```
 
 QR bill with (new) creditor reference
-![QR bill with creditor reference](./imgs/qr_bill_qith_creditor_reference.png)
+![QR bill with creditor reference](./imgs/qr_bill_with_creditor_reference.png)
 
 QR bill with (old) reference type
 ![QR bill with (old) reference type](./imgs/qr_bill_with_old_reference.png)
