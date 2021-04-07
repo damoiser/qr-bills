@@ -24,7 +24,7 @@ module QRParams
         reference: "", # qr reference or creditor reference (iso-11649)
         additionally_information: "",
         bill_information_coded: "",
-        alternative_scheme_paramters: "",
+        alternative_scheme_parameters: "",
         creditor: {
           address: {
             type: "S",
