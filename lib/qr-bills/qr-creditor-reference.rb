@@ -1,7 +1,7 @@
 require 'qr-bills/qr-exceptions'
 
 # implement Creditor Reference ISO 11649 generator
-class QRCreditorReference
+module QRCreditorReference
   PREFIX = "RF"
 
   @char_values = {

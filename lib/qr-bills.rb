@@ -4,41 +4,32 @@ require 'qr-bills/qr-params'
 require 'qr-bills/qr-html-layout'
 require 'qr-bills/qr-creditor-reference'
 
-class QRBills
+module QRBills
   def self.generate(qr_params)
-
-    # params validation
-    if qr_params.has_key?(:bill_type)
-
-      if !QRParams.valid?(qr_params)
-        raise QRExceptions::INVALID_PARAMETERS + ": params validation check failed"
-      end
-
-      if !qr_params[:output_params][:format] == "html"
-        raise QRExceptions::NOT_SUPPORTED + ": html is the only output format supported so far"
-      end
-
-    else
-      raise QRExceptions::INVALID_PARAMETERS + ": bill type param not set"
-    end
+    raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: bill type param not set" unless qr_params.has_key?(:bill_type)
+    raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: validation failed" unless QRParams.valid?(qr_params)
 
     # init translator sets
-    I18n.load_path << File.join(qr_params[:locales][:path], "qrbills.it.yml")
-    I18n.load_path << File.join(qr_params[:locales][:path], "qrbills.en.yml")
-    I18n.load_path << File.join(qr_params[:locales][:path], "qrbills.de.yml")
-    I18n.load_path << File.join(qr_params[:locales][:path], "qrbills.fr.yml")
-    I18n.default_locale = :it
+    %i[it en de fr].each do |locale|
+      locale_file = File.join(qr_params[:locales][:path], "qrbills.#{locale}.yml")
 
-    bill = { 
-      params: qr_params,
-      output: QRHTMLLayout.create(qr_params) 
-    }
+      I18n.load_path << locale_file
+    end
 
-    return bill
+    output = case qr_params[:output_params][:format]
+    when 'html'
+      QRHTMLLayout.create(qr_params)
+    when 'qrcode_png'
+      QRGenerator.create(qr_params, qr_params[:qrcode_filepath])
+    else
+      raise ArgumentError, "#{QRExceptions::NOT_SUPPORTED}: #{qr_params[:output_params][:format]} is not yet supported"
+    end
+
+    { params: qr_params, output: output }
   end
 
   def self.create_creditor_reference(reference)
-    return QRCreditorReference.create(reference)
+    QRCreditorReference.create(reference)
   end
 
   def self.get_qr_params
