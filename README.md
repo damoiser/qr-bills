@@ -21,47 +21,6 @@ To support translations, copy/paste the 4 languages code into your I18n engine: 
 
 ## Usage
 
-### Generate a QR-Bill
-
-```ruby
-# get the QR Params
-params = QRBills.get_qr_params
-
-# fill the params, for example
-params[:qrcode_filepath] = "#{Dir.pwd}/tmp/qrcode-html.png"
-params[:bill_params][:creditor][:iban] = "CH93 0076 2011 6238 5295 7"
-params[:bill_params][:creditor][:address][:type] = "S"
-params[:bill_params][:creditor][:address][:name] = "Compagnia di assicurazione forma & scalciante"
-params[:bill_params][:creditor][:address][:line1] = "Via cantonale"
-params[:bill_params][:creditor][:address][:line2] = "24"
-params[:bill_params][:creditor][:address][:postal_code] = "3000"
-params[:bill_params][:creditor][:address][:town] = "Lugano"
-params[:bill_params][:creditor][:address][:country] = "CH"
-params[:bill_params][:amount] = 12345.15
-params[:bill_params][:currency] = "CHF"
-params[:bill_params][:debtor][:address][:type] = "S"
-params[:bill_params][:debtor][:address][:name] = "Foobar Barfoot"
-params[:bill_params][:debtor][:address][:line1] = "Via cantonale"
-params[:bill_params][:debtor][:address][:line2] = "25"
-params[:bill_params][:debtor][:address][:postal_code] = "3001"
-params[:bill_params][:debtor][:address][:town] = "Comano"
-params[:bill_params][:debtor][:address][:country] = "CH"
-params[:bill_params][:reference] = "RF89MTR81UUWZYO48NY55NP3"
-params[:bill_params][:reference_type] = "SCOR"
-params[:bill_params][:additionally_information] = "pagamento riparazione monopattino"
-
-# generate the QR Bill
-bill = QRBills.generate(params)
-
-# bill format is given in the params, standard is html
-# bill has the following format:
-#    bill = {
-#      params: params,
-#      output: "output"
-#    }
-
-```
-
 ### Generate a creditor reference (ISO-11649) number
 
 The creditor reference is composed as follow:
@@ -72,6 +31,80 @@ Max reference length is 21 chars.
 ```ruby
 QRBills.create_creditor_reference("MTR81UUWZYO48NY55NP3")
 # => "RF89MTR81UUWZYO48NY55NP3"
+```
+
+### Availables outputs formats
+
+```ruby
+params[:output_params][:format] = "html"
+# OR
+params[:output_params][:format] = "qrcode_png"
+```
+
+* `html` returns a full qr-bill as a html-template
+* `qrcode_png` returns the qrcode of the qr-bill
+
+### Availables qr-bill types formats
+
+```ruby
+params[:bill_type] = QRBills.get_qrbill_with_creditor_reference_type
+# OR
+params[:bill_type] = QRBills.get_qrbill_with_qr_reference_type
+# OR
+params[:bill_type] = QRBills.get_qrbill_without_reference_type
+```
+
+QR bill with (new) creditor reference
+![QR bill with creditor reference](./imgs/qr_bill_qith_creditor_reference.png)
+
+QR bill with (old) reference type
+![QR bill with (old) reference type](./imgs/qr_bill_with_old_reference.png)
+
+QR bill without reference
+![QR bill without reference](./imgs/qr_bill_without_reference.png)
+
+### Generate a QR-Bill
+
+```ruby
+# get the QR Params
+params = QRBills.get_qr_params
+
+# fill the params, for example
+params[:bill_type]                                      = QRBills.get_qrbill_with_creditor_reference_type
+params[:qrcode_filepath]                                = "#{Dir.pwd}/tmp/qrcode-html.png"
+params[:output_params][:format]                         = "html"
+params[:bill_params][:creditor][:iban]                  = "CH93 0076 2011 6238 5295 7"
+params[:bill_params][:creditor][:address][:type]        = "S"
+params[:bill_params][:creditor][:address][:name]        = "Compagnia di assicurazione forma & scalciante"
+params[:bill_params][:creditor][:address][:line1]       = "Via cantonale"
+params[:bill_params][:creditor][:address][:line2]       = "24"
+params[:bill_params][:creditor][:address][:postal_code] = "3000"
+params[:bill_params][:creditor][:address][:town]        = "Lugano"
+params[:bill_params][:creditor][:address][:country]     = "CH"
+params[:bill_params][:amount]                           = 12345.15
+params[:bill_params][:currency]                         = "CHF"
+params[:bill_params][:debtor][:address][:type]          = "S"
+params[:bill_params][:debtor][:address][:name]          = "Foobar Barfoot"
+params[:bill_params][:debtor][:address][:line1]         = "Via cantonale"
+params[:bill_params][:debtor][:address][:line2]         = "25"
+params[:bill_params][:debtor][:address][:postal_code]   = "3001"
+params[:bill_params][:debtor][:address][:town]          = "Comano"
+params[:bill_params][:debtor][:address][:country]       = "CH"
+# you can get the new creditor reference using QRBills.create_creditor_reference("your_reference") 
+params[:bill_params][:reference]                        = "RF89MTR81UUWZYO48NY55NP3" 
+params[:bill_params][:reference_type]                   = "SCOR"
+params[:bill_params][:additionally_information]         = "pagamento riparazione monopattino"
+
+# generate the QR Bill
+bill = QRBills.generate(params)
+
+# bill format is given in the params, default is html
+# bill has the following format:
+#    bill = {
+#      params: params,
+#      output: "output"
+#    }
+
 ```
 
 ## References
