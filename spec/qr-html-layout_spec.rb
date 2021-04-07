@@ -51,6 +51,12 @@ RSpec.describe "QRHTMLLayout" do
 
     it "writes the result to tmp for double checks" do
       IO.binwrite("#{Dir.pwd}/tmp/html-layout.html", QRHTMLLayout.create(@params).to_s)
+      expect(File.exist?("#{Dir.pwd}/tmp/html-layout.html")).to be_truthy
+      expect(File.exist?("#{Dir.pwd}/tmp/qrcode-html.png")).to be_truthy
+
+      # just test that is not empty
+      expect(File.size("#{Dir.pwd}/tmp/html-layout.html")).to be > 10
+      expect(File.size("#{Dir.pwd}/tmp/qrcode-html.png")).to be > 10
     end
   end
 end
