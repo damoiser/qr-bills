@@ -89,4 +89,4 @@ QRBills.create_creditor_reference("MTR81UUWZYO48NY55NP3")
 
 ## License
 
-MIT
+BSD-3
