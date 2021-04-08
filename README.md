@@ -61,7 +61,7 @@ params[:bill_params][:reference]        = "RF89MTR81UUWZYO48NY55NP3" # example
 
 This can be compared to the (old) orange bill type
 ```ruby
-params[:bill_type] = QRBills.get_qrbill_with_qr_reference_type
+params[:bill_type]                      = QRBills.get_qrbill_with_qr_reference_type
 params[:bill_params][:reference_type]   = "QRR" # fixed type for bill with qr reference
 params[:bill_params][:reference]        = "00 00037 01588 13258 31366 09972" # example
 ```
@@ -72,7 +72,7 @@ params[:bill_params][:reference]        = "00 00037 01588 13258 31366 09972" # e
 
 This can be compared to the (old) red bill type
 ```ruby
-params[:bill_type] = QRBills.get_qrbill_without_reference_type
+params[:bill_type]                      = QRBills.get_qrbill_without_reference_type
 params[:bill_params][:reference_type]   = "NON" # fixed type for bill without reference
 ```
 
