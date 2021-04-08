@@ -74,8 +74,8 @@ module QRHTMLLayout
     layout += "        <span class=\"finfo_header\">#{I18n.t("qrbills.name").capitalize} AV1:</span> #{params[:bill_params][:bill_information_coded]}\n"
     end
   
-    if !params[:bill_params][:alternative_scheme_paramters].nil? && !params[:bill_params][:alternative_scheme_paramters].empty?
-    layout += "        <span class=\"finfo_header\">#{I18n.t("qrbills.name").capitalize} AV2:</span> #{params[:bill_params][:alternative_scheme_paramters]}\n"
+    if !params[:bill_params][:alternative_scheme_parameters].nil? && !params[:bill_params][:alternative_scheme_parameters].empty?
+    layout += "        <span class=\"finfo_header\">#{I18n.t("qrbills.name").capitalize} AV2:</span> #{params[:bill_params][:alternative_scheme_parameters]}\n"
     end
 
     layout += "      </div>\n"

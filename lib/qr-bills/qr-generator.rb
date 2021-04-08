@@ -69,7 +69,7 @@ module QRGenerator
     payload += "#{params[:bill_params][:additionally_information]}\r\n"
     payload += "EPD\r\n"
     payload += "#{params[:bill_params][:bill_information_coded]}\r\n"
-    payload += "#{params[:bill_params][:alternative_scheme_paramters]}\r\n"
+    payload += "#{params[:bill_params][:alternative_scheme_parameters]}\r\n"
 
     qrcode = RQRCode::QRCode.new(payload)
 

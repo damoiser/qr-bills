@@ -7,7 +7,7 @@ RSpec.describe QRBills do
     end
 
     it "raise an exception if the bill kind is not valid" do
-      expect { QRBills.generate(bill_type: "bad") }.to raise_error(ArgumentError, "QR-bill invalid parameters: validation failed")
+      expect { QRBills.generate(bill_type: "bad") }.to raise_error(ArgumentError, "QR-bill invalid parameters: qrcode_filepath cannot be blank")
     end
   end
 end
