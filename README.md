@@ -81,7 +81,7 @@ params[:bill_params][:reference_type]   = "NON" # fixed type for bill without re
 ### Generate a QR-Bill
 
 ```ruby
-# get the QR Params
+# get the QR params, so you will get the full hash structure and as well some default values
 params = QRBills.get_qr_params
 
 # fill the params, for example
