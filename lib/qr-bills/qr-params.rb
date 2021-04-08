@@ -72,22 +72,54 @@ module QRParams
   end
   
   def self.base_params_valid?(params)
-    # TODO
+    if params[:bill_type] == "" || params[:bill_type] == nil
+      raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: bill type cannot be blank"
+    end
+
+    if params[:qrcode_filepath] == "" || params[:qrcode_filepath] == nil
+      raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: qrcode_filepath cannot be blank"
+    end
+
+    if params[:bill_params][:currency] == "" || params[:bill_params][:currency] == nil
+      raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: currency cannot be blank"
+    end
+
     true
   end
 
   def self.qr_bill_with_qr_reference_valid?(params)
-    # TODO
+    if params[:bill_params][:reference_type] != "QRR"
+      raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: reference type must be 'QRR' for QR bill with standard reference"
+    end
+    
+    if params[:bill_params][:reference] == "" || params[:bill_params][:reference] == nil
+      raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: reference cannot be blank for QR bill with standard reference"
+    end
+
     true
   end
 
   def self.qr_bill_with_creditor_reference_valid?(params)
-    # TODO
+    if params[:bill_params][:reference_type] != "SCOR"
+      raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: reference type must be 'SCOR' for QR bill with (new) creditor reference"
+    end
+    
+    if params[:bill_params][:reference] == "" || params[:bill_params][:reference] == nil
+      raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: reference cannot be blank for QR bill with (new) creditor reference"
+    end
+
     true
   end
 
   def self.qr_bill_without_reference_valid?(params)
-    # TODO
+    if params[:bill_params][:reference_type] != "NON"
+      raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: reference type must be 'NON' for QR bill without reference"
+    end
+    
+    if params[:bill_params][:reference] != ""
+      raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: reference must be blank for QR bill without reference"
+    end
+  
     true
   end
 end
