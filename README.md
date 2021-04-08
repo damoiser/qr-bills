@@ -41,26 +41,41 @@ params[:output_params][:format] = "html"
 params[:output_params][:format] = "qrcode_png"
 ```
 
-* `html` returns a full qr-bill as a html-template
+* `html` returns a full qr-bill as a html-template string
 * `qrcode_png` returns the qrcode of the qr-bill
 
 ### Availables qr-bill types formats
 
+#### QR bill with (new) creditor reference
+
+This is a new bill type introduced with the new qr bills format
 ```ruby
-params[:bill_type] = QRBills.get_qrbill_with_creditor_reference_type
-# OR
-params[:bill_type] = QRBills.get_qrbill_with_qr_reference_type
-# OR
-params[:bill_type] = QRBills.get_qrbill_without_reference_type
+params[:bill_type]                      = QRBills.get_qrbill_with_creditor_reference_type
+params[:bill_params][:reference_type]   = "SCOR" # fixed type for bill with creditor reference
+params[:bill_params][:reference]        = "RF89MTR81UUWZYO48NY55NP3" # example
 ```
 
-QR bill with (new) creditor reference
 ![QR bill with creditor reference](./imgs/qr_bill_with_creditor_reference.png)
 
-QR bill with (old) reference type
+#### QR bill with (old) reference type
+
+This can be compared to the (old) orange bill type
+```ruby
+params[:bill_type] = QRBills.get_qrbill_with_qr_reference_type
+params[:bill_params][:reference_type]   = "QRR" # fixed type for bill with qr reference
+params[:bill_params][:reference]        = "00 00037 01588 13258 31366 09972" # example
+```
+
 ![QR bill with (old) reference type](./imgs/qr_bill_with_old_reference.png)
 
-QR bill without reference
+#### QR bill without reference
+
+This can be compared to the (old) red bill type
+```ruby
+params[:bill_type] = QRBills.get_qrbill_without_reference_type
+params[:bill_params][:reference_type]   = "NON" # fixed type for bill without reference
+```
+
 ![QR bill without reference](./imgs/qr_bill_without_reference.png)
 
 ### Generate a QR-Bill
