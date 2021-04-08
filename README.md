@@ -115,12 +115,9 @@ bill = QRBills.generate(params)
 
 ## TODO
 
+* add other outputs formats
 * add "empty" QR-Bill
 ![QR bill empty](./imgs/qr_bill_empty.png)
-
-* improve tests
-* add other outputs formats
-* improve params validations
 
 ## License
 
