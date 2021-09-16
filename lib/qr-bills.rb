@@ -45,6 +45,6 @@ module QRBills
   end
 
   def self.get_qrbill_without_reference_type
-    QRParams::QR_BILL_WITOUTH_REFERENCE
+    QRParams::QR_BILL_WITHOUT_REFERENCE
   end
 end
