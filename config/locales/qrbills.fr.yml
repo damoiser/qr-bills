@@ -9,7 +9,7 @@ fr:
     currency: monnaie
     amount: montant
     receipt: récépissé
-    acceptance_point: èpomt de dépôt
+    acceptance_point: point de dépôt
     separate_before_paying_in: à détacher avant le versement
     payable_by: payable par
     payable_by_name_addr: payable par (nom/adresse)
