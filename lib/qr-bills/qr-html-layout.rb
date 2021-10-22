@@ -8,6 +8,7 @@ module QRHTMLLayout
   end
 
   def self.html_layout(params)
+    I18n.locale = params[:bill_params][:language]
     layout  = "<div class=\"bill_container\">\n"
     layout += "  <div class=\"receipt_section\">\n"
     layout += "    <div class=\"title\">#{I18n.t("qrbills.receipt").capitalize}</div>\n"
