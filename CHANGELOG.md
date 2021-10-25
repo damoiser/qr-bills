@@ -1,3 +1,10 @@
+### v1.0.2
+* fix typo for French
+* fix locale setting in html template
+
+### v1.0.1
+* fix typo in constant
+
 ### v1
 * change license to BSD-3
 * improve tests
