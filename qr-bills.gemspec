@@ -1,5 +1,3 @@
-require 'rake'
-
 Gem::Specification.new do |s|
   s.name        = "qr-bills"
   s.version     = "1.0.2"
@@ -8,9 +6,7 @@ Gem::Specification.new do |s|
   s.description = "QR-bills support for swiss payments, for full documentation please refer to github repo: https://github.com/damoiser/qr-bills"
   s.authors     = ["Damiano Radice"]
   s.email       = "dam.radice@gmail.com"
-  s.files       = FileList["lib/**/*",
-                  "web/assets/**/*",
-                  "config/locales/*.yml"]
+  s.files       = Dir["lib/**/*"] + Dir["web/assets/**/*"] + Dir["config/locales/*.yml"]
   s.homepage    = "https://github.com/damoiser/qr-bills"
   s.license     = "MIT"
   s.metadata    = {
