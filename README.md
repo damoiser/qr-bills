@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.com/damoiser/qr-bills.svg?branch=master)](https://travis-ci.com/damoiser/qr-bills)
+[![CircleCI](https://circleci.com/gh/damoiser/qr-bills/tree/master.svg?style=svg)](https://circleci.com/gh/damoiser/qr-bills/tree/master)
 ![](https://ruby-gem-downloads-badge.herokuapp.com/qr-bills?type=total)
 [![Gem Version](https://badge.fury.io/rb/qr-bills.svg)](https://badge.fury.io/rb/qr-bills)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://www.paypal.com/donate?business=DJNJMV5YAEBT6&currency_code=CHF)
