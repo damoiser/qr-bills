@@ -13,7 +13,7 @@
 * improve readme / documentation
 * fix typo in param: alternative_scheme_parameters
 
-### v0.3
+### v0.3
 * refactoring and fix typos
 * remove RMagick and use ChunkyPNG
 * add output format qrcode-png
