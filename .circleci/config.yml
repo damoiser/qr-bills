@@ -16,6 +16,7 @@ jobs:
     executor: ruby/default
     steps:
       - checkout
+      - run: bundle install
       - run: bundle list
       - run: bundle exec rake spec
 
