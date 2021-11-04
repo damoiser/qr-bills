@@ -1,9 +1,0 @@
-language: ruby
-cache: bundler
-
-rvm:
-  - 2.7.1
-
-script:
-  - bundle list
-  - bundle exec rake spec
