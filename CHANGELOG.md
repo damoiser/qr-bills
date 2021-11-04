@@ -1,3 +1,9 @@
+### v1.0.4
+* remove rake dependency
+
+### v1.0.3
+* switch CI from Travis to CircleCI
+
 ### v1.0.2
 * fix typo for French
 * fix locale setting in html template
