@@ -1,4 +1,6 @@
+require 'i18n'
 require 'qr-bills/qr-html-layout'
+require 'qr-bills/qr-params'
 
 RSpec.configure do |config|
   config.before(:each) do
@@ -17,7 +19,7 @@ RSpec.configure do |config|
     @params[:bill_params][:creditor][:address][:postal_code] = "3000"
     @params[:bill_params][:creditor][:address][:town] = "Lugano"
     @params[:bill_params][:creditor][:address][:country] = "CH"
-    @params[:bill_params][:amount] = 12345.15
+    @params[:bill_params][:amount] = 12345.1
     @params[:bill_params][:currency] = "CHF"
     @params[:bill_params][:debtor][:address][:type] = "S"
     @params[:bill_params][:debtor][:address][:name] = "Foobar Barfoot"
