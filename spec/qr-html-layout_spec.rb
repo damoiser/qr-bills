@@ -83,7 +83,7 @@ RSpec.describe "QRHTMLLayout" do
       expect(html_output).to include("12345.10")
     end
 
-    it "rounds correctly (1)" do
+    it "rounds correctly (3)" do
       @params[:bill_params][:amount] = 12345.10
 
       html_output = QRHTMLLayout.create(@params).to_s
