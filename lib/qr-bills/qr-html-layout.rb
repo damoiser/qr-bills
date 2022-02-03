@@ -44,7 +44,7 @@ module QRHTMLLayout
 
     layout += "      <div class=\"amount_value\">\n"
     layout += "        <span class=\"amount_header subtitle\">#{I18n.t("qrbills.amount").capitalize}</span><br/>\n"
-    layout += "        #{params[:bill_params][:amount]}<br/>\n"
+    layout += "        #{format('%.2f', params[:bill_params][:amount])}<br/>\n"
     layout += "      </div>\n"
     layout += "    </div>\n"
     
@@ -65,7 +65,7 @@ module QRHTMLLayout
     
     layout += "        <div class=\"amount_value\">\n"
     layout += "          <span class=\"amount_header subtitle\">#{I18n.t("qrbills.amount").capitalize}</span><br/>\n"
-    layout += "          #{params[:bill_params][:amount]}<br/>\n"
+    layout += "          #{format('%.2f',params[:bill_params][:amount])}<br/>\n"
     layout += "        </div>\n"
     layout += "      </div>\n"
     

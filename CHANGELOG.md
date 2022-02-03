@@ -1,3 +1,7 @@
+### v1.0.5
+* fix amount formatting ('%.2f')
+* adjust qr error code to m as specs: see PR#18
+
 ### v1.0.4
 * remove rake dependency
 
