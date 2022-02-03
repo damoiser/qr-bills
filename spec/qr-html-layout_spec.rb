@@ -19,7 +19,7 @@ RSpec.configure do |config|
     @params[:bill_params][:creditor][:address][:postal_code] = "3000"
     @params[:bill_params][:creditor][:address][:town] = "Lugano"
     @params[:bill_params][:creditor][:address][:country] = "CH"
-    @params[:bill_params][:amount] = 12345.1
+    @params[:bill_params][:amount] = 12345.15
     @params[:bill_params][:currency] = "CHF"
     @params[:bill_params][:debtor][:address][:type] = "S"
     @params[:bill_params][:debtor][:address][:name] = "Foobar Barfoot"
@@ -59,6 +59,43 @@ RSpec.describe "QRHTMLLayout" do
       # just test that is not empty
       expect(File.size("#{Dir.pwd}/tmp/html-layout.html")).to be > 10
       expect(File.size("#{Dir.pwd}/tmp/qrcode-html.png")).to be > 10
+    end
+
+    it "rounds correctly (1)" do
+      html_output = QRHTMLLayout.create(@params).to_s
+
+      IO.binwrite("#{Dir.pwd}/tmp/html-layout.html", html_output)
+      expect(File.exist?("#{Dir.pwd}/tmp/html-layout.html")).to be_truthy
+      expect(File.exist?("#{Dir.pwd}/tmp/qrcode-html.png")).to be_truthy
+
+      # just test that is not empty
+      expect(html_output).to include("12345.15")
+    end
+
+    it "rounds correctly (2)" do
+      @params[:bill_params][:amount] = 12345.1
+
+      html_output = QRHTMLLayout.create(@params).to_s
+
+      IO.binwrite("#{Dir.pwd}/tmp/html-layout.html", html_output)
+      expect(File.exist?("#{Dir.pwd}/tmp/html-layout.html")).to be_truthy
+      expect(File.exist?("#{Dir.pwd}/tmp/qrcode-html.png")).to be_truthy
+
+      # just test that is not empty
+      expect(html_output).to include("12345.10")
+    end
+
+    it "rounds correctly (1)" do
+      @params[:bill_params][:amount] = 12345.10
+
+      html_output = QRHTMLLayout.create(@params).to_s
+
+      IO.binwrite("#{Dir.pwd}/tmp/html-layout.html", html_output)
+      expect(File.exist?("#{Dir.pwd}/tmp/html-layout.html")).to be_truthy
+      expect(File.exist?("#{Dir.pwd}/tmp/qrcode-html.png")).to be_truthy
+
+      # just test that is not empty
+      expect(html_output).to include("12345.10")
     end
   end
 end
