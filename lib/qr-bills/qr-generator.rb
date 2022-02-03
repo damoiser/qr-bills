@@ -84,6 +84,7 @@ module QRGenerator
       resize_exactly_to: false,
       resize_gte_to: false,
       size: 1024,
+      level: 'm'
     )
 
     swiss_cross = ChunkyPNG::Image.from_file(File.expand_path("#{File.dirname(__FILE__)}/../../web/assets/images/swiss_cross.png"))
