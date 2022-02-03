@@ -68,7 +68,6 @@ RSpec.describe "QRHTMLLayout" do
       expect(File.exist?("#{Dir.pwd}/tmp/html-layout.html")).to be_truthy
       expect(File.exist?("#{Dir.pwd}/tmp/qrcode-html.png")).to be_truthy
 
-      # just test that is not empty
       expect(html_output).to include("12345.15")
     end
 
@@ -81,7 +80,6 @@ RSpec.describe "QRHTMLLayout" do
       expect(File.exist?("#{Dir.pwd}/tmp/html-layout.html")).to be_truthy
       expect(File.exist?("#{Dir.pwd}/tmp/qrcode-html.png")).to be_truthy
 
-      # just test that is not empty
       expect(html_output).to include("12345.10")
     end
 
@@ -94,7 +92,6 @@ RSpec.describe "QRHTMLLayout" do
       expect(File.exist?("#{Dir.pwd}/tmp/html-layout.html")).to be_truthy
       expect(File.exist?("#{Dir.pwd}/tmp/qrcode-html.png")).to be_truthy
 
-      # just test that is not empty
       expect(html_output).to include("12345.10")
     end
   end
