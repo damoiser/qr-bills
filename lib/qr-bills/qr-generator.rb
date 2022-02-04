@@ -55,7 +55,7 @@ module QRGenerator
     payload += "\r\n"
     payload += "\r\n"
     payload += "\r\n"
-    payload += "#{params[:bill_params][:amount]}\r\n"
+    payload += "#{format('%.2f', params[:bill_params][:amount])}\r\n"
     payload += "#{params[:bill_params][:currency]}\r\n"
     payload += "#{params[:bill_params][:debtor][:address][:type]}\r\n"
     payload += "#{params[:bill_params][:debtor][:address][:name]}\r\n"
@@ -71,7 +71,7 @@ module QRGenerator
     payload += "#{params[:bill_params][:bill_information_coded]}\r\n"
     payload += "#{params[:bill_params][:alternative_scheme_parameters]}\r\n"
 
-    qrcode = RQRCode::QRCode.new(payload)
+    qrcode = RQRCode::QRCode.new(payload, level: 'm')
 
     png = qrcode.as_png(
       bit_depth: 1,
@@ -84,7 +84,6 @@ module QRGenerator
       resize_exactly_to: false,
       resize_gte_to: false,
       size: 1024,
-      level: 'm'
     )
 
     swiss_cross = ChunkyPNG::Image.from_file(File.expand_path("#{File.dirname(__FILE__)}/../../web/assets/images/swiss_cross.png"))
