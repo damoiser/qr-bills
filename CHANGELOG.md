@@ -1,3 +1,7 @@
+### v1.0.6
+* fix amount formatting ('%.2f') - in generator as well
+* adjust qr error code to m as specs: see PR#18 - in generator as well
+
 ### v1.0.5
 * fix amount formatting ('%.2f')
 * adjust qr error code to m as specs: see PR#18
