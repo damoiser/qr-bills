@@ -33,9 +33,7 @@ module QRHTMLLayout
       layout += "    <div class=\"subtitle payable_to\">#{I18n.t("qrbills.account").capitalize} / #{I18n.t("qrbills.payable_to").capitalize}</div>\n"
       layout += "    <div class=\"qrcontent\">\n"
       layout += "      #{params[:bill_params][:creditor][:iban]}<br/>\n"
-      layout += "      #{params[:bill_params][:creditor][:address][:name]}<br/>\n"
-      layout += "      #{params[:bill_params][:creditor][:address][:line1]} #{params[:bill_params][:creditor][:address][:line2]}<br/>\n"
-      layout += "      #{params[:bill_params][:creditor][:address][:postal_code]} #{params[:bill_params][:creditor][:address][:town]}<br/>\n"
+      layout +=        render_address(params[:bill_params][:creditor][:address])
       layout += "    </div>\n"
       layout += "    <div><br/></div>\n"
 
@@ -49,9 +47,7 @@ module QRHTMLLayout
 
       layout += "    <div class=\"subtitle payable_by\">#{I18n.t("qrbills.payable_by").capitalize}</div>\n"
       layout += "    <div class=\"payable_by\">\n"
-      layout += "      #{params[:bill_params][:debtor][:address][:name]}<br/>\n"
-      layout += "      #{params[:bill_params][:debtor][:address][:line1]} #{params[:bill_params][:debtor][:address][:line2]}<br/>\n"
-      layout += "      #{params[:bill_params][:debtor][:address][:postal_code]} #{params[:bill_params][:debtor][:address][:town]}<br/>\n"
+      layout +=        render_address(params[:bill_params][:debtor][:address])
       layout += "    </div>\n"
 
       layout += "    <div class=\"amount\">\n"
@@ -103,9 +99,7 @@ module QRHTMLLayout
       layout += "      <div class=\"subtitle payable_to\">#{I18n.t("qrbills.account").capitalize} / #{I18n.t("qrbills.payable_to").capitalize}</div>\n"
       layout += "      <div class=\"qrcontent\">\n"
       layout += "        #{params[:bill_params][:creditor][:iban]}<br/>\n"
-      layout += "        #{params[:bill_params][:creditor][:address][:name]}<br/>\n"
-      layout += "        #{params[:bill_params][:creditor][:address][:line1]} #{params[:bill_params][:creditor][:address][:line2]}<br/>\n"
-      layout += "        #{params[:bill_params][:creditor][:address][:postal_code]} #{params[:bill_params][:creditor][:address][:town]}<br/>\n"
+      layout +=          render_address(params[:bill_params][:creditor][:address])
       layout += "      </div>\n"
       layout += "    <div><br/></div>\n"
 
@@ -127,9 +121,7 @@ module QRHTMLLayout
 
       layout += "    <div class=\"subtitle payable_by\">#{I18n.t("qrbills.payable_by").capitalize}</div>\n"
       layout += "      <div class=\"payable_by\">\n"
-      layout += "        #{params[:bill_params][:debtor][:address][:name]}<br/>\n"
-      layout += "        #{params[:bill_params][:debtor][:address][:line1]} #{params[:bill_params][:debtor][:address][:line2]}<br/>\n"
-      layout += "        #{params[:bill_params][:debtor][:address][:postal_code]} #{params[:bill_params][:debtor][:address][:town]}<br/>\n"
+      layout +=          render_address(params[:bill_params][:debtor][:address])
       layout += "      </div>\n"
       layout += "    </div>\n"
       layout += "  </div>\n"
@@ -250,6 +242,15 @@ module QRHTMLLayout
       layout += "</style>\n"
 
       layout
+    end
+  end
+
+  def self.render_address(address)
+    case address[:type]
+    when 'S'
+      format("%s<br>\n%s %s<br>\n%s %s<br>\n", address[:name], address[:line1], address[:line2], address[:postal_code], address[:town])
+    when 'K'
+      format("%s<br>\n%s<br>\n%s<br>\n", address[:name], address[:line1], address[:line2])
     end
   end
 end
