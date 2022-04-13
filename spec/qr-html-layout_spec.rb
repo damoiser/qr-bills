@@ -1,4 +1,5 @@
 require 'i18n'
+require 'fileutils'
 require 'qr-bills/qr-html-layout'
 require 'qr-bills/qr-params'
 
@@ -10,7 +11,7 @@ RSpec.configure do |config|
     @params[:fonts][:ttf] = "../web/assets/fonts/LiberationSans-Regular.ttf"
     @params[:fonts][:svg] = "../web/assets/fonts/LiberationSans-Regular.svg"
     @params[:locales][:path] = "config/locales/"
-    @params[:qrcode_filepath] = "#{Dir.pwd}/tmp/qrcode-html.png"
+    @params[:qrcode_format] = 'png'
     @params[:bill_params][:creditor][:iban] = "CH9300762011623852957"
     @params[:bill_params][:creditor][:address][:type] = "S"
     @params[:bill_params][:creditor][:address][:name] = "Compagnia di assicurazione forma & scalciante"
@@ -38,27 +39,50 @@ RSpec.configure do |config|
     I18n.load_path << File.join(@params[:locales][:path], "qrbills.fr.yml")
     I18n.default_locale = :it
   end
-
-  config.before(:all) do
-    FileUtils.mkdir_p "#{Dir.pwd}/tmp/"
-  end
 end
 
-
 RSpec.describe "QRHTMLLayout" do
+  before do
+    FileUtils.mkdir_p "#{Dir.pwd}/tmp/"
+    File.delete filepath if File.exist?(filepath)
+  end
+
+  let(:filepath) { "#{Dir.pwd}/tmp/html-layout.html" }
+
   describe "layout generation" do
+    before do
+      @params[:qrcode_format] = 'png'
+    end
+
     it "generates successfully the html layout + qr code" do
       expect{QRHTMLLayout.create(@params)}.not_to raise_error
     end
 
-    it "writes the result to tmp for double checks" do
-      IO.binwrite("#{Dir.pwd}/tmp/html-layout.html", QRHTMLLayout.create(@params).to_s)
-      expect(File.exist?("#{Dir.pwd}/tmp/html-layout.html")).to be_truthy
-      expect(File.exist?("#{Dir.pwd}/tmp/qrcode-html.png")).to be_truthy
+    it "generates legacy png qrcode" do
+      @params[:qrcode_format] = nil
+      @params[:qrcode_filepath] = "#{Dir.pwd}/tmp/qrcode-html.png"
 
-      # just test that is not empty
-      expect(File.size("#{Dir.pwd}/tmp/html-layout.html")).to be > 10
-      expect(File.size("#{Dir.pwd}/tmp/qrcode-html.png")).to be > 10
+      IO.binwrite("#{Dir.pwd}/tmp/html-layout.html", QRHTMLLayout.create(@params).to_s)
+      expect(File.exist?(filepath)).to be_truthy
+      expect(File.exist?("#{Dir.pwd}/tmp/qrcode-html.png")).to be_truthy
+    end
+
+    it "generates png qrcode" do
+      html_output = QRHTMLLayout.create(@params).to_s
+      IO.binwrite(filepath, html_output)
+      expect(File.exist?(filepath)).to be_truthy
+
+      expect(html_output).to include("data:image/png;base64,")
+    end
+
+    it "generates svg qrcode" do
+      @params[:qrcode_format] = 'svg'
+
+      html_output = QRHTMLLayout.create(@params).to_s
+      IO.binwrite(filepath, html_output)
+      expect(File.exist?(filepath)).to be_truthy
+
+      expect(html_output).to include("data:image/svg+xml;charset=utf-8,")
     end
 
     it "does not overwrite locale" do
@@ -72,9 +96,8 @@ RSpec.describe "QRHTMLLayout" do
     it "rounds correctly (1)" do
       html_output = QRHTMLLayout.create(@params).to_s
 
-      IO.binwrite("#{Dir.pwd}/tmp/html-layout.html", html_output)
-      expect(File.exist?("#{Dir.pwd}/tmp/html-layout.html")).to be_truthy
-      expect(File.exist?("#{Dir.pwd}/tmp/qrcode-html.png")).to be_truthy
+      IO.binwrite(filepath, html_output)
+      expect(File.exist?(filepath)).to be_truthy
 
       expect(html_output).to include("12345.15")
     end
@@ -84,9 +107,8 @@ RSpec.describe "QRHTMLLayout" do
 
       html_output = QRHTMLLayout.create(@params).to_s
 
-      IO.binwrite("#{Dir.pwd}/tmp/html-layout.html", html_output)
-      expect(File.exist?("#{Dir.pwd}/tmp/html-layout.html")).to be_truthy
-      expect(File.exist?("#{Dir.pwd}/tmp/qrcode-html.png")).to be_truthy
+      IO.binwrite(filepath, html_output)
+      expect(File.exist?(filepath)).to be_truthy
 
       expect(html_output).to include("12345.10")
     end
@@ -96,9 +118,8 @@ RSpec.describe "QRHTMLLayout" do
 
       html_output = QRHTMLLayout.create(@params).to_s
 
-      IO.binwrite("#{Dir.pwd}/tmp/html-layout.html", html_output)
-      expect(File.exist?("#{Dir.pwd}/tmp/html-layout.html")).to be_truthy
-      expect(File.exist?("#{Dir.pwd}/tmp/qrcode-html.png")).to be_truthy
+      IO.binwrite(filepath, html_output)
+      expect(File.exist?(filepath)).to be_truthy
 
       expect(html_output).to include("12345.10")
     end

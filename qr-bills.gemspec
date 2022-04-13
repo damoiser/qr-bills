@@ -7,6 +7,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Damiano Radice"]
   s.email       = "dam.radice@gmail.com"
   s.files       = Dir["lib/**/*"] + Dir["web/assets/**/*"] + Dir["config/locales/*.yml"]
+  s.require_paths = ["lib"]
   s.homepage    = "https://github.com/damoiser/qr-bills"
   s.license     = "MIT"
   s.metadata    = {
@@ -19,7 +20,9 @@ Gem::Specification.new do |s|
   }
   s.required_ruby_version = ">= 2.7.1"
   s.add_runtime_dependency("i18n", ">= 1.8.3", "< 2")
-  s.add_runtime_dependency("rqrcode", ">= 1.1.2", "< 2")
+  s.add_runtime_dependency("rqrcode", ">= 2.1", "< 3")
   s.add_development_dependency("rspec", "~> 3.9")
   s.add_development_dependency("rake", "~> 13.0")
+  s.add_development_dependency("pry")
+  s.add_development_dependency("byebug")
 end

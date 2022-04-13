@@ -7,7 +7,7 @@ RSpec.describe "QRCreditorReference" do
       expect(QRBills.create_creditor_reference("MTR81UUWZYO48NY55NP3")).to eq("RF89MTR81UUWZYO48NY55NP3")
     end
   end
-  
+
   describe "validate the input correctly" do
     it "checks that reference should be less than 21 chars" do
       expect{QRCreditorReference.create("ABCDABCDABCDABCDABCDABCD")}.to raise_error
