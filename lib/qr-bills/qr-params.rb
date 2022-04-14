@@ -17,7 +17,7 @@ module QRParams
         path: File.expand_path("#{File.dirname(__FILE__)}/../../config/locales")
       },
       bill_params: {
-        language: "it",
+        language: I18n.locale,
         amount: 0.0,
         currency: "CHF",
         reference_type: "", # QRR = QR reference, SCOR = Creditor reference, NON = without reference

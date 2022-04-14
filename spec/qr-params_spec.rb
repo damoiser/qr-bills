@@ -1,7 +1,10 @@
+require 'i18n'
 require 'qr-bills/qr-params'
 
 RSpec.configure do |config|
   config.before(:each) do
+    I18n.default_locale = :it
+
     @params = QRParams.get_qr_params
     @params[:bill_type] = QRParams::QR_BILL_WITH_QR_REFERENCE
     @params[:fonts][:eot] = "../web/assets/fonts/LiberationSans-Regular.eot"
@@ -35,6 +38,10 @@ end
 
 
 RSpec.describe "QR params" do
+  it "uses current locale as language" do
+    expect(@params[:bill_params][:language]).to be :it
+  end
+
   describe "basic param validation" do
     it "fails if bill type is empty" do
       @params[:bill_type] = ""
