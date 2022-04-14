@@ -61,6 +61,14 @@ RSpec.describe "QRHTMLLayout" do
       expect(File.size("#{Dir.pwd}/tmp/qrcode-html.png")).to be > 10
     end
 
+    it "does not overwrite locale" do
+      @params[:bill_params][:language] = :de
+
+      QRHTMLLayout.create(@params)
+
+      expect(I18n.locale).to be :it
+    end
+
     it "rounds correctly (1)" do
       html_output = QRHTMLLayout.create(@params).to_s
 
