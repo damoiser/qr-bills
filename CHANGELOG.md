@@ -1,3 +1,6 @@
+### v1.0.7
+* make default locale dynamic
+
 ### v1.0.6
 * fix amount formatting ('%.2f') - in generator as well
 * adjust qr error code to m as specs: see PR#18 - in generator as well
