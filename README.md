@@ -10,6 +10,9 @@ QR-Bills gem for implementing Swiss payments.
 Please note that **no checks are performed to validate IBAN and references (like Creditor Reference)** when submitting the params.
 These checks are required to be performed by the application.
 
+###  Deprecation warnings &#x26a0;&#xfe0f;
+:warning: :fire: If you are using `qrcode_filepath` please switch and start using `qrcode_format` as `qrcode_filepath` will be deprecated and removed!
+
 ## Installation
 
 ### Gem installation
