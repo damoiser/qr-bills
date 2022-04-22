@@ -1,3 +1,6 @@
+### v1.0.8
+* added SVG support
+
 ### v1.0.7
 * make default locale dynamic
 
