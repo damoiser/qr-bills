@@ -6,7 +6,8 @@ module QRParams
   def self.get_qr_params
     {
       bill_type: "", # see global variables / README
-      qrcode_filepath: "", # where to store the qrcode, i.e. : /tmp/qrcode_1234.png
+      qrcode_format: nil, # png or svg, overwrites qrcode_filepath
+      qrcode_filepath: "", # deprecated, where to store the qrcode, i.e. : /tmp/qrcode_1234.png
       fonts: {
         eot: File.expand_path("#{File.dirname(__FILE__)}/../../web/assets/fonts/LiberationSans-Regular.eot"),
         woff: File.expand_path("#{File.dirname(__FILE__)}/../../web/assets/fonts/LiberationSans-Regular.woff"),
@@ -67,7 +68,7 @@ module QRParams
     when QRParams::QR_BILL_WITHOUT_REFERENCE
       QRParams.qr_bill_without_reference_valid?(params)
     else
-      false
+      raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: bill type is not supported"
     end
   end
   
@@ -76,11 +77,7 @@ module QRParams
       raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: bill type cannot be blank"
     end
 
-    if params[:qrcode_filepath] == "" || params[:qrcode_filepath] == nil
-      raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: qrcode_filepath cannot be blank"
-    end
-
-    if params[:bill_params][:currency] == "" || params[:bill_params][:currency] == nil
+    if params.dig(:bill_params, :currency) == "" || params.dig(:bill_params, :currency) == nil
       raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: currency cannot be blank"
     end
 

@@ -1,3 +1,5 @@
 *.idea
 *.gem
 tmp/*
+.byebug
+.byebug_history

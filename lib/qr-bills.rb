@@ -17,13 +17,11 @@ module QRBills
     end
 
     output = case qr_params[:output_params][:format]
-    when 'html'
-      QRHTMLLayout.create(qr_params)
-    when 'qrcode_png'
-      QRGenerator.create(qr_params, qr_params[:qrcode_filepath])
-    else
-      raise ArgumentError, "#{QRExceptions::NOT_SUPPORTED}: #{qr_params[:output_params][:format]} is not yet supported"
-    end
+             when 'html'
+               QRHTMLLayout.create(qr_params)
+             else
+               QRGenerator.create(qr_params, qr_params[:qrcode_filepath])
+             end
 
     { params: qr_params, output: output }
   end

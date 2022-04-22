@@ -12,7 +12,6 @@ RSpec.configure do |config|
     @params[:fonts][:ttf] = "../web/assets/fonts/LiberationSans-Regular.ttf"
     @params[:fonts][:svg] = "../web/assets/fonts/LiberationSans-Regular.svg"
     @params[:locales][:path] = "config/locales/"
-    @params[:qrcode_filepath] = "#{Dir.pwd}/tmp/qrcode-html.png"
     @params[:bill_params][:creditor][:iban] = "CH9300762011623852957"
     @params[:bill_params][:creditor][:address][:type] = "S"
     @params[:bill_params][:creditor][:address][:name] = "Compagnia di assicurazione forma & scalciante"
@@ -53,16 +52,6 @@ RSpec.describe "QR params" do
       expect{QRParams.base_params_valid?(@params)}.to raise_error(ArgumentError, "QR-bill invalid parameters: bill type cannot be blank")
     end
 
-    it "fails if qrcode_filepath is empty" do
-      @params[:qrcode_filepath] = ""
-      expect{QRParams.base_params_valid?(@params)}.to raise_error(ArgumentError, "QR-bill invalid parameters: qrcode_filepath cannot be blank")
-    end
-
-    it "fails if qrcode_filepath is nil" do
-      @params[:qrcode_filepath] = nil
-      expect{QRParams.base_params_valid?(@params)}.to raise_error(ArgumentError, "QR-bill invalid parameters: qrcode_filepath cannot be blank")
-    end
-
     it "fails if currency type is empty" do
       @params[:bill_params][:currency] = ""
       expect{QRParams.base_params_valid?(@params)}.to raise_error(ArgumentError, "QR-bill invalid parameters: currency cannot be blank")
@@ -72,7 +61,7 @@ RSpec.describe "QR params" do
       @params[:bill_params][:currency] = nil
       expect{QRParams.base_params_valid?(@params)}.to raise_error(ArgumentError, "QR-bill invalid parameters: currency cannot be blank")
     end
-    
+
     it "succeeds if the previous params are correctly set" do
       expect{QRParams.base_params_valid?(@params)}.not_to raise_error
       expect(QRParams.base_params_valid?(@params)).to be_truthy

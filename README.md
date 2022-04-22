@@ -42,11 +42,14 @@ QRBills.create_creditor_reference("MTR81UUWZYO48NY55NP3")
 ```ruby
 params[:output_params][:format] = "html"
 # OR
-params[:output_params][:format] = "qrcode_png"
+params[:output_params][:format] = "png"
+# OR
+params[:output_params][:format] = "svg"
 ```
 
-* `html` returns a full qr-bill as a html-template string
-* `qrcode_png` returns the qrcode of the qr-bill
+* `html` returns a full qr-bill as a html-template string, uses `params[:qrcode_format]` for the qrcode format which supports `png` and `svg`. Defaults to `png`.
+* `png` returns the qrcode of the qr-bill as a ChunkyPNG::Image object.
+* `svg` returns the qrcode of the qr-bill as a svg string.
 
 ### Availables qr-bill types formats
 
@@ -91,6 +94,7 @@ params = QRBills.get_qr_params
 # fill the params, for example
 params[:bill_type]                                      = QRBills.get_qrbill_with_creditor_reference_type
 params[:qrcode_filepath]                                = "#{Dir.pwd}/tmp/qrcode-html.png"
+params[:qrcode_format]                                  = "svg" # use qrcode_format with "svg" / "png" instead of qrcode_filepath to use a data url encoded qr code
 params[:output_params][:format]                         = "html"
 params[:bill_params][:creditor][:iban]                  = "CH93 0076 2011 6238 5295 7"
 params[:bill_params][:creditor][:address][:type]        = "S"
