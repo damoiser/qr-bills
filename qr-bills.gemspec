@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = "qr-bills"
-  s.version     = "1.0.8"
-  s.date        = "2022-04-22"
+  s.version     = "1.0.9"
+  s.date        = "2022-05-01"
   s.summary     = "QR-bills support for swiss payments"
   s.description = "QR-bills support for swiss payments, for full documentation please refer to github repo: https://github.com/damoiser/qr-bills"
   s.authors     = ["Damiano Radice"]

@@ -1,3 +1,6 @@
+### v1.0.9
+* added support for address of type "K"
+
 ### v1.0.8
 * added SVG support
 
