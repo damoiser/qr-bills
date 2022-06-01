@@ -2,6 +2,7 @@ require 'i18n'
 require 'qr-bills/qr-exceptions'
 require 'qr-bills/qr-params'
 require 'qr-bills/qr-html-layout'
+require 'qr-bills/qr-prawn-layout'
 require 'qr-bills/qr-creditor-reference'
 
 module QRBills
@@ -19,6 +20,8 @@ module QRBills
     output = case qr_params[:output_params][:format]
              when 'html'
                QRHTMLLayout.create(qr_params)
+             when 'prawn'
+               QRPRAWNLayout.create(qr_params)
              else
                QRGenerator.create(qr_params, qr_params[:qrcode_filepath])
              end
