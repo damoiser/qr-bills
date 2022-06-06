@@ -5,13 +5,14 @@ require 'qr-bills/qr-params'
 
 RSpec.configure do |config|
   config.before(:each) do
+    @pdf = Prawn::Document.new(:page_size => 'A4')
     @params = QRParams.get_qr_params
     @params[:fonts][:eot] = "../web/assets/fonts/LiberationSans-Regular.eot"
     @params[:fonts][:woff] = "../web/assets/fonts/LiberationSans-Regular.woff"
     @params[:fonts][:ttf] = "../web/assets/fonts/LiberationSans-Regular.ttf"
     @params[:fonts][:svg] = "../web/assets/fonts/LiberationSans-Regular.svg"
     @params[:locales][:path] = "config/locales/"
-    @params[:qrcode_format] = 'png'
+    @params[:qrcode_format] = 'svg'
     @params[:bill_params][:creditor][:iban] = "CH9300762011623852957"
     @params[:bill_params][:creditor][:address][:type] = "S"
     @params[:bill_params][:creditor][:address][:name] = "Compagnia di assicurazione forma & scalciante"
@@ -51,24 +52,15 @@ RSpec.describe "QRPRAWNLayout" do
 
   describe "layout generation" do
     before do
-      @params[:qrcode_format] = 'png'
+      @params[:qrcode_format] = 'svg'
     end
 
     it "successfully generates prawn/ruby layout + qr code" do
-      expect{QRPRAWNLayout.create(@params)}.not_to raise_error
+      expect{QRPRAWNLayout.create(@params, @pdf)}.not_to raise_error
     end
 
-    it "generates legacy png qrcode" do
-      @params[:qrcode_format] = nil
-      @params[:qrcode_filepath] = "#{Dir.pwd}/tmp/qrcode-html.png"
-
-      IO.binwrite("#{Dir.pwd}/tmp/prawn-layout.pdf", QRPRAWNLayout.create(@params).to_s)
-      expect(File.exist?(filepath)).to be_truthy
-      expect(File.exist?("#{Dir.pwd}/tmp/qrcode-html.png")).to be_truthy
-    end
-
-    it "generates png qrcode" do
-      prawn_output = QRPRAWNLayout.create(@params).to_s
+    it "generates svg qrcode" do
+      prawn_output = QRPRAWNLayout.create(@params, @pdf).to_s
       IO.binwrite(filepath, prawn_output)
       expect(File.exist?(filepath)).to be_truthy
 
@@ -80,7 +72,7 @@ RSpec.describe "QRPRAWNLayout" do
     it "generates svg qrcode" do
       @params[:qrcode_format] = 'svg'
 
-      prawn_output = QRPRAWNLayout.create(@params).to_s
+      prawn_output = QRPRAWNLayout.create(@params, @pdf).to_s
       IO.binwrite(filepath, prawn_output)
       expect(File.exist?(filepath)).to be_truthy
 
@@ -92,13 +84,13 @@ RSpec.describe "QRPRAWNLayout" do
     it "does not overwrite locale" do
       @params[:bill_params][:language] = :de
 
-      QRPRAWNLayout.create(@params)
+      QRPRAWNLayout.create(@params, @pdf)
 
       expect(I18n.locale).to be :it
     end
 
     it "rounds correctly (1)" do
-      prawn_output = QRPRAWNLayout.create(@params).to_s
+      prawn_output = QRPRAWNLayout.create(@params, @pdf).to_s
 
       IO.binwrite(filepath, prawn_output)
       expect(File.exist?(filepath)).to be_truthy
@@ -110,7 +102,7 @@ RSpec.describe "QRPRAWNLayout" do
     it "rounds correctly (2)" do
       @params[:bill_params][:amount] = 12345.1
 
-      prawn_output = QRPRAWNLayout.create(@params).to_s
+      prawn_output = QRPRAWNLayout.create(@params, @pdf).to_s
 
       IO.binwrite(filepath, prawn_output)
       expect(File.exist?(filepath)).to be_truthy
@@ -122,7 +114,7 @@ RSpec.describe "QRPRAWNLayout" do
     it "rounds correctly (3)" do
       @params[:bill_params][:amount] = 12345.10
 
-      prawn_output = QRPRAWNLayout.create(@params).to_s
+      prawn_output = QRPRAWNLayout.create(@params, @pdf).to_s
 
       IO.binwrite(filepath, prawn_output)
       expect(File.exist?(filepath)).to be_truthy
