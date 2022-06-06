@@ -2,6 +2,7 @@ require 'i18n'
 require 'fileutils'
 require 'qr-bills/qr-prawn-layout'
 require 'qr-bills/qr-params'
+require 'byebug'
 
 RSpec.configure do |config|
   config.before(:each) do
@@ -60,25 +61,13 @@ RSpec.describe "QRPRAWNLayout" do
     end
 
     it "generates svg qrcode" do
-      prawn_output = QRPRAWNLayout.create(@params, @pdf).to_s
+      expect(@params[:qrcode_filepath]).to_not include("data:image/svg+xml;")
+
+      prawn_output = QRPRAWNLayout.create(@params, @pdf)
       IO.binwrite(filepath, prawn_output)
       expect(File.exist?(filepath)).to be_truthy
 
-      # TODO
-      # Parse generated PDF and determine if it has QR code as ChunkyPNG
-      # expect(prawn_output).to include("data:image/png;base64,")
-    end
-
-    it "generates svg qrcode" do
-      @params[:qrcode_format] = 'svg'
-
-      prawn_output = QRPRAWNLayout.create(@params, @pdf).to_s
-      IO.binwrite(filepath, prawn_output)
-      expect(File.exist?(filepath)).to be_truthy
-
-      # TODO
-      # Parse generated PDF and determine if it has QR code as svg
-      # expect(prawn_output).to include("data:image/svg+xml;charset=utf-8,")
+      expect(@params[:qrcode_filepath]).to include("data:image/svg+xml;")
     end
 
     it "does not overwrite locale" do
@@ -87,40 +76,6 @@ RSpec.describe "QRPRAWNLayout" do
       QRPRAWNLayout.create(@params, @pdf)
 
       expect(I18n.locale).to be :it
-    end
-
-    it "rounds correctly (1)" do
-      prawn_output = QRPRAWNLayout.create(@params, @pdf).to_s
-
-      IO.binwrite(filepath, prawn_output)
-      expect(File.exist?(filepath)).to be_truthy
-
-      # TODO
-      # expect(prawn_output).to include("12345.15")
-    end
-
-    it "rounds correctly (2)" do
-      @params[:bill_params][:amount] = 12345.1
-
-      prawn_output = QRPRAWNLayout.create(@params, @pdf).to_s
-
-      IO.binwrite(filepath, prawn_output)
-      expect(File.exist?(filepath)).to be_truthy
-
-      # TODO
-      # expect(prawn_output).to include("12345.10")
-    end
-
-    it "rounds correctly (3)" do
-      @params[:bill_params][:amount] = 12345.10
-
-      prawn_output = QRPRAWNLayout.create(@params, @pdf).to_s
-
-      IO.binwrite(filepath, prawn_output)
-      expect(File.exist?(filepath)).to be_truthy
-
-      # TODO
-      # expect(prawn_output).to include("12345.10")
     end
   end
 end
