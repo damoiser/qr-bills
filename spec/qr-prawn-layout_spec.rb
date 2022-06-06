@@ -2,7 +2,6 @@ require 'i18n'
 require 'fileutils'
 require 'qr-bills/qr-prawn-layout'
 require 'qr-bills/qr-params'
-require 'byebug'
 
 RSpec.configure do |config|
   config.before(:each) do
