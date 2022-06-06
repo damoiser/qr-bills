@@ -6,7 +6,7 @@ require 'qr-bills/qr-prawn-layout'
 require 'qr-bills/qr-creditor-reference'
 
 module QRBills
-  def self.generate(qr_params)
+  def self.generate(qr_params, pdf = nil)
     raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: bill type param not set" unless qr_params.has_key?(:bill_type)
     raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: validation failed" unless QRParams.valid?(qr_params)
 
@@ -21,7 +21,7 @@ module QRBills
              when 'html'
                QRHTMLLayout.create(qr_params)
              when 'prawn'
-               QRPRAWNLayout.create(qr_params)
+               QRPRAWNLayout.create(qr_params, pdf)
              else
                QRGenerator.create(qr_params, qr_params[:qrcode_filepath])
              end

@@ -1,256 +1,148 @@
 require 'qr-bills/qr-generator'
+require 'prawn'
+require 'prawn-svg'
+require "prawn/measurement_extensions"
 
 module QRPRAWNLayout
-  def self.create(params)
+  attr_reader :document, :type
+
+  def self.create(params, pdf)
     qrcode = QRGenerator.create(params, params[:qrcode_filepath])
     params[:qrcode_filepath] = convert_qrcode_to_data_url(qrcode)
-    prawn_layout(params)
+    prawn_layout(params, pdf)
   end
 
   def self.convert_qrcode_to_data_url(qrcode)
-    case qrcode
-    when ChunkyPNG::Image
-      qrcode.to_data_url
-    else
-      # Stolen from sprockets
-      # https://github.com/rails/sprockets/blob/0f3e0e93dabafa8f3027e8036e40fd08902688c8/lib/sprockets/context.rb#L295-L303
-      data = CGI.escape(qrcode)
-      data.gsub!('%3D', '=')
-      data.gsub!('%3A', ':')
-      data.gsub!('%2F', '/')
-      data.gsub!('%27', "'")
-      data.tr!('+', ' ')
+    # Stolen from sprockets
+    # https://github.com/rails/sprockets/blob/0f3e0e93dabafa8f3027e8036e40fd08902688c8/lib/sprockets/context.rb#L295-L303
+    data = CGI.escape(qrcode)
+    data.gsub!('%3D', '=')
+    data.gsub!('%3A', ':')
+    data.gsub!('%2F', '/')
+    data.gsub!('%27', "'")
+    data.tr!('+', ' ')
 
-      "data:image/svg+xml;charset=utf-8,#{data}"
-    end
+    "data:image/svg+xml;charset=utf-8,#{data}"
   end
 
-  def self.prawn_layout(params)
-    I18n.with_locale(params[:bill_params][:language]) do
-      layout  = "<div class=\"bill_container\">\n"
-      layout += "  <div class=\"receipt_section\">\n"
-      layout += "    <div class=\"title\">#{I18n.t("qrbills.receipt").capitalize}</div>\n"
-      layout += "    <div class=\"subtitle payable_to\">#{I18n.t("qrbills.account").capitalize} / #{I18n.t("qrbills.payable_to").capitalize}</div>\n"
-      layout += "    <div class=\"qrcontent\">\n"
-      layout += "      #{params[:bill_params][:creditor][:iban]}<br/>\n"
-      layout +=        render_address(params[:bill_params][:creditor][:address])
-      layout += "    </div>\n"
-      layout += "    <div><br/></div>\n"
+  def self.prawn_layout(params, pdf)
+    pdf.canvas do
+      I18n.with_locale(params[:bill_params][:language]) do
+        pdf.bounding_box([0, 105.mm], width: 210.mm, height: 105.mm) do
+          y_pos = pdf.cursor
 
-      if !params[:bill_params][:reference].nil? && !params[:bill_params][:reference].empty?
-        layout += "    <div class=\"subtitle reference\">#{I18n.t("qrbills.reference").capitalize}</div>\n"
-        layout += "    <div class=\"reference\">\n"
-        layout += "      #{params[:bill_params][:reference]}<br/>\n"
-        layout += "    </div>\n"
-        layout += "    <div><br/></div>\n"
+          # Receipt Panel
+          pdf.bounding_box([5.mm, y_pos], width: 52.mm, height: 105.mm) do
+            pdf.move_down 5.mm
+
+            pdf.text I18n.t("qrbills.receipt").capitalize, size: 11.pt, style: :bold
+            pdf.move_down 4.mm
+
+            pdf.text "#{I18n.t("qrbills.account").capitalize} / #{I18n.t("qrbills.payable_to").capitalize}", size: 6.pt, style: :bold
+            pdf.text "#{params[:bill_params][:creditor][:iban]}", size: 8.pt
+            pdf.text "#{render_address(params[:bill_params][:creditor][:address])}", size: 8.pt, inline_format: true
+
+            if !params[:bill_params][:reference].nil? && !params[:bill_params][:reference].empty?
+              pdf.move_down 4.mm
+              pdf.text I18n.t("qrbills.reference").capitalize, size: 6.pt, style: :bold
+              pdf.text "#{params[:bill_params][:reference]}", size: 8.pt
+            end
+            pdf.move_down 4.mm
+
+            pdf.text I18n.t("qrbills.payable_by").capitalize, size: 6.pt, style: :bold
+            pdf.text "#{render_address(params[:bill_params][:debtor][:address])}", size: 8.pt, inline_format: true
+            pdf.move_down 8.mm
+
+            bounding_box_cursor = pdf.cursor
+            pdf.bounding_box([0, bounding_box_cursor], width: 20.mm) do
+              pdf.text I18n.t("qrbills.currency").capitalize, size: 6.pt, style: :bold
+              pdf.text "#{params[:bill_params][:currency]}", size: 8.pt
+            end
+
+            pdf.bounding_box([20.mm, bounding_box_cursor], width: 20.mm) do
+              pdf.text I18n.t("qrbills.amount").capitalize, size: 6.pt, style: :bold
+              pdf.text "#{format('%.2f', params[:bill_params][:amount])}", size: 8.pt
+            end
+
+            pdf.move_down 6.mm
+            pdf.text I18n.t("qrbills.acceptance_point"), align: :right, size: 6.pt, style: :bold
+          end
+
+          # Payment Panel - QR code sub-section
+          pdf.bounding_box([67.mm, y_pos], width: 51.mm, height: 90.mm) do
+            pdf.move_down 5.mm
+
+            pdf.text I18n.t("qrbills.payment_part").capitalize, size: 11.pt, style: :bold
+            pdf.move_down 5.mm
+
+            pdf.svg QRGenerator.build_svg(params[:bill_params]), width: 46.mm, height: 46.mm
+            pdf.move_down 5.mm
+
+            payment_currency_bounding_box_cursor = pdf.cursor
+            pdf.bounding_box([0, payment_currency_bounding_box_cursor], width: 20.mm) do
+              pdf.text I18n.t("qrbills.currency").capitalize, size: 8.pt, style: :bold
+              pdf.text "#{params[:bill_params][:currency]}", size: 10.pt
+            end
+
+            pdf.bounding_box([20.mm, payment_currency_bounding_box_cursor], width: 20.mm) do
+              pdf.text I18n.t("qrbills.amount").capitalize, size: 8.pt, style: :bold
+              pdf.text "#{format('%.2f', params[:bill_params][:amount])}", size: 10.pt
+            end
+          end
+
+          # Payment Panel - Account / Payable to sub-section
+          pdf. bounding_box([118.mm, y_pos], width: 92.mm, height: 90.mm) do
+            pdf.move_down 5.mm
+
+            pdf.text "#{I18n.t("qrbills.account").capitalize} / #{I18n.t("qrbills.payable_to").capitalize}", size: 8.pt, style: :bold
+            pdf.text "#{params[:bill_params][:creditor][:iban]}", size: 10.pt
+            pdf.text "#{render_address(params[:bill_params][:creditor][:address])}", size: 10.pt, inline_format: true
+
+            if !params[:bill_params][:reference].nil? && !params[:bill_params][:reference].empty?
+              pdf.move_down 4.mm
+              pdf.text "#{I18n.t("qrbills.reference").capitalize}", size: 8.pt, style: :bold
+              pdf.text "#{params[:bill_params][:reference]}", size: 10.pt
+            end
+
+            if !params[:bill_params][:additionally_information].nil? && !params[:bill_params][:additionally_information].empty?
+              pdf.move_down 4.mm
+              pdf.text "#{I18n.t("qrbills.additional_information").capitalize}", size: 8.pt, style: :bold
+              pdf.text "#{params[:bill_params][:additionally_information]}", size: 10.pt
+            end
+            pdf.move_down 4.mm
+
+            pdf.text "#{I18n.t("qrbills.payable_by").capitalize}", size: 8.pt, style: :bold
+            pdf.text "#{render_address(params[:bill_params][:debtor][:address])}", size: 10.pt, inline_format: true
+          end
+
+          # Payment Panel - Further information sub-section
+          pdf.bounding_box([67.mm, y_pos - 85.mm], width: 138.mm, height: 10.mm) do
+            if !params[:bill_params][:bill_information_coded].nil? && !params[:bill_params][:bill_information_coded].empty?
+              pdf.text "<b>#{I18n.t("qrbills.name").capitalize}</b> AV1: #{params[:bill_params][:bill_information_coded]}", size: 7.pt, inline_format: true
+            end
+
+            if !params[:bill_params][:alternative_scheme_parameters].nil? && !params[:bill_params][:alternative_scheme_parameters].empty?
+              pdf.text "<b>#{I18n.t("qrbills.name").capitalize}</b> AV2: #{params[:bill_params][:alternative_scheme_parameters]}", size: 7.pt, inline_format: true
+            end
+          end
+
+          pdf.stroke_color("808080")
+          pdf.dash(2, space: 2)
+            pdf.stroke_vertical_line 0, 105.mm, at: 62.mm
+            pdf.stroke_horizontal_line 0, 210.mm, at: 105.mm
+          pdf.undash
+
+        end
       end
-
-      layout += "    <div class=\"subtitle payable_by\">#{I18n.t("qrbills.payable_by").capitalize}</div>\n"
-      layout += "    <div class=\"payable_by\">\n"
-      layout +=        render_address(params[:bill_params][:debtor][:address])
-      layout += "    </div>\n"
-
-      layout += "    <div class=\"amount\">\n"
-      layout += "      <div class=\"currency\">\n"
-      layout += "        <span class=\"amount_header subtitle\">#{I18n.t("qrbills.currency").capitalize}</span><br/>\n"
-      layout += "        #{params[:bill_params][:currency]}<br/>\n"
-      layout += "      </div>\n"
-
-      layout += "      <div class=\"amount_value\">\n"
-      layout += "        <span class=\"amount_header subtitle\">#{I18n.t("qrbills.amount").capitalize}</span><br/>\n"
-      layout += "        #{format('%.2f', params[:bill_params][:amount])}<br/>\n"
-      layout += "      </div>\n"
-      layout += "    </div>\n"
-
-      layout += "    <div class=\"acceptance_point\">\n"
-      layout += "      #{I18n.t("qrbills.acceptance_point").capitalize}<br/>\n"
-      layout += "    </div>\n"
-
-      layout += "  </div>\n"
-      layout += "  <div class=\"payment_section\">\n"
-      layout += "    <div class=\"left_column\">\n"
-      layout += "      <div class=\"title\">#{I18n.t("qrbills.payment_part").capitalize}</div>\n"
-      layout += "      <div class=\"qr_code\"><img src=\"#{params[:qrcode_filepath]}\" /></div>\n"
-      layout += "      <div class=\"amount\">\n"
-      layout += "        <div class=\"currency\">\n"
-      layout += "          <span class=\"amount_header subtitle\">#{I18n.t("qrbills.currency").capitalize}</span><br/>\n"
-      layout += "          #{params[:bill_params][:currency]}<br/>\n"
-      layout += "        </div>\n"
-
-      layout += "        <div class=\"amount_value\">\n"
-      layout += "          <span class=\"amount_header subtitle\">#{I18n.t("qrbills.amount").capitalize}</span><br/>\n"
-      layout += "          #{format('%.2f',params[:bill_params][:amount])}<br/>\n"
-      layout += "        </div>\n"
-      layout += "      </div>\n"
-
-      layout += "      <div class=\"further_information\">\n"
-
-      if !params[:bill_params][:bill_information_coded].nil? && !params[:bill_params][:bill_information_coded].empty?
-        layout += "        <span class=\"finfo_header\">#{I18n.t("qrbills.name").capitalize} AV1:</span> #{params[:bill_params][:bill_information_coded]}\n"
-      end
-
-      if !params[:bill_params][:alternative_scheme_parameters].nil? && !params[:bill_params][:alternative_scheme_parameters].empty?
-        layout += "        <span class=\"finfo_header\">#{I18n.t("qrbills.name").capitalize} AV2:</span> #{params[:bill_params][:alternative_scheme_parameters]}\n"
-      end
-
-      layout += "      </div>\n"
-      layout += "    </div>\n"
-      layout += "    <div class=\"right_column\">\n"
-      layout += "      <div class=\"subtitle payable_to\">#{I18n.t("qrbills.account").capitalize} / #{I18n.t("qrbills.payable_to").capitalize}</div>\n"
-      layout += "      <div class=\"qrcontent\">\n"
-      layout += "        #{params[:bill_params][:creditor][:iban]}<br/>\n"
-      layout +=          render_address(params[:bill_params][:creditor][:address])
-      layout += "      </div>\n"
-      layout += "    <div><br/></div>\n"
-
-      if !params[:bill_params][:reference].nil? && !params[:bill_params][:reference].empty?
-        layout += "    <div class=\"subtitle reference\">#{I18n.t("qrbills.reference").capitalize}</div>\n"
-        layout += "      <div class=\"reference\">\n"
-        layout += "        #{params[:bill_params][:reference]}<br/>\n"
-        layout += "      </div>\n"
-        layout += "    <div><br/></div>\n"
-      end
-
-      if !params[:bill_params][:additionally_information].nil? && !params[:bill_params][:additionally_information].empty?
-        layout += "    <div class=\"subtitle additional_information\">#{I18n.t("qrbills.additional_information").capitalize}</div>\n"
-        layout += "      <div class=\"additional_information\">\n"
-        layout += "        #{params[:bill_params][:additionally_information]}<br/>\n"
-        layout += "      </div>\n"
-        layout += "    <div><br/></div>\n"
-      end
-
-      layout += "    <div class=\"subtitle payable_by\">#{I18n.t("qrbills.payable_by").capitalize}</div>\n"
-      layout += "      <div class=\"payable_by\">\n"
-      layout +=          render_address(params[:bill_params][:debtor][:address])
-      layout += "      </div>\n"
-      layout += "    </div>\n"
-      layout += "  </div>\n"
-      layout += "</div>\n"
-
-      layout += "<style>\n"
-      layout += "  @font-face{ \n"
-      layout += "    font-family: \"liberation_sansregular\";\n"
-      layout += "    src: url(\"#{params[:fonts][:eot]}\");\n"
-      layout += "    src: url(\"#{params[:fonts][:eot]}?#iefix\") format(\"embedded-opentype\"),\n"
-      layout += "        url(\"#{params[:fonts][:woff]}\") format(\"woff\"),\n"
-      layout += "        url(\"#{params[:fonts][:ttf]}\") format(\"truetype\"),\n"
-      layout += "        url(\"#{params[:fonts][:svg]}#liberation_sansregular\") format(\"svg\");\n"
-      layout += "    font-weight: normal;\n"
-      layout += "    font-style: normal;\n"
-      layout += "  }\n"
-
-      layout += "  .bill_container {\n"
-      layout += "    width: 210mm;\n"
-      layout += "    height: 105mm;\n"
-      layout += "    font-family: \"liberation_sansregular\";\n"
-      layout += "   border: 1px solid #ccc;\n"
-      layout += "  }\n"
-
-      layout += "  .bill_container:after {\n"
-      layout += "    content: \"\";\n"
-      layout += "    display: table;\n"
-      layout += "    clear: both;\n"
-      layout += "  }\n"
-
-      layout += "  .receipt_section {\n"
-      layout += "    width: 52mm;\n"
-      layout += "    height: 95mm;\n"
-      layout += "    padding: 5mm;\n"
-      layout += "    float: left;\n"
-      layout += "    font-size: 8pt;\n"
-      layout += "    border-right: 1px dotted #ccc;\n"
-      layout += "  }\n"
-
-      layout += " .payment_section {\n"
-      layout += "    width: 137mm;\n"
-      layout += "    height: 95mm;\n"
-      layout += "    float: left;\n"
-      layout += "    padding: 5mm;\n"
-      layout += "    font-size: 10pt;\n"
-      layout += "  }\n"
-
-      layout += "  .payment_section .left_column {\n"
-      layout += "    height: 95mm;\n"
-      layout += "    width: 46mm;\n"
-      layout += "    float: left;\n"
-      layout += "    margin-right: 5mm;\n"
-      layout += "  }\n"
-
-      layout += "  .payment_section .right_column {\n"
-      layout += "    height: 95mm;\n"
-      layout += "    width: 86mm;\n"
-      layout += "    float: left;\n"
-      layout += "  }\n"
-
-      layout += "  .qr_code {\n"
-      layout += "    padding: 5mm 0mm 5mm 0mm;\n"
-      layout += "    height: 46mm;\n"
-      layout += "    width: 46mm;\n"
-      layout += "  }\n"
-
-      layout += "  .qr_code img {\n"
-      layout += "    height: 46mm;\n"
-      layout += "    width: 46mm;\n"
-      layout += "  }\n"
-
-      layout += "  .amount {\n"
-      layout += "    margin-top: 15px;\n"
-      layout += "  }\n"
-
-      layout += "  .amount .currency {\n"
-      layout += "    float: left;\n"
-      layout += "    margin-right: 15px;\n"
-      layout += "  }\n"
-
-      layout += "  .title {\n"
-      layout += "    font-weight: bold;\n"
-      layout += "    font-size: 11pt;\n"
-      layout += "  }\n"
-
-      layout += "  .receipt_section .subtitle {\n"
-      layout += "    font-weight: bold;\n"
-      layout += "    font-size: 6pt;\n"
-      layout += "    line-height: 9pt;\n"
-      layout += "  }\n"
-
-      layout += "  .receipt_section .acceptance_point {\n"
-      layout += "    font-weight: bold;\n"
-      layout += "    text-align: right;\n"
-      layout += "    font-size: 6pt;\n"
-      layout += "    line-height: 8pt;\n"
-      layout += "    padding-top: 5mm;\n"
-      layout += "  }\n"
-
-      layout += "  .payment_section .subtitle {\n"
-      layout += "    font-weight: bold;\n"
-      layout += "    font-size: 8pt;\n"
-      layout += "    line-height: 11pt;\n"
-      layout += "  }\n"
-
-      layout += "  .payment_section .amount {\n"
-      layout += "    height: 22mm;\n"
-      layout += "    margin-top: 40px;\n"
-      layout += "  }\n"
-
-      layout += "  .payment_section .further_information {\n"
-      layout += "    font-size: 7pt;\n"
-      layout += "  }\n"
-
-      layout += "  .payment_section .finfo_header {\n"
-      layout += "    font-weight: bold;\n"
-      layout += "  }      \n"
-      layout += "</style>\n"
-
-      layout
     end
   end
 
   def self.render_address(address)
     case address[:type]
     when 'S'
-      format("%s<br>\n%s %s<br>\n%s %s<br>\n", address[:name], address[:line1], address[:line2], address[:postal_code], address[:town])
+      format("%s<br>%s %s<br>%s %s<br>", address[:name], address[:line1], address[:line2], address[:postal_code], address[:town])
     when 'K'
-      format("%s<br>\n%s<br>\n%s<br>\n", address[:name], address[:line1], address[:line2])
+      format("%s<br>%s<br>%s<br>", address[:name], address[:line1], address[:line2])
     end
   end
 end
