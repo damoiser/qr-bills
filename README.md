@@ -45,12 +45,15 @@ QRBills.create_creditor_reference("MTR81UUWZYO48NY55NP3")
 ```ruby
 params[:output_params][:format] = "html"
 # OR
+params[:output_params][:format] = "prawn"
+# OR
 params[:output_params][:format] = "png"
 # OR
 params[:output_params][:format] = "svg"
 ```
 
 * `html` returns a full qr-bill as a html-template string, uses `params[:qrcode_format]` for the qrcode format which supports `png` and `svg`. Defaults to `png`.
+* `prawn` returns a full qr-bill in pure Ruby for inclusion in a [Prawn PDF template](https://github.com/prawnpdf/prawn), uses `params[:qrcode_format]` for the qrcode format which supports `svg` ONLY.
 * `png` returns the qrcode of the qr-bill as a ChunkyPNG::Image object.
 * `svg` returns the qrcode of the qr-bill as a svg string.
 
@@ -123,6 +126,10 @@ params[:bill_params][:additionally_information]         = "pagamento riparazione
 
 # generate the QR Bill
 bill = QRBills.generate(params)
+
+# if params[:output_params][:format] == "prawn" pass `pdf` to QRBills.generate to get a Prawn::Document object
+bill = QRBills.generate(params, pdf)
+
 
 # bill format is given in the params, default is html
 # bill has the following format:

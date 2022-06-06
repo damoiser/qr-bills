@@ -54,15 +54,18 @@ RSpec.describe "QR params" do
 
     it "fails if currency type is empty" do
       @params[:bill_params][:currency] = ""
+      @params[:bill_type] = QRParams::QR_BILL_WITH_QR_REFERENCE
       expect{QRParams.base_params_valid?(@params)}.to raise_error(ArgumentError, "QR-bill invalid parameters: currency cannot be blank")
     end
 
     it "fails if currency is nil" do
       @params[:bill_params][:currency] = nil
+      @params[:bill_type] = QRParams::QR_BILL_WITH_QR_REFERENCE
       expect{QRParams.base_params_valid?(@params)}.to raise_error(ArgumentError, "QR-bill invalid parameters: currency cannot be blank")
     end
 
     it "succeeds if the previous params are correctly set" do
+      @params[:bill_type] = QRParams::QR_BILL_WITH_QR_REFERENCE
       expect{QRParams.base_params_valid?(@params)}.not_to raise_error
       expect(QRParams.base_params_valid?(@params)).to be_truthy
     end
