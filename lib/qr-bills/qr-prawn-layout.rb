@@ -6,7 +6,7 @@ require "prawn/measurement_extensions"
 module QRPRAWNLayout
   attr_reader :document, :type
 
-  def self.create(params, pdf)
+  def self.create(params, pdf = nil)
     qrcode = QRGenerator.create(params, params[:qrcode_filepath])
     params[:qrcode_filepath] = convert_qrcode_to_data_url(qrcode)
     prawn_layout(params, pdf)
