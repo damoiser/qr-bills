@@ -1,5 +1,6 @@
 ### v1.0.10
 * fixed pipeline error (new svg style attribute) -> style=fill:#000
+* fixed locales error for EN and FR
 
 ### v1.0.9
 * added support for address of type "K"
