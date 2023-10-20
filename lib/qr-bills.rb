@@ -30,6 +30,24 @@ module QRBills
     QRCreditorReference.create(reference)
   end
 
+  def self.create_esr_reference(reference)
+    fail('You must provide a 26 digit reference for ESR.') unless reference.size == 26
+    
+    esr = "#{reference}0"
+    lookup_table = [0, 9, 4, 6, 8, 2, 7, 1, 3, 5]
+    next_val = 0
+
+    (0...esr.length - 1).each do |i|
+      ch = esr[i]
+      n = ch.to_i
+      index = (next_val + n) % 10
+      next_val = lookup_table[index]
+    end
+
+    result = (10 - next_val) % 10
+    return result
+  end
+
   def self.get_qr_params
     QRParams.get_qr_params
   end
