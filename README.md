@@ -88,6 +88,17 @@ params[:bill_params][:reference_type]   = "NON" # fixed type for bill without re
 
 ![QR bill without reference](./imgs/qr_bill_without_reference.png)
 
+#### QR bill with empty fields
+
+No prefilled amount and/or debtor. When paying the missing values can either be written by hand on a print within the corner marks, or added to the rest of the scanned information in an e-banking application (the QR code still contains creditor, currency, etc.).
+
+```ruby
+params[:bill_params][:amount] = nil
+params[:bill_params][:debtor] = nil
+```
+
+![QR bill empty](./imgs/qr_bill_empty.png)
+
 ### Generate a QR-Bill
 
 ```ruby
@@ -142,8 +153,6 @@ bill = QRBills.generate(params)
 ## TODO
 
 * add other outputs formats
-* add "empty" QR-Bill
-![QR bill empty](./imgs/qr_bill_empty.png)
 
 ## License
 

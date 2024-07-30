@@ -123,5 +123,18 @@ RSpec.describe "QRHTMLLayout" do
 
       expect(html_output).to include("12345.10")
     end
+
+    it "renders empty fields" do
+      @params[:bill_params][:debtor] = nil
+      @params[:bill_params][:amount] = nil
+
+      html_output = QRHTMLLayout.create(@params).to_s
+
+      IO.binwrite(filepath, html_output)
+      expect(File.exist?(filepath)).to be_truthy
+
+      expect(html_output).to include("payable_by empty").twice
+      expect(html_output).to include("amount empty").twice
+    end
   end
 end
