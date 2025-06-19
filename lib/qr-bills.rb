@@ -30,9 +30,11 @@ module QRBills
     QRCreditorReference.create(reference)
   end
 
+  # ESR reference should be considered "deprecated" and is here for backward compatibility 
   def self.create_esr_reference(reference)
-    fail('You must provide a 26 digit reference for ESR.') unless reference.size == 26
-    
+    raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: You must provide a 26 digit reference for ESR." unless reference.size == 26
+    raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: You must provide a valid digit for ESR." unless reference.to_i.to_s == reference
+
     esr = "#{reference}0"
     lookup_table = [0, 9, 4, 6, 8, 2, 7, 1, 3, 5]
     next_val = 0
