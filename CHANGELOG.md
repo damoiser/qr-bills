@@ -1,3 +1,7 @@
+### v1.0.11
+* bump ruby version to 3.2.2
+* add support for ESR reference
+
 ### v1.0.10
 * fixed pipeline error (new svg style attribute) -> style=fill:#000
 * fixed locales error for EN and FR
