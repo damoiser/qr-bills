@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.files       = Dir["lib/**/*"] + Dir["web/assets/**/*"] + Dir["config/locales/*.yml"]
   s.require_paths = ["lib"]
   s.homepage    = "https://github.com/damoiser/qr-bills"
-  s.license     = "MIT"
+  s.license     = "BSD 3-Clause"
   s.metadata    = {
     "bug_tracker_uri"   => "https://github.com/damoiser/qr-bills/issues",
     "changelog_uri"     => "https://github.com/damoiser/qr-bills/CHANGELOG.md",
