@@ -15,11 +15,11 @@ RSpec.describe QRBills do
     end
 
     it "raise an exception if params for ESR is less than 26 chars" do
-      expect { QRBills.create_esr_reference("123") }.to raise_error(ArgumentError, "QR-bill invalid parameters: You must provide a 26 digit reference for ESR.")
+      expect { QRBills.create_esr_creditor_reference("123") }.to raise_error(ArgumentError, "QR-bill invalid parameters: You must provide a 26 digit reference for ESR.")
     end
 
     it "raise an exception if params for ESR is not an integer" do
-      expect { QRBills.create_esr_reference("aabbccddeeffgghhiijjkkllmm") }.to raise_error(ArgumentError, "QR-bill invalid parameters: You must provide a valid digit for ESR.")
+      expect { QRBills.create_esr_creditor_reference("aabbccddeeffgghhiijjkkllmm") }.to raise_error(ArgumentError, "QR-bill invalid parameters: You must provide a valid digit for ESR.")
     end
   end
 end
