@@ -1,7 +1,7 @@
 Gem::Specification.new do |s|
   s.name        = "qr-bills"
   s.version     = "1.0.11"
-  s.date        = "2025-06-19"
+  s.date        = "2025-09-30"
   s.summary     = "QR-bills support for swiss payments"
   s.description = "QR-bills support for swiss payments, for full documentation please refer to github repo: https://github.com/damoiser/qr-bills"
   s.authors     = ["Damiano Radice"]
@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.files       = Dir["lib/**/*"] + Dir["web/assets/**/*"] + Dir["config/locales/*.yml"]
   s.require_paths = ["lib"]
   s.homepage    = "https://github.com/damoiser/qr-bills"
-  s.license     = "BSD 3-Clause"
+  s.license     = "BSD-3-Clause"
   s.metadata    = {
     "bug_tracker_uri"   => "https://github.com/damoiser/qr-bills/issues",
     "changelog_uri"     => "https://github.com/damoiser/qr-bills/CHANGELOG.md",
