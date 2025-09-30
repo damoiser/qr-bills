@@ -40,6 +40,8 @@ QRBills.create_creditor_reference("MTR81UUWZYO48NY55NP3")
 # => "RF89MTR81UUWZYO48NY55NP3"
 ```
 
+When generating an invoice with a reference number where the creditor has an old (deprecated) ESR IBAN, the reference number must be of a different format. Refer to the comments above `QRBills.iban_type` for details.
+
 ### Availables outputs formats
 
 ```ruby
@@ -116,8 +118,8 @@ params[:bill_params][:debtor][:address][:line2]         = "25"
 params[:bill_params][:debtor][:address][:postal_code]   = "3001"
 params[:bill_params][:debtor][:address][:town]          = "Comano"
 params[:bill_params][:debtor][:address][:country]       = "CH"
-# you can get the new creditor reference using QRBills.create_creditor_reference("your_reference") 
-params[:bill_params][:reference]                        = "RF89MTR81UUWZYO48NY55NP3" 
+# you can get the new creditor reference using QRBills.create_creditor_reference("your_reference")
+params[:bill_params][:reference]                        = "RF89MTR81UUWZYO48NY55NP3"
 params[:bill_params][:reference_type]                   = "SCOR"
 params[:bill_params][:additionally_information]         = "pagamento riparazione monopattino"
 

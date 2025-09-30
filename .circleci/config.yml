@@ -12,7 +12,7 @@ orbs:
 jobs:
   test:
     docker:
-      - image: cimg/ruby:2.7.4
+      - image: cimg/ruby:3.2.2
     executor: ruby/default
     resource_class: medium
     steps:
