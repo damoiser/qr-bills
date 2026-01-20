@@ -45,10 +45,16 @@ module QRHTMLLayout
         layout += "    <div><br/></div>\n"
       end
 
-      layout += "    <div class=\"subtitle payable_by\">#{I18n.t("qrbills.payable_by").capitalize}</div>\n"
-      layout += "    <div class=\"payable_by\">\n"
-      layout +=        render_address(params[:bill_params][:debtor][:address])
-      layout += "    </div>\n"
+      if params[:bill_params][:debtor].nil?
+        layout += "    <div class=\"subtitle payable_by\">#{I18n.t("qrbills.payable_by_name_addr").capitalize}</div>\n"
+        layout += "    <div class=\"payable_by empty\">\n"
+        layout += "    </div>\n"
+      else
+        layout += "    <div class=\"subtitle payable_by\">#{I18n.t("qrbills.payable_by").capitalize}</div>\n"
+        layout += "    <div class=\"payable_by\">\n"
+        layout += render_address(params[:bill_params][:debtor][:address])
+        layout += "    </div>\n"
+      end
 
       layout += "    <div class=\"amount\">\n"
       layout += "      <div class=\"currency\">\n"
@@ -56,9 +62,15 @@ module QRHTMLLayout
       layout += "        #{params[:bill_params][:currency]}<br/>\n"
       layout += "      </div>\n"
 
-      layout += "      <div class=\"amount_value\">\n"
-      layout += "        <span class=\"amount_header subtitle\">#{I18n.t("qrbills.amount").capitalize}</span><br/>\n"
-      layout += "        #{format('%.2f', params[:bill_params][:amount])}<br/>\n"
+      if params[:bill_params][:amount].nil?
+        layout += "      <div class=\"amount_value row\">\n"
+        layout += "        <span class=\"amount_header subtitle\">#{I18n.t("qrbills.amount").capitalize}</span><br/>\n"
+        layout += "        <div class=\"amount empty\"></div>\n"
+      else
+        layout += "      <div class=\"amount_value\">\n"
+        layout += "        <span class=\"amount_header subtitle\">#{I18n.t("qrbills.amount").capitalize}</span><br/>\n"
+        layout += "        #{format("%.2f", params[:bill_params][:amount])}<br/>\n"
+      end
       layout += "      </div>\n"
       layout += "    </div>\n"
 
@@ -77,9 +89,13 @@ module QRHTMLLayout
       layout += "          #{params[:bill_params][:currency]}<br/>\n"
       layout += "        </div>\n"
 
-      layout += "        <div class=\"amount_value\">\n"
-      layout += "          <span class=\"amount_header subtitle\">#{I18n.t("qrbills.amount").capitalize}</span><br/>\n"
-      layout += "          #{format('%.2f',params[:bill_params][:amount])}<br/>\n"
+      layout += "      <div class=\"amount_value\">\n"
+      layout += "        <span class=\"amount_header subtitle\">#{I18n.t("qrbills.amount").capitalize}</span><br/>\n"
+      if params[:bill_params][:amount].nil?
+        layout += "        <div class=\"amount empty\"></div>\n"
+      else
+        layout += "        #{format("%.2f", params[:bill_params][:amount])}<br/>\n"
+      end
       layout += "        </div>\n"
       layout += "      </div>\n"
 
@@ -119,10 +135,16 @@ module QRHTMLLayout
         layout += "    <div><br/></div>\n"
       end
 
-      layout += "    <div class=\"subtitle payable_by\">#{I18n.t("qrbills.payable_by").capitalize}</div>\n"
-      layout += "      <div class=\"payable_by\">\n"
-      layout +=          render_address(params[:bill_params][:debtor][:address])
-      layout += "      </div>\n"
+      if params[:bill_params][:debtor].nil?
+        layout += "    <div class=\"subtitle payable_by\">#{I18n.t("qrbills.payable_by_name_addr").capitalize}</div>\n"
+        layout += "    <div class=\"payable_by empty\">\n"
+        layout += "    </div>\n"
+      else
+        layout += "    <div class=\"subtitle payable_by\">#{I18n.t("qrbills.payable_by").capitalize}</div>\n"
+        layout += "      <div class=\"payable_by\">\n"
+        layout += render_address(params[:bill_params][:debtor][:address])
+        layout += "      </div>\n"
+      end
       layout += "    </div>\n"
       layout += "  </div>\n"
       layout += "</div>\n"
@@ -195,11 +217,22 @@ module QRHTMLLayout
 
       layout += "  .amount {\n"
       layout += "    margin-top: 15px;\n"
+      layout += "    display: flex;\n"
       layout += "  }\n"
 
+      layout += "  .payment_section .amount .subtitle {\n"
+      layout += "    font-weight: bold;\n"
+      layout += "    font-size: 6pt;\n"
+      layout += "    line-height: 9pt;\n"
+      layout += "  }      \n"
+
       layout += "  .amount .currency {\n"
-      layout += "    float: left;\n"
-      layout += "    margin-right: 15px;\n"
+      layout += "    margin-right: 4pt;\n"
+      layout += "    font-size: 8pt;\n"
+      layout += "  }\n"
+
+      layout += "  .receipt_section .amount .currency {\n"
+      layout += "    margin-right: 10pt;\n"
       layout += "  }\n"
 
       layout += "  .title {\n"
@@ -238,6 +271,50 @@ module QRHTMLLayout
 
       layout += "  .payment_section .finfo_header {\n"
       layout += "    font-weight: bold;\n"
+      layout += "  }      \n"
+
+      layout += "  .receipt_section .payable_by.empty {\n"
+      layout += "    width: 52mm;\n"
+      layout += "    height: 20mm;\n"
+      layout += "    margin-top: 2mm;\n"
+      layout += "  }      \n"
+
+      layout += "  .payment_section .payable_by.empty {\n"
+      layout += "    width: 65mm;\n"
+      layout += "    height: 25mm;\n"
+      layout += "    margin-top: 2mm;\n"
+      layout += "  }      \n"
+
+      layout += "  .receipt_section .amount.empty {\n"
+      layout += "    width: 30mm;\n"
+      layout += "    height: 10mm;\n"
+      layout += "    margin-top: 0;\n"
+      layout += "  }      \n"
+
+      layout += "  .payment_section .amount.empty {\n"
+      layout += "    width: 40mm;\n"
+      layout += "    height: 15mm;\n"
+      layout += "    margin-top: 1mm;\n"
+      layout += "  }      \n"
+
+      layout += "  .receipt_section .amount_value.row {\n"
+      layout += "    display: flex;\n"
+      layout += "    gap: 4pt;\n"
+      layout += "  }      \n"
+
+      layout += "  .empty {\n"
+      layout += "    background:\n"
+      layout += "      linear-gradient(to right, black 1.3pt, transparent 1.3pt) 0 0,\n"
+      layout += "      linear-gradient(to right, black 1.3pt, transparent 1.3pt) 0 100%,\n"
+      layout += "      linear-gradient(to left, black 1.3pt, transparent 1.3pt) 100% 0,\n"
+      layout += "      linear-gradient(to left, black 1.3pt, transparent 1.3pt) 100% 100%,\n"
+      layout += "      linear-gradient(to bottom, black 1.3pt, transparent 1.3pt) 0 0,\n"
+      layout += "      linear-gradient(to bottom, black 1.3pt, transparent 1.3pt) 100% 0,\n"
+      layout += "      linear-gradient(to top, black 1.3pt, transparent 1.3pt) 0 100%,\n"
+      layout += "      linear-gradient(to top, black 1.3pt, transparent 1.3pt) 100% 100%;\n"
+
+      layout += "    background-repeat: no-repeat;\n"
+      layout += "    background-size: 11pt 6pt;\n"
       layout += "  }      \n"
       layout += "</style>\n"
 
