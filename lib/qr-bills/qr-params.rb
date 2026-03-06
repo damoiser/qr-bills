@@ -30,8 +30,10 @@ module QRParams
           address: {
             type: "S",
             name: "",
-            line1: "",
-            line2: "",
+            line1: "", # not valid after 13.12.2026, decom of address type-K, deprecation warning active v1.0.12
+            line2: "", # not valid after 13.12.2026, decom of address type-K, deprecation warning active v1.0.12
+            street_name: "",      # new fields for addess type-S
+            building_number: "",  # new fields for addess type-S
             postal_code: "",
             town: "",
             country: "",
@@ -42,8 +44,10 @@ module QRParams
           address: {
             type: "S",
             name: "",
-            line1: "",
-            line2: "",
+            line1: "", # not valid after 13.12.2026, decom of address type-K, deprecation warning active v1.0.12
+            line2: "", # not valid after 13.12.2026, decom of address type-K, deprecation warning active v1.0.12
+            street_name: "",      # new fields for addess type-S
+            building_number: "",  # new fields for addess type-S
             postal_code: "",
             town: "",
             country: "",
@@ -80,7 +84,7 @@ module QRParams
     if params.dig(:bill_params, :currency) == "" || params.dig(:bill_params, :currency) == nil
       raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: currency cannot be blank"
     end
-
+ 
     true
   end
 

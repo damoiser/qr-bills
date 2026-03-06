@@ -248,8 +248,15 @@ module QRHTMLLayout
   def self.render_address(address)
     case address[:type]
     when 'S'
-      format("%s<br>\n%s %s<br>\n%s %s<br>\n", address[:name], address[:line1], address[:line2], address[:postal_code], address[:town])
+      if !address[:street_name].blank?
+        format("%s<br>\n%s %s<br>\n%s %s<br>\n", address[:name], address[:street_name], address[:building_number], address[:postal_code], address[:town])
+      else 
+        # backward compatibility, to be removed after 13.11.2026, decom of address type-K, deprecation warning active v1.0.12
+        format("%s<br>\n%s %s<br>\n%s %s<br>\n", address[:name], address[:line1], address[:line2], address[:postal_code], address[:town])
+      end
     when 'K'
+      warn('DEPRECATION WARNING: please move to type-S addresses, K-type will be removed after 13.11.2026 as not compliant with the standard')
+      # backward compatibility, to be removed after 13.11.2026, decom of address type-K, deprecation warning active v1.0.12
       format("%s<br>\n%s<br>\n%s<br>\n", address[:name], address[:line1], address[:line2])
     end
   end

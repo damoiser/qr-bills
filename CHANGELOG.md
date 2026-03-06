@@ -1,3 +1,6 @@
+### v1.0.12
+* update to latest standard, S-type address only: https://www.postfinance.ch/content/dam/pfch/doc/460_479/460_445_en.pdf
+
 ### v1.0.11
 * bump ruby version to 3.2.2
 * add support for ESR reference
