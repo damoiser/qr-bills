@@ -16,7 +16,8 @@ jobs:
     executor: ruby/default
     resource_class: medium
     steps:
-      - checkout
+      - checkout:
+          method: full
       - run: bundle install
       - run: bundle list
       - run: bundle exec rake spec
