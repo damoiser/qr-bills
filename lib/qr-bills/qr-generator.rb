@@ -127,7 +127,7 @@ module QRGenerator
     payload += "#{bill_params[:creditor][:iban].delete(' ')}\r\n"
     payload += "#{bill_params[:creditor][:address][:type]}\r\n"
     payload += "#{bill_params[:creditor][:address][:name]}\r\n"
-    if !bill_params[:creditor][:address][:street_name].blank?
+    if !bill_params[:creditor][:address][:street_name].empty?
       # new fields for addess type-S, to be used when address type is S and
       payload += "#{bill_params[:creditor][:address][:street_name]}\r\n"
       payload += "#{bill_params[:creditor][:address][:building_number]}\r\n"
@@ -150,7 +150,7 @@ module QRGenerator
     payload += "#{bill_params[:currency]}\r\n"
     payload += "#{bill_params[:debtor][:address][:type]}\r\n"
     payload += "#{bill_params[:debtor][:address][:name]}\r\n"
-    if !bill_params[:debtor][:address][:street_name].blank?
+    if !bill_params[:debtor][:address][:street_name].empty?
       # new fields for addess type-S, to be used when address type is S and
       payload += "#{bill_params[:debtor][:address][:street_name]}\r\n"
       payload += "#{bill_params[:debtor][:address][:building_number]}\r\n"

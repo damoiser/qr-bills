@@ -15,8 +15,12 @@ RSpec.configure do |config|
     @params[:bill_params][:creditor][:iban] = "CH9300762011623852957"
     @params[:bill_params][:creditor][:address][:type] = "S"
     @params[:bill_params][:creditor][:address][:name] = "Compagnia di assicurazione forma & scalciante"
+
+    # to be removed after 13.12.2026, decom of address type-K, deprecation warning active v1.0.12
     @params[:bill_params][:creditor][:address][:line1] = "Via cantonale"
     @params[:bill_params][:creditor][:address][:line2] = "24"
+    #
+  
     @params[:bill_params][:creditor][:address][:postal_code] = "3000"
     @params[:bill_params][:creditor][:address][:town] = "Lugano"
     @params[:bill_params][:creditor][:address][:country] = "CH"
@@ -24,8 +28,12 @@ RSpec.configure do |config|
     @params[:bill_params][:currency] = "CHF"
     @params[:bill_params][:debtor][:address][:type] = "S"
     @params[:bill_params][:debtor][:address][:name] = "Foobar Barfoot"
+
+    # to be removed after 13.12.2026, decom of address type-K, deprecation warning active v1.0.12
     @params[:bill_params][:debtor][:address][:line1] = "Via cantonale"
     @params[:bill_params][:debtor][:address][:line2] = "25"
+    #
+
     @params[:bill_params][:debtor][:address][:postal_code] = "3001"
     @params[:bill_params][:debtor][:address][:town] = "Comano"
     @params[:bill_params][:debtor][:address][:country] = "CH"
