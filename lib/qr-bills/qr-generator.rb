@@ -127,15 +127,8 @@ module QRGenerator
     payload += "#{bill_params[:creditor][:iban].delete(' ')}\r\n"
     payload += "#{bill_params[:creditor][:address][:type]}\r\n"
     payload += "#{bill_params[:creditor][:address][:name]}\r\n"
-    if !bill_params[:creditor][:address][:street_name].empty?
-      # new fields for addess type-S, to be used when address type is S and
-      payload += "#{bill_params[:creditor][:address][:street_name]}\r\n"
-      payload += "#{bill_params[:creditor][:address][:building_number]}\r\n"
-    else      # backward compatibility, to be removed after 13.11.2026, decom of address type-K, deprecation warning active v1.0.12
-      warn('DEPRECATION WARNING: please move to :street_name and :building_number, :creditor:address:line1 and :creditor:address:line2 will be removed after 13.11.2026 as not compliant with the standard')
-      payload += "#{bill_params[:creditor][:address][:line1]}\r\n"
-      payload += "#{bill_params[:creditor][:address][:line2]}\r\n"
-    end
+    payload += "#{bill_params[:creditor][:address][:street_name]}\r\n"
+    payload += "#{bill_params[:creditor][:address][:building_number]}\r\n"
     payload += "#{bill_params[:creditor][:address][:postal_code]}\r\n"
     payload += "#{bill_params[:creditor][:address][:town]}\r\n"
     payload += "#{bill_params[:creditor][:address][:country]}\r\n"
@@ -150,15 +143,8 @@ module QRGenerator
     payload += "#{bill_params[:currency]}\r\n"
     payload += "#{bill_params[:debtor][:address][:type]}\r\n"
     payload += "#{bill_params[:debtor][:address][:name]}\r\n"
-    if !bill_params[:debtor][:address][:street_name].empty?
-      # new fields for addess type-S, to be used when address type is S and
-      payload += "#{bill_params[:debtor][:address][:street_name]}\r\n"
-      payload += "#{bill_params[:debtor][:address][:building_number]}\r\n"
-    else      # backward compatibility, to be removed after 13.11.2026, decom of address type-K, deprecation warning active v1.0.12
-      warn('DEPRECATION WARNING: please move to :street_name and :building_number, :debtor:address:line1 and :debtor:address:line2 will be removed after 13.11.2026 as not compliant with the standard')
-      payload += "#{bill_params[:debtor][:address][:line1]}\r\n"
-      payload += "#{bill_params[:debtor][:address][:line2]}\r\n"
-    end
+    payload += "#{bill_params[:debtor][:address][:street_name]}\r\n"
+    payload += "#{bill_params[:debtor][:address][:building_number]}\r\n"
     payload += "#{bill_params[:debtor][:address][:postal_code]}\r\n"
     payload += "#{bill_params[:debtor][:address][:town]}\r\n"
     payload += "#{bill_params[:debtor][:address][:country]}\r\n"

@@ -30,10 +30,8 @@ module QRParams
           address: {
             type: "S",
             name: "",
-            line1: "", # not valid after 13.12.2026, decom of address type-K, deprecation warning active v1.0.12
-            line2: "", # not valid after 13.12.2026, decom of address type-K, deprecation warning active v1.0.12
-            street_name: "",      # new fields for addess type-S
-            building_number: "",  # new fields for addess type-S
+            street_name: "",
+            building_number: "",
             postal_code: "",
             town: "",
             country: "",
@@ -44,10 +42,8 @@ module QRParams
           address: {
             type: "S",
             name: "",
-            line1: "", # not valid after 13.12.2026, decom of address type-K, deprecation warning active v1.0.12
-            line2: "", # not valid after 13.12.2026, decom of address type-K, deprecation warning active v1.0.12
-            street_name: "",      # new fields for addess type-S
-            building_number: "",  # new fields for addess type-S
+            street_name: "",
+            building_number: "",
             postal_code: "",
             town: "",
             country: "",
