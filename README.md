@@ -106,12 +106,6 @@ params[:bill_params][:creditor][:address][:type]        = "S" # or type "K"
 params[:bill_params][:creditor][:address][:name]        = "Compagnia di assicurazione forma & scalciante"
 params[:bill_params][:creditor][:address][:street_name]       = "Via cantonale"
 params[:bill_params][:creditor][:address][:building_number]   = "24"
-
-## deprecated after 13.12.2026 please move to :street_name and :building_number
-# params[:bill_params][:creditor][:address][:line1]       = "Via cantonale"
-# params[:bill_params][:creditor][:address][:line2]       = "24"
-##
-
 params[:bill_params][:creditor][:address][:postal_code] = "3000"
 params[:bill_params][:creditor][:address][:town]        = "Lugano"
 params[:bill_params][:creditor][:address][:country]     = "CH"
@@ -121,12 +115,6 @@ params[:bill_params][:debtor][:address][:type]          = "S"
 params[:bill_params][:debtor][:address][:name]          = "Foobar Barfoot"
 params[:bill_params][:debtor][:address][:street_name]         = "Via cantonale"
 params[:bill_params][:debtor][:address][:building_number]     = "25"
-
-## deprecated after 13.12.2026 please move to :street_name and :building_number
-# params[:bill_params][:debtor][:address][:line1]         = "Via cantonale"
-# params[:bill_params][:debtor][:address][:line2]         = "25"
-##
-
 params[:bill_params][:debtor][:address][:postal_code]   = "3001"
 params[:bill_params][:debtor][:address][:town]          = "Comano"
 params[:bill_params][:debtor][:address][:country]       = "CH"
