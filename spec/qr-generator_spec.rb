@@ -34,6 +34,22 @@ RSpec.describe QRGenerator do
     end
   end
 
+  describe "payload generation" do
+    it "omits blank trailing optional fields after the EPD trailer" do
+      payload = QRGenerator.build_payload(params[:bill_params])
+
+      expect(payload).to end_with("pagamento riparazione monopattino\r\nEPD")
+    end
+
+    it "keeps the blank bill information field when alternative scheme parameters are present" do
+      params[:bill_params][:alternative_scheme_parameters] = "eBill/B/41010560425610173"
+
+      payload = QRGenerator.build_payload(params[:bill_params])
+
+      expect(payload).to end_with("EPD\r\n\r\neBill/B/41010560425610173")
+    end
+  end
+
   describe "qrcode generation" do
     it "generates successfully a qr image" do
       params[:qrcode_format] = 'qrcode_png'

@@ -154,5 +154,7 @@ module QRGenerator
     payload += "EPD\r\n"
     payload += "#{bill_params[:bill_information_coded]}\r\n"
     payload += "#{bill_params[:alternative_scheme_parameters]}\r\n"
+    payload.delete_suffix!("\r\n") while payload.end_with?("\r\n")
+    payload
   end
 end
