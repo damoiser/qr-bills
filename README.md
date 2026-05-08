@@ -97,31 +97,31 @@ params[:bill_params][:reference_type]   = "NON" # fixed type for bill without re
 params = QRBills.get_qr_params
 
 # fill the params, for example
-params[:bill_type]                                      = QRBills.get_qrbill_with_creditor_reference_type
-params[:qrcode_filepath]                                = "#{Dir.pwd}/tmp/qrcode-html.png"
-params[:qrcode_format]                                  = "svg" # use qrcode_format with "svg" / "png" instead of qrcode_filepath to use a data url encoded qr code
-params[:output_params][:format]                         = "html"
-params[:bill_params][:creditor][:iban]                  = "CH93 0076 2011 6238 5295 7"
-params[:bill_params][:creditor][:address][:type]        = "S" # or type "K"
-params[:bill_params][:creditor][:address][:name]        = "Compagnia di assicurazione forma & scalciante"
+params[:bill_type]                                            = QRBills.get_qrbill_with_creditor_reference_type
+params[:qrcode_filepath]                                      = "#{Dir.pwd}/tmp/qrcode-html.png"
+params[:qrcode_format]                                        = "svg" # use qrcode_format with "svg" / "png" instead of qrcode_filepath to use a data url encoded qr code
+params[:output_params][:format]                               = "html"
+params[:bill_params][:creditor][:iban]                        = "CH93 0076 2011 6238 5295 7"
+params[:bill_params][:creditor][:address][:type]              = "S" # or type "K"
+params[:bill_params][:creditor][:address][:name]              = "Compagnia di assicurazione forma & scalciante"
 params[:bill_params][:creditor][:address][:street_name]       = "Via cantonale"
 params[:bill_params][:creditor][:address][:building_number]   = "24"
-params[:bill_params][:creditor][:address][:postal_code] = "3000"
-params[:bill_params][:creditor][:address][:town]        = "Lugano"
-params[:bill_params][:creditor][:address][:country]     = "CH"
-params[:bill_params][:amount]                           = 12345.15
-params[:bill_params][:currency]                         = "CHF"
-params[:bill_params][:debtor][:address][:type]          = "S"
-params[:bill_params][:debtor][:address][:name]          = "Foobar Barfoot"
+params[:bill_params][:creditor][:address][:postal_code]       = "3000"
+params[:bill_params][:creditor][:address][:town]              = "Lugano"
+params[:bill_params][:creditor][:address][:country]           = "CH"
+params[:bill_params][:amount]                                 = 12345.15
+params[:bill_params][:currency]                               = "CHF"
+params[:bill_params][:debtor][:address][:type]                = "S"
+params[:bill_params][:debtor][:address][:name]                = "Foobar Barfoot"
 params[:bill_params][:debtor][:address][:street_name]         = "Via cantonale"
 params[:bill_params][:debtor][:address][:building_number]     = "25"
-params[:bill_params][:debtor][:address][:postal_code]   = "3001"
-params[:bill_params][:debtor][:address][:town]          = "Comano"
-params[:bill_params][:debtor][:address][:country]       = "CH"
+params[:bill_params][:debtor][:address][:postal_code]         = "3001"
+params[:bill_params][:debtor][:address][:town]                = "Comano"
+params[:bill_params][:debtor][:address][:country]             = "CH"
 # you can get the new creditor reference using QRBills.create_creditor_reference("your_reference")
-params[:bill_params][:reference]                        = "RF89MTR81UUWZYO48NY55NP3"
-params[:bill_params][:reference_type]                   = "SCOR"
-params[:bill_params][:additionally_information]         = "pagamento riparazione monopattino"
+params[:bill_params][:reference]                              = "RF89MTR81UUWZYO48NY55NP3"
+params[:bill_params][:reference_type]                         = "SCOR"
+params[:bill_params][:additionally_information]               = "pagamento riparazione monopattino"
 
 # generate the QR Bill
 bill = QRBills.generate(params)
