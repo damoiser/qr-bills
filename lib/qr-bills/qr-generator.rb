@@ -19,8 +19,6 @@ module QRGenerator
   end
 
   def self.build_qrcode_png(bill_params, qrcode_path)
-    warn('DEPRECATION WARNING: The qrcode_png format and qrcode_filepath parameter are deprecated and will be removed from qr-bills 1.1 (use png or svg instead)')
-
     final_qr = build_png(bill_params)
     final_qr.save(qrcode_path)
     final_qr
