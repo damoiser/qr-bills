@@ -254,7 +254,7 @@ module QRHTMLLayout
         format("%s<br>\n%s %s<br>\n%s %s<br>\n", address[:name], address[:street_name], address[:building_number], address[:postal_code], address[:town])
       end
     when 'K'
-      raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: please move to type-S addresses, K-type is not supported anymore with and after v2.0.0"
+      raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: please move to type-S addresses, K-type is not supported anymore with and after v2.0.0 - params line1 and line2 doesn't exist anymore and are now street_name / building_number"
     end
   end
 end
