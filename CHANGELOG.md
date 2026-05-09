@@ -1,7 +1,6 @@
 ### v2.0.0
 * Not backward compatible! 
   * update to latest standard, S-type address only, remove K-type address: https://www.postfinance.ch/content/dam/pfch/doc/460_479/460_445_en.pdf
-  * remove deprecated functions such as ```qrcode_filepath``` (switch to ```qrcode_format```)
 
 * migration quick-guide
 ```ruby
