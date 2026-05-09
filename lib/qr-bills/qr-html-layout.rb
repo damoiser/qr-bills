@@ -248,10 +248,10 @@ module QRHTMLLayout
   def self.render_address(address)
     case address[:type]
     when 'S'
-      if !address[:street_name].empty?
-        format("%s<br>\n%s %s<br>\n%s %s<br>\n", address[:name], address[:street_name], address[:building_number], address[:postal_code], address[:town])
+      if address[:street_name].empty?
+        format("%s<br>\n%s %s<br>\n", address[:name], address[:postal_code], address[:town])
       else 
-        raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: please move to type-S addresses, K-type is not supported anymore with and after v2.0.0"
+        format("%s<br>\n%s %s<br>\n%s %s<br>\n", address[:name], address[:street_name], address[:building_number], address[:postal_code], address[:town])
       end
     when 'K'
       raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: please move to type-S addresses, K-type is not supported anymore with and after v2.0.0"
