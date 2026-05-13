@@ -31,7 +31,7 @@ module QRBills
   #     - :qr => create_creditor_reference
   #     - :esr => create_esr_creditor_reference
   def self.iban_type(iban)
-    return nil if iban.empty?
+    return nil if iban.blank?
     iban_institute_identifier = iban.strip.gsub(' ', '')[4..8].to_i
     return iban_institute_identifier.between?(30_000, 31_999) ? :qr : :esr
   end
