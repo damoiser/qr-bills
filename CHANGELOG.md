@@ -1,4 +1,5 @@
 ### v2.0.0
+* fix optional fields validation warnings for StrdBkgInf and AltPmt
 * Not backward compatible! 
   * update to latest standard, S-type address only, remove K-type address: https://www.postfinance.ch/content/dam/pfch/doc/460_479/460_445_en.pdf
 
