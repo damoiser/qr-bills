@@ -4,7 +4,7 @@
 
 * migration quick-guide
 ```ruby
-## deprecated please move to :street_name and :building_number
+## removed in v2.0.0, please move to :street_name and :building_number
 # params[:bill_params][:creditor][:address][:line1]       = "Via cantonale"
 # params[:bill_params][:creditor][:address][:line2]       = "24"
 ##
@@ -14,12 +14,12 @@ params[:bill_params][:creditor][:address][:building_number]   = "24"
 ```
 
 ```ruby
-## deprecated after 13.12.2026 please move to :street_name and :building_number
-# params[:bill_params][:debtor][:address][:line1]         = "Via cantonale"
+## removed in v2.0.0, please move to :street_name and :building_number
+# params[:bill_params][:debtor][:address][:line1]         = "Via Prospo"
 # params[:bill_params][:debtor][:address][:line2]         = "25"
 ##
 
-params[:bill_params][:debtor][:address][:street_name]         = "Via cantonale"
+params[:bill_params][:debtor][:address][:street_name]         = "Via Prospo"
 params[:bill_params][:debtor][:address][:building_number]     = "25"
 
 ```
