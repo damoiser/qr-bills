@@ -149,8 +149,20 @@ module QRGenerator
     payload += "#{bill_params[:reference_type]}\r\n"
     payload += "#{bill_params[:reference].delete(' ')}\r\n"
     payload += "#{bill_params[:additionally_information]}\r\n"
-    payload += "EPD\r\n"
-    payload += "#{bill_params[:bill_information_coded]}\r\n"
-    payload += "#{bill_params[:alternative_scheme_parameters]}\r\n"
+    payload += "EPD\r"
+    
+    if bill_params[:bill_information_coded] && !bill_params[:bill_information_coded].empty?
+      # Based on SIX validator: Element <StrdBkgInf> must only be delivered if the element ist not empty. Exception: If subsequent elements are provided.
+      payload += "\n"
+      payload += "#{bill_params[:bill_information_coded]}\r"
+    end
+    
+    if bill_params[:alternative_scheme_parameters] && !bill_params[:alternative_scheme_parameters].empty?
+      # Based on SIX validator: Element <AltPmt> must only be delivered if the element ist not empty. Exception: If subsequent elements are provided.
+      payload += "\n"
+      payload += "#{bill_params[:alternative_scheme_parameters]}\r"
+    end
+  
+    payload
   end
 end

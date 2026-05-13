@@ -58,5 +58,40 @@ RSpec.describe QRGenerator do
       file = File.open('spec/fixtures/qrcode.svg').read
       expect(svg).to eq(file)
     end
+
+    it "generates successfully the txt payload (and to test against SIX validator)" do
+      txt = QRGenerator.build_payload(params[:bill_params])
+      File.write('tmp/qrcode.txt', txt)
+      file = File.open('spec/fixtures/qrcode.txt').read
+      expect(txt).to eq(file)
+    end
+
+    it "optional fields are correctly generated as txt payload (and to test against SIX validator) > bill_information_coded" do
+      params[:bill_params][:bill_information_coded] = "//S1/10/10201409/11/181105/40/0:30"
+      
+      txt = QRGenerator.build_payload(params[:bill_params])
+      File.write('tmp/qrcode_information_coded.txt', txt)
+      file = File.open('spec/fixtures/qrcode_information_coded.txt').read
+      expect(txt).to eq(file)
+    end
+
+    it "optional fields are correctly generated as txt payload (and to test against SIX validator) > alternative_scheme_parameters" do
+      params[:bill_params][:alternative_scheme_parameters] = "eBill/B/41010560425610173"
+      
+      txt = QRGenerator.build_payload(params[:bill_params])
+      File.write('tmp/qrcode_information_alt_scheme.txt', txt)
+      file = File.open('spec/fixtures/qrcode_information_alt_scheme.txt').read
+      expect(txt).to eq(file)
+    end
+
+    it "optional fields are correctly generated as txt payload (and to test against SIX validator) > bill_information_coded & alternative_scheme_parameters" do
+      params[:bill_params][:alternative_scheme_parameters] = "eBill/B/41010560425610173"
+      params[:bill_params][:bill_information_coded] = "//S1/10/10201409/11/181105/40/0:30"
+      
+      txt = QRGenerator.build_payload(params[:bill_params])
+      File.write('tmp/qrcode_information_coded_and_alt_scheme.txt', txt)
+      file = File.open('spec/fixtures/qrcode_information_coded_and_alt_scheme.txt').read
+      expect(txt).to eq(file)
+    end
   end
 end
