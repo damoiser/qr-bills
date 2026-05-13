@@ -1,0 +1,32 @@
+SPC
+0200
+1
+CH9300762011623852957
+S
+Compagnia di assicurazione forma & scalciante
+Via cantonale
+24
+3000
+Lugano
+CH
+
+
+
+
+
+
+
+12345.15
+CHF
+S
+Foobar Barfoot
+Via Prospo
+25
+3001
+Comano
+CH
+SCOR
+RF89MTR81UUWZYO48NY55NP3
+pagamento riparazione monopattino
+EPD
+//S1/10/10201409/11/181105/40/0:30
