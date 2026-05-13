@@ -23,7 +23,7 @@ RSpec.describe QRGenerator do
       params_hash[:bill_params][:currency] = "CHF"
       params_hash[:bill_params][:debtor][:address][:type] = "S"
       params_hash[:bill_params][:debtor][:address][:name] = "Foobar Barfoot"
-      params_hash[:bill_params][:debtor][:address][:street_name]       = "Via cantonale"
+      params_hash[:bill_params][:debtor][:address][:street_name]       = "Via Prospo"
       params_hash[:bill_params][:debtor][:address][:building_number]   = "25"
       params_hash[:bill_params][:debtor][:address][:postal_code] = "3001"
       params_hash[:bill_params][:debtor][:address][:town] = "Comano"

@@ -24,7 +24,7 @@ RSpec.configure do |config|
     @params[:bill_params][:currency] = "CHF"
     @params[:bill_params][:debtor][:address][:type] = "S"
     @params[:bill_params][:debtor][:address][:name] = "Foobar Barfoot"
-    @params[:bill_params][:debtor][:address][:street_name]       = "Via cantonale"
+    @params[:bill_params][:debtor][:address][:street_name]       = "Via Prospo"
     @params[:bill_params][:debtor][:address][:building_number]   = "25"
     @params[:bill_params][:debtor][:address][:postal_code] = "3001"
     @params[:bill_params][:debtor][:address][:town] = "Comano"
