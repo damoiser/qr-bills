@@ -150,25 +150,10 @@ module QRGenerator
     payload += "#{bill_params[:reference].delete(' ')}\r\n"
     payload += "#{bill_params[:additionally_information]}\r\n"
     payload += "EPD\r\n"
-    
-    if bill_params[:bill_information_coded] && !bill_params[:bill_information_coded].empty?
-      # Based on SIX validator: Element <StrdBkgInf> must only be delivered if the element ist not empty. Exception: If subsequent elements are provided.
-      payload += "#{bill_params[:bill_information_coded]}\r\n"
-    end
-    
-    if bill_params[:alternative_scheme_parameters] && !bill_params[:alternative_scheme_parameters].empty?
-      # Based on SIX validator: Element <AltPmt> must only be delivered if the element ist not empty. Exception: If subsequent elements are provided.
-      if bill_params[:bill_information_coded] && bill_params[:bill_information_coded].empty?
-        # put extra blank lines to correct map this field if previous optional field is empty
-        payload += "\r\n"
-      end
-      
-      payload += "#{bill_params[:alternative_scheme_parameters]}\r\n"
-    end
+    payload += "#{bill_params[:bill_information_coded]}\r\n"
+    payload += "#{bill_params[:alternative_scheme_parameters]}\r\n"
 
-    # clean out empty lines at the end of the payload
     payload.delete_suffix!("\r\n") while payload.end_with?("\r\n")
-
     payload
   end
 end
