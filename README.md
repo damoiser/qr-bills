@@ -140,6 +140,7 @@ bill = QRBills.generate(params)
 * https://www.paymentstandards.ch/en/shared/know-how/faq/qr.html
 * https://www.kmu.admin.ch/kmu/it/home/consigli-pratici/questioni-finanziarie/contabilita-e-revisione/introduzione-della-qr-fattura.html
 * https://www.paymentstandards.ch/dam/downloads/drehbuch-rechnung-steller-empfaenger-it.pdf
+* https://www.postfinance.ch/content/dam/pfch/doc/460_479/460_445_en.pdf
 
 ## TODO
 
