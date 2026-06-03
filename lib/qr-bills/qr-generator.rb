@@ -19,8 +19,6 @@ module QRGenerator
   end
 
   def self.build_qrcode_png(bill_params, qrcode_path)
-    warn('DEPRECATION WARNING: The qrcode_png format and qrcode_filepath parameter are deprecated and will be removed from qr-bills 1.1 (use png or svg instead)')
-
     final_qr = build_png(bill_params)
     final_qr.save(qrcode_path)
     final_qr
@@ -127,8 +125,8 @@ module QRGenerator
     payload += "#{bill_params[:creditor][:iban].delete(' ')}\r\n"
     payload += "#{bill_params[:creditor][:address][:type]}\r\n"
     payload += "#{bill_params[:creditor][:address][:name]}\r\n"
-    payload += "#{bill_params[:creditor][:address][:line1]}\r\n"
-    payload += "#{bill_params[:creditor][:address][:line2]}\r\n"
+    payload += "#{bill_params[:creditor][:address][:street_name]}\r\n"
+    payload += "#{bill_params[:creditor][:address][:building_number]}\r\n"
     payload += "#{bill_params[:creditor][:address][:postal_code]}\r\n"
     payload += "#{bill_params[:creditor][:address][:town]}\r\n"
     payload += "#{bill_params[:creditor][:address][:country]}\r\n"
@@ -143,8 +141,8 @@ module QRGenerator
     payload += "#{bill_params[:currency]}\r\n"
     payload += "#{bill_params[:debtor][:address][:type]}\r\n"
     payload += "#{bill_params[:debtor][:address][:name]}\r\n"
-    payload += "#{bill_params[:debtor][:address][:line1]}\r\n"
-    payload += "#{bill_params[:debtor][:address][:line2]}\r\n"
+    payload += "#{bill_params[:debtor][:address][:street_name]}\r\n"
+    payload += "#{bill_params[:debtor][:address][:building_number]}\r\n"
     payload += "#{bill_params[:debtor][:address][:postal_code]}\r\n"
     payload += "#{bill_params[:debtor][:address][:town]}\r\n"
     payload += "#{bill_params[:debtor][:address][:country]}\r\n"
@@ -154,5 +152,8 @@ module QRGenerator
     payload += "EPD\r\n"
     payload += "#{bill_params[:bill_information_coded]}\r\n"
     payload += "#{bill_params[:alternative_scheme_parameters]}\r\n"
+
+    payload.delete_suffix!("\r\n") while payload.end_with?("\r\n")
+    payload
   end
 end

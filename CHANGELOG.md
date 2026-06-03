@@ -1,3 +1,30 @@
+### v2.0.0
+* fix optional fields validation warnings for StrdBkgInf and AltPmt
+* Not backward compatible! 
+  * update to latest standard, S-type address only, remove K-type address: https://www.postfinance.ch/content/dam/pfch/doc/460_479/460_445_en.pdf
+
+* migration quick-guide
+```ruby
+## removed in v2.0.0, please move to :street_name and :building_number
+# params[:bill_params][:creditor][:address][:line1]       = "Via cantonale"
+# params[:bill_params][:creditor][:address][:line2]       = "24"
+##
+
+params[:bill_params][:creditor][:address][:street_name]       = "Via cantonale"
+params[:bill_params][:creditor][:address][:building_number]   = "24"
+```
+
+```ruby
+## removed in v2.0.0, please move to :street_name and :building_number
+# params[:bill_params][:debtor][:address][:line1]         = "Via Prospo"
+# params[:bill_params][:debtor][:address][:line2]         = "25"
+##
+
+params[:bill_params][:debtor][:address][:street_name]         = "Via Prospo"
+params[:bill_params][:debtor][:address][:building_number]     = "25"
+
+```
+
 ### v1.0.11
 * bump ruby version to 3.2.2
 * add support for ESR reference

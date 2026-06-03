@@ -30,8 +30,8 @@ module QRParams
           address: {
             type: "S",
             name: "",
-            line1: "",
-            line2: "",
+            street_name: "",
+            building_number: "",
             postal_code: "",
             town: "",
             country: "",
@@ -42,8 +42,8 @@ module QRParams
           address: {
             type: "S",
             name: "",
-            line1: "",
-            line2: "",
+            street_name: "",
+            building_number: "",
             postal_code: "",
             town: "",
             country: "",
@@ -80,7 +80,7 @@ module QRParams
     if params.dig(:bill_params, :currency) == "" || params.dig(:bill_params, :currency) == nil
       raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: currency cannot be blank"
     end
-
+ 
     true
   end
 

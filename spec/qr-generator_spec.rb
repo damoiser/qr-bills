@@ -14,8 +14,8 @@ RSpec.describe QRGenerator do
       params_hash[:bill_params][:creditor][:iban] = "CH93 0076 2011 6238 5295 7"
       params_hash[:bill_params][:creditor][:address][:type] = "S"
       params_hash[:bill_params][:creditor][:address][:name] = "Compagnia di assicurazione forma & scalciante"
-      params_hash[:bill_params][:creditor][:address][:line1] = "Via cantonale"
-      params_hash[:bill_params][:creditor][:address][:line2] = "24"
+      params_hash[:bill_params][:creditor][:address][:street_name]       = "Via cantonale"
+      params_hash[:bill_params][:creditor][:address][:building_number]   = "24"  
       params_hash[:bill_params][:creditor][:address][:postal_code] = "3000"
       params_hash[:bill_params][:creditor][:address][:town] = "Lugano"
       params_hash[:bill_params][:creditor][:address][:country] = "CH"
@@ -23,8 +23,8 @@ RSpec.describe QRGenerator do
       params_hash[:bill_params][:currency] = "CHF"
       params_hash[:bill_params][:debtor][:address][:type] = "S"
       params_hash[:bill_params][:debtor][:address][:name] = "Foobar Barfoot"
-      params_hash[:bill_params][:debtor][:address][:line1] = "Via cantonale"
-      params_hash[:bill_params][:debtor][:address][:line2] = "25"
+      params_hash[:bill_params][:debtor][:address][:street_name]       = "Via Prospo"
+      params_hash[:bill_params][:debtor][:address][:building_number]   = "25"
       params_hash[:bill_params][:debtor][:address][:postal_code] = "3001"
       params_hash[:bill_params][:debtor][:address][:town] = "Comano"
       params_hash[:bill_params][:debtor][:address][:country] = "CH"
@@ -57,6 +57,41 @@ RSpec.describe QRGenerator do
       File.write('tmp/qrcode.svg', svg)
       file = File.open('spec/fixtures/qrcode.svg').read
       expect(svg).to eq(file)
+    end
+
+    it "generates successfully the txt payload (and to test against SIX validator)" do
+      txt = QRGenerator.build_payload(params[:bill_params])
+      File.write('tmp/qrcode.txt', txt)
+      file = File.open('spec/fixtures/qrcode.txt').read
+      expect(txt).to eq(file)
+    end
+
+    it "optional fields are correctly generated as txt payload (and to test against SIX validator) > bill_information_coded" do
+      params[:bill_params][:bill_information_coded] = "//S1/10/10201409/11/181105/40/0:30"
+      
+      txt = QRGenerator.build_payload(params[:bill_params])
+      File.write('tmp/qrcode_information_coded.txt', txt)
+      file = File.open('spec/fixtures/qrcode_information_coded.txt').read
+      expect(txt).to eq(file)
+    end
+
+    it "optional fields are correctly generated as txt payload (and to test against SIX validator) > alternative_scheme_parameters" do
+      params[:bill_params][:alternative_scheme_parameters] = "eBill/B/41010560425610173"
+      
+      txt = QRGenerator.build_payload(params[:bill_params])
+      File.write('tmp/qrcode_information_alt_scheme.txt', txt)
+      file = File.open('spec/fixtures/qrcode_information_alt_scheme.txt').read
+      expect(txt).to eq(file)
+    end
+
+    it "optional fields are correctly generated as txt payload (and to test against SIX validator) > bill_information_coded & alternative_scheme_parameters" do
+      params[:bill_params][:alternative_scheme_parameters] = "eBill/B/41010560425610173"
+      params[:bill_params][:bill_information_coded] = "//S1/10/10201409/11/181105/40/0:30"
+      
+      txt = QRGenerator.build_payload(params[:bill_params])
+      File.write('tmp/qrcode_information_coded_and_alt_scheme.txt', txt)
+      file = File.open('spec/fixtures/qrcode_information_coded_and_alt_scheme.txt').read
+      expect(txt).to eq(file)
     end
   end
 end
