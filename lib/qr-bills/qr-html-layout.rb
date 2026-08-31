@@ -58,7 +58,7 @@ module QRHTMLLayout
 
       layout += "      <div class=\"amount_value\">\n"
       layout += "        <span class=\"amount_header subtitle\">#{I18n.t("qrbills.amount").capitalize}</span><br/>\n"
-      layout += "        #{format('%.2f', params[:bill_params][:amount])}<br/>\n"
+      layout +=          render_amount_value(params[:bill_params][:amount], "receipt_amount_blank")
       layout += "      </div>\n"
       layout += "    </div>\n"
 
@@ -79,7 +79,7 @@ module QRHTMLLayout
 
       layout += "        <div class=\"amount_value\">\n"
       layout += "          <span class=\"amount_header subtitle\">#{I18n.t("qrbills.amount").capitalize}</span><br/>\n"
-      layout += "          #{format('%.2f',params[:bill_params][:amount])}<br/>\n"
+      layout +=          render_amount_value(params[:bill_params][:amount], "payment_amount_blank")
       layout += "        </div>\n"
       layout += "      </div>\n"
 
@@ -202,6 +202,53 @@ module QRHTMLLayout
       layout += "    margin-right: 15px;\n"
       layout += "  }\n"
 
+      # Empty amount field with corner registration marks (Swiss Implementation Guidelines
+      # 3.5.3 payment part / 3.6.3 receipt): 4 small L-shaped strokes, 0.75pt, at each corner
+      # of the box the payer (or their banking app) is expected to fill in by hand.
+      layout += "  .amount_blank {\n"
+      layout += "    position: relative;\n"
+      layout += "  }\n"
+
+      layout += "  .receipt_amount_blank {\n"
+      layout += "    width: 30mm;\n"
+      layout += "    height: 10mm;\n"
+      layout += "  }\n"
+
+      layout += "  .payment_amount_blank {\n"
+      layout += "    width: 40mm;\n"
+      layout += "    height: 15mm;\n"
+      layout += "  }\n"
+
+      layout += "  .amount_blank .corner {\n"
+      layout += "    position: absolute;\n"
+      layout += "    width: 3mm;\n"
+      layout += "    height: 3mm;\n"
+      layout += "  }\n"
+
+      layout += "  .amount_blank .corner_tl {\n"
+      layout += "    top: 0; left: 0;\n"
+      layout += "    border-top: 0.75pt solid #000;\n"
+      layout += "    border-left: 0.75pt solid #000;\n"
+      layout += "  }\n"
+
+      layout += "  .amount_blank .corner_tr {\n"
+      layout += "    top: 0; right: 0;\n"
+      layout += "    border-top: 0.75pt solid #000;\n"
+      layout += "    border-right: 0.75pt solid #000;\n"
+      layout += "  }\n"
+
+      layout += "  .amount_blank .corner_bl {\n"
+      layout += "    bottom: 0; left: 0;\n"
+      layout += "    border-bottom: 0.75pt solid #000;\n"
+      layout += "    border-left: 0.75pt solid #000;\n"
+      layout += "  }\n"
+
+      layout += "  .amount_blank .corner_br {\n"
+      layout += "    bottom: 0; right: 0;\n"
+      layout += "    border-bottom: 0.75pt solid #000;\n"
+      layout += "    border-right: 0.75pt solid #000;\n"
+      layout += "  }\n"
+
       layout += "  .title {\n"
       layout += "    font-weight: bold;\n"
       layout += "    font-size: 11pt;\n"
@@ -243,6 +290,22 @@ module QRHTMLLayout
 
       layout
     end
+  end
+
+  # When the amount is not predefined (params[:bill_params][:amount] is nil), the Swiss
+  # Implementation Guidelines (sections 3.5.3 / 3.6.3) require an empty field with corner
+  # registration marks instead of a printed value: 40x15mm on the payment part, 30x10mm on
+  # the receipt. The two call sites only differ in the box's CSS class (which sets the size).
+  def self.render_amount_value(amount, blank_css_class)
+    return "#{format('%.2f', amount)}<br/>\n" unless amount.nil?
+
+    layout  = "<div class=\"amount_blank #{blank_css_class}\">\n"
+    layout += "  <div class=\"corner corner_tl\"></div>\n"
+    layout += "  <div class=\"corner corner_tr\"></div>\n"
+    layout += "  <div class=\"corner corner_bl\"></div>\n"
+    layout += "  <div class=\"corner corner_br\"></div>\n"
+    layout += "</div>\n"
+    layout
   end
 
   def self.render_address(address)

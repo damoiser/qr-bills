@@ -1,3 +1,12 @@
+### Unreleased
+* Support QR-bills without a predefined amount (`params[:bill_params][:amount] = nil`), per
+  section 4.2.2 of the Swiss Implementation Guidelines for the QR-bill: `Amt` is optional,
+  the payer/banking app fills it in after scanning. The `Amt` payload line stays present but
+  empty, `Ccy` is unaffected. The `html` output now renders the regulatory empty field with
+  corner registration marks (40x15mm on the payment part, 30x10mm on the receipt) instead of
+  a numeric value. A present amount must still be between 0.01 and 999999999.99 (now
+  validated - previously unchecked). Amount-present behavior is unchanged.
+
 ### v2.0.0
 * fix optional fields validation warnings for StrdBkgInf and AltPmt
 * Not backward compatible! 

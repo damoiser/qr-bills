@@ -68,6 +68,59 @@ RSpec.describe "QR params" do
     end
   end
 
+  describe "optional amount validation" do
+    it "is valid when amount is nil (no predefined amount)" do
+      @params[:bill_params][:amount] = nil
+      expect{QRParams.amount_valid?(@params)}.not_to raise_error
+      expect(QRParams.amount_valid?(@params)).to be_truthy
+    end
+
+    it "is valid when the amount key is entirely absent" do
+      @params[:bill_params].delete(:amount)
+      expect{QRParams.amount_valid?(@params)}.not_to raise_error
+    end
+
+    it "is valid with a classic decimal amount" do
+      @params[:bill_params][:amount] = 12345.15
+      expect{QRParams.amount_valid?(@params)}.not_to raise_error
+    end
+
+    it "is valid at the lower bound (0.01)" do
+      @params[:bill_params][:amount] = 0.01
+      expect{QRParams.amount_valid?(@params)}.not_to raise_error
+    end
+
+    it "is valid at the upper bound (999999999.99)" do
+      @params[:bill_params][:amount] = 999_999_999.99
+      expect{QRParams.amount_valid?(@params)}.not_to raise_error
+    end
+
+    it "rejects a zero amount" do
+      @params[:bill_params][:amount] = 0
+      expect{QRParams.amount_valid?(@params)}.to raise_error(ArgumentError, /amount must be nil.*or between 0.01 and 999999999.99/)
+    end
+
+    it "rejects a zero float amount" do
+      @params[:bill_params][:amount] = 0.0
+      expect{QRParams.amount_valid?(@params)}.to raise_error(ArgumentError, /amount must be nil.*or between 0.01 and 999999999.99/)
+    end
+
+    it "rejects a negative amount" do
+      @params[:bill_params][:amount] = -5.0
+      expect{QRParams.amount_valid?(@params)}.to raise_error(ArgumentError, /amount must be nil.*or between 0.01 and 999999999.99/)
+    end
+
+    it "rejects an amount above the maximum" do
+      @params[:bill_params][:amount] = 1_000_000_000.00
+      expect{QRParams.amount_valid?(@params)}.to raise_error(ArgumentError, /amount must be nil.*or between 0.01 and 999999999.99/)
+    end
+
+    it "is enforced through base_params_valid? too" do
+      @params[:bill_params][:amount] = -1
+      expect{QRParams.base_params_valid?(@params)}.to raise_error(ArgumentError, /amount must be nil.*or between 0.01 and 999999999.99/)
+    end
+  end
+
   describe "qr bill with QR reference params validation" do
     it "fails if reference is not QRR" do
       @params[:bill_params][:reference_type]= "bla"
