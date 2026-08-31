@@ -124,4 +124,50 @@ RSpec.describe "QRHTMLLayout" do
       expect(html_output).to include("12345.10")
     end
   end
+
+  describe "optional amount (no predefined amount)" do
+    before do
+      @params[:qrcode_format] = 'png'
+      @params[:bill_params][:amount] = nil
+    end
+
+    it "does not raise and does not print a numeric amount" do
+      html_output = nil
+      expect { html_output = QRHTMLLayout.create(@params).to_s }.not_to raise_error
+      expect(html_output).not_to include("<br/>0.00")
+    end
+
+    it "renders a 40x15mm empty field with corner marks in the payment section" do
+      html_output = QRHTMLLayout.create(@params).to_s
+
+      expect(html_output).to include("payment_amount_blank")
+      expect(html_output).to include("width: 40mm")
+      expect(html_output).to include("height: 15mm")
+    end
+
+    it "renders a 30x10mm empty field with corner marks in the receipt section" do
+      html_output = QRHTMLLayout.create(@params).to_s
+
+      expect(html_output).to include("receipt_amount_blank")
+      expect(html_output).to include("width: 30mm")
+      expect(html_output).to include("height: 10mm")
+    end
+
+    it "draws the 4 corner registration marks at 0.75pt" do
+      html_output = QRHTMLLayout.create(@params).to_s
+
+      expect(html_output).to include("corner_tl")
+      expect(html_output).to include("corner_tr")
+      expect(html_output).to include("corner_bl")
+      expect(html_output).to include("corner_br")
+      expect(html_output).to include("0.75pt solid #000")
+    end
+
+    it "still shows currency and amount labels" do
+      html_output = QRHTMLLayout.create(@params).to_s
+
+      expect(html_output).to include(I18n.t("qrbills.currency").capitalize)
+      expect(html_output).to include(I18n.t("qrbills.amount").capitalize)
+    end
+  end
 end
