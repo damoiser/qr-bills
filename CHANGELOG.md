@@ -1,3 +1,6 @@
+### Unreleased
+* Allow rqrcode 3.x (and thus rqrcode_core 2.x) while remaining compatible with rqrcode 2.1+
+
 ### v2.0.0
 * fix optional fields validation warnings for StrdBkgInf and AltPmt
 * Not backward compatible! 
