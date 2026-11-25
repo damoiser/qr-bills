@@ -135,6 +135,22 @@ bill = QRBills.generate(params)
 
 ```
 
+### QR-bill without a predefined amount
+
+Per section 4.2.2 of the Swiss Implementation Guidelines for the QR-bill, `Amt` is optional:
+pass `nil` (instead of a number) to generate a QR-bill where the payer (or their banking app,
+after scanning) fills in the amount themselves - useful e.g. for an early-payment discount,
+where the final amount depends on when the invoice gets paid.
+
+```ruby
+params[:bill_params][:amount] = nil
+```
+
+Everything else (IBAN, addresses, reference, currency) works exactly the same. The `html`
+output renders the regulatory empty field with corner registration marks instead of a
+number; `png`/`svg` just encode the QR code payload with an empty (but present) `Amt` line.
+If you do set an amount, it must be between 0.01 and 999'999'999.99.
+
 ## References
 * https://www.paymentstandards.ch/dam/downloads/ig-qr-bill-en.pdf
 * https://www.paymentstandards.ch/en/shared/know-how/faq/qr.html
@@ -145,8 +161,6 @@ bill = QRBills.generate(params)
 ## TODO
 
 * add other outputs formats
-* add "empty" QR-Bill
-![QR bill empty](./imgs/qr_bill_empty.png)
 
 ## License
 

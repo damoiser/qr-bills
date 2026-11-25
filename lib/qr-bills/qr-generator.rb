@@ -137,7 +137,10 @@ module QRGenerator
     payload += "\r\n"
     payload += "\r\n"
     payload += "\r\n"
-    payload += "#{format('%.2f', bill_params[:amount])}\r\n"
+    # Amt (section 4.2.2 of the Swiss Implementation Guidelines for the QR-bill) is optional:
+    # a nil amount means the payer fills it in themselves (e.g. an early-payment discount),
+    # but the line must stay present (empty) since Ccy always immediately follows it.
+    payload += "#{bill_params[:amount].nil? ? '' : format('%.2f', bill_params[:amount])}\r\n"
     payload += "#{bill_params[:currency]}\r\n"
     payload += "#{bill_params[:debtor][:address][:type]}\r\n"
     payload += "#{bill_params[:debtor][:address][:name]}\r\n"

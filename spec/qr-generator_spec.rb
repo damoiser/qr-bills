@@ -87,11 +87,104 @@ RSpec.describe QRGenerator do
     it "optional fields are correctly generated as txt payload (and to test against SIX validator) > bill_information_coded & alternative_scheme_parameters" do
       params[:bill_params][:alternative_scheme_parameters] = "eBill/B/41010560425610173"
       params[:bill_params][:bill_information_coded] = "//S1/10/10201409/11/181105/40/0:30"
-      
+
       txt = QRGenerator.build_payload(params[:bill_params])
       File.write('tmp/qrcode_information_coded_and_alt_scheme.txt', txt)
       file = File.open('spec/fixtures/qrcode_information_coded_and_alt_scheme.txt').read
       expect(txt).to eq(file)
+    end
+  end
+
+  describe "optional amount (Amt, section 4.2.2 of the Swiss Implementation Guidelines)" do
+    def lines(txt)
+      txt.split("\r\n", -1)
+    end
+
+    it "keeps the classic amount-present payload byte-identical to before this change" do
+      txt = QRGenerator.build_payload(params[:bill_params])
+      file = File.open('spec/fixtures/qrcode.txt').read
+      expect(txt).to eq(file)
+    end
+
+    it "encodes an empty (but present) Amt line when amount is nil, Ccy immediately following" do
+      params[:bill_params][:amount] = nil
+
+      txt = QRGenerator.build_payload(params[:bill_params])
+      payload_lines = lines(txt)
+
+      # Amt is at index 18, Ccy at index 19 - fixed positions per the payload layout
+      # regardless of whether an amount is present.
+      expect(payload_lines[18]).to eq("")
+      expect(payload_lines[19]).to eq("CHF")
+    end
+
+    it "encodes an empty Amt line when the amount key is omitted entirely" do
+      params[:bill_params].delete(:amount)
+
+      txt = QRGenerator.build_payload(params[:bill_params])
+      payload_lines = lines(txt)
+
+      expect(payload_lines[18]).to eq("")
+      expect(payload_lines[19]).to eq("CHF")
+    end
+
+    it "does not shift any other field when amount is nil (creditor/debtor/reference intact)" do
+      params[:bill_params][:amount] = nil
+
+      txt = QRGenerator.build_payload(params[:bill_params])
+      payload_lines = lines(txt)
+
+      expect(payload_lines[3]).to eq("CH9300762011623852957") # creditor IBAN
+      expect(payload_lines[20]).to eq("S") # debtor address type
+      expect(payload_lines[21]).to eq("Foobar Barfoot") # debtor name
+      expect(payload_lines[27]).to eq("SCOR") # reference type
+      expect(payload_lines[28]).to eq("RF89MTR81UUWZYO48NY55NP3") # reference
+    end
+
+    it "supports EUR with no predefined amount" do
+      params[:bill_params][:amount] = nil
+      params[:bill_params][:currency] = "EUR"
+
+      txt = QRGenerator.build_payload(params[:bill_params])
+      payload_lines = lines(txt)
+
+      expect(payload_lines[18]).to eq("")
+      expect(payload_lines[19]).to eq("EUR")
+    end
+
+    it "keeps formatting a real amount with 2 decimals as before" do
+      params[:bill_params][:amount] = 42
+
+      txt = QRGenerator.build_payload(params[:bill_params])
+      payload_lines = lines(txt)
+
+      expect(payload_lines[18]).to eq("42.00")
+    end
+
+    it "still works with a QRR reference and no predefined amount" do
+      params[:bill_params][:amount] = nil
+      params[:bill_params][:reference_type] = "QRR"
+      params[:bill_params][:reference] = "210000000003139471430009017"
+
+      txt = QRGenerator.build_payload(params[:bill_params])
+      payload_lines = lines(txt)
+
+      expect(payload_lines[18]).to eq("")
+      expect(payload_lines[27]).to eq("QRR")
+      expect(payload_lines[28]).to eq("210000000003139471430009017")
+    end
+
+    it "still works with a NON reference (no reference) and no predefined amount" do
+      params[:bill_params][:amount] = nil
+      params[:bill_params][:reference_type] = "NON"
+      params[:bill_params][:reference] = ""
+
+      txt = QRGenerator.build_payload(params[:bill_params])
+      payload_lines = lines(txt)
+
+      expect(payload_lines[18]).to eq("")
+      expect(payload_lines[27]).to eq("NON")
+      expect(payload_lines[28]).to eq("")
     end
   end
 end

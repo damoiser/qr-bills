@@ -80,7 +80,24 @@ module QRParams
     if params.dig(:bill_params, :currency) == "" || params.dig(:bill_params, :currency) == nil
       raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: currency cannot be blank"
     end
- 
+
+    QRParams.amount_valid?(params)
+
+    true
+  end
+
+  # Amt (section 4.2.2 of the Swiss Implementation Guidelines for the QR-bill) is optional:
+  # nil means "no predefined amount" (the payer fills it in, e.g. for an early-payment
+  # discount) and is always valid. When present it must be a strictly positive amount
+  # within the range the spec allows.
+  def self.amount_valid?(params)
+    amount = params.dig(:bill_params, :amount)
+    return true if amount.nil?
+
+    unless amount.is_a?(Numeric) && amount >= 0.01 && amount <= 999_999_999.99
+      raise ArgumentError, "#{QRExceptions::INVALID_PARAMETERS}: amount must be nil (no predefined amount) or between 0.01 and 999999999.99"
+    end
+
     true
   end
 
